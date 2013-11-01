@@ -1,4 +1,13 @@
+<%if current_user.user_info%>
+<%if current_user.user_info.teacher== true%>
 <%@user_classes.each do |c|%>
 <%=link_to(c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id))%>
 <br />
+<%end%>
+<%elsif current_user.user_info.pupil== true%>
+<%@user_classes.each do |c|%>
+<%=c.class_name.class_name%>
+<br />
+<%end%>
+<%end%>
 <%end%>

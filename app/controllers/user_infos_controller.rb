@@ -1,6 +1,7 @@
 class UserInfosController < ApplicationController
+	before_filter :authorize_admin, only: :index
+
   def index
-    @user_infos = UserInfo.all
 	@users = User.all
 	@results = Result.all.to_a
   end

@@ -5,5 +5,15 @@ class ApplicationController < ActionController::Base
   
   def after_sign_in_path_for(user_class)
   user_classes_path
-end
+  end
+  
+  def authorize_admin
+    redirect_to(user_classes_path) if current_user.admin != true
+    #redirects to previous page
+	end
+	
+  def authorize_teacher
+    redirect_to(root_path) if current_user.user_info.teacher != true
+    #redirects to previous page
+	end
 end
