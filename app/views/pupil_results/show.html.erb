@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @pupil_result.user_id %>
+</p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @pupil_result.class_id %>
+</p>
+
+<p>
+  <strong>Result:</strong>
+  <%= @pupil_result.result %>
+</p>
+
+<p>
+  <strong>Col:</strong>
+  <%= @pupil_result.col_id %>
+</p>
+
+<%= link_to 'Edit', edit_pupil_result_path(@pupil_result) %> |
+<%= link_to 'Back', pupil_results_path %>

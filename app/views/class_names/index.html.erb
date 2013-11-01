@@ -1,0 +1,56 @@
+<h1>Listing class_names</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Class name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @class_names.each do |class_name| %>
+      <tr>
+        <td><%= class_name.class_name %></td>
+        <td><%= link_to 'Show', class_name %></td>
+        <td><%= link_to 'Edit', edit_class_name_path(class_name) %></td>
+        <td><%= link_to 'Destroy', class_name, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<div class="row-fluid">
+<div class="span6">
+<div class="span4 center">
+<div style="margin-top:40px;">
+<H5>Import your data</H5>
+<br />
+Click on select file to browse to the file you have now filled with student data. 
+Then click import.
+</div>
+<div style="margin-top:50px">
+<%= form_tag import_class_names_path, multipart: true do %>
+    <div class="fileupload fileupload-new" data-provides="fileupload">
+  <div class="input-append">
+    <div class="uneditable-input span3">
+	<i class="icon-file fileupload-exists"></i> 
+	<span class="fileupload-preview"></span>
+	</div><span class="btn btn-file">
+	<span class="fileupload-new">Select file</span>
+	<span class="fileupload-exists">Change</span>
+	<%= file_field_tag :file %>
+	</span>
+	<%= submit_tag "Import", class: "btn fileupload-exists btn-danger" %>
+<%end%>
+	</div>
+</div>
+</div>
+
+
+<%= link_to 'New Class name', new_class_name_path %>
+

@@ -1,0 +1,31 @@
+<h1>Listing title_classes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Class</th>
+      <th>Col</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @title_classes.each do |title_class| %>
+      <tr>
+        <td><%= title_class.title %></td>
+        <td><%= title_class.class_id %></td>
+        <td><%= title_class.col_id %></td>
+        <td><%= link_to 'Show', title_class %></td>
+        <td><%= link_to 'Edit', edit_title_class_path(title_class) %></td>
+        <td><%= link_to 'Destroy', title_class, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Title class', new_title_class_path %>

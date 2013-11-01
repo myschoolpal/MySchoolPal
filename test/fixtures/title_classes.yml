@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  class_id: 1
+  col_id: 1
+
+two:
+  title: MyString
+  class_id: 1
+  col_id: 1

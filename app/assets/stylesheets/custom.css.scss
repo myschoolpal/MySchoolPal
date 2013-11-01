@@ -1,0 +1,102 @@
+
+
+/* mixins, variables, etc. */
+
+$above_target_color: rgba(91,157,245,0.9);
+$on_target_color:rgba(7,181,22,0.9);
+$one_below_target_color:rgba(255,182,46,0.9);
+$below_target_color:rgba(232,7,7,0.9);
+@mixin box_sizing {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+body{
+background-color:#fff;
+font-family:Gill Sans MT;
+}
+
+.background
+{
+
+}
+
+/*Nav bar*/
+
+.navbar .navbar-inner {
+        padding: 0;	
+		
+      }
+      .navbar .nav {
+        margin: 0;
+        display: table;
+		background-color:#6D696E;
+		width:100%;
+		
+      }
+      .navbar .nav li {
+        display: table-cell;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-size:16px;
+        text-align: center;
+        border-left: 0px solid rgba(255,255,255,.75);
+        border-right: 0px solid rgba(0,0,0,.1);
+		color:#FFF;
+		
+      }
+	  .navbar .nav li a:hover {
+	  color:#000;
+	  }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+	  
+/*Homepage*/
+
+.logo
+{
+width:350px;
+margin-top:10px;
+margin-bottom:20px;
+margin-left:40px;
+}
+
+/*Cell Background*/
+
+.cell_design
+{
+border:1px solid #000;
+}
+
+.above_target
+{
+background-color:$above_target_color;
+}
+
+.on_target
+{
+background-color:$on_target_color;
+}
+
+.one_below_target
+{
+background-color:$one_below_target_color;
+}
+
+.below_target
+{
+background-color:$below_target_color;
+}
+
+.empty_result
+{
+background-color:#fff;
+}

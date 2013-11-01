@@ -1,0 +1,19 @@
+
+<%= form_for @u do |f| %>
+<%@users.each do |p|%>
+<div>
+<% if p.user_info%>
+<%=p.user_info.surname%>
+<%=p.user_info.forename%>
+<%=Result.find(p.user_targets.where(:subject_id => '3').first.target).grade%>
+<%=f.fields_for :pupil_results do |builder| %>
+<%=builder.text_field :result%>
+<%end%>
+<%end%>
+<%end%>
+</div>
+<%=submit_tag%>
+<%end%>
+
+
+

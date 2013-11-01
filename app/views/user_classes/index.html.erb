@@ -1,0 +1,4 @@
+<%@user_classes.each do |c|%>
+<%=link_to(c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id))%>
+<br />
+<%end%>

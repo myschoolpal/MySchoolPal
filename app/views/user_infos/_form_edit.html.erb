@@ -1,0 +1,97 @@
+<%= form_for @user_info do |f| %>
+  <%= f.error_messages %>
+<div class="row">
+	<div class="col-md-2">
+			<%= f.label :forename %><br />
+		<%= f.text_field :forename %>
+	</div>	  
+	<div class="col-md-2">
+			<%= f.label :surname %><br />
+			<%= f.text_field :surname %>
+	</div>
+	<div class="col-md-2">
+			<%= f.label :gender %><br />
+			<%= f.text_field :gender %>
+	</div>
+	<div class="col-md-2">	
+			<%= f.label :ks2_english %><br />
+			<%= f.collection_select(:ks2_english, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+	</div>
+	<div class="col-md-2">
+			<%= f.label :ks2_maths %><br />
+			<%= f.collection_select(:ks2_maths, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+	</div>
+	<div class="col-md-2">
+			<%= f.label :ks2_science %><br />
+			<%= f.collection_select(:ks2_science, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+	</div>
+</div>	
+<br />
+<div class="row">
+	<div class="col-md-2">
+		<%= f.label :pupil %><br />
+		<%= f.check_box :pupil%>
+	</div>
+	<div class="col-md-2">
+		<%= f.label :teacher %><br />
+		 <%= f.check_box :teacher%>
+	</div>
+
+	<div class="col-md-2">
+		<%= f.label :ks1_english %><br />
+		<%= f.collection_select(:ks1_english, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+	</div>
+	<div class="col-md-2">	
+		<%= f.label :ks1_maths %><br />
+		<%= f.collection_select(:ks1_maths, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+	</div>
+	<div class="col-md-2">
+		<%= f.label :ks1_writing %><br />
+		<%= f.collection_select(:ks1_writing, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+	</div>
+	<div class="col-md-2">
+		<%= f.label :ks1_reading %><br />
+		<%= f.collection_select(:ks1_reading, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+	</div>
+</div>
+<br />
+<div class="row">
+	<div class="col-md-2">
+		<b>Classes:</b>
+		  <%= f.fields_for :user_classes do |builder| %>
+		   <div class="field" style="margin-bottom:5px">
+			<%= builder.collection_select(:class_id, ClassName.all, :id, :class_name,{}, {class: 'form-control'}) %>
+		  </div>
+		<% end -%>
+	</div>
+	<div class="col-md-2">
+		<b>Groups:</b>
+		  <%= f.fields_for :user_groups do |builder| %>
+		   <div class="field" style="margin-bottom:5px">
+			<%= builder.collection_select(:group_id, Group.all, :id, :group,{}, {class: 'form-control'}) %>
+		  </div>
+		<% end -%>
+	</div>
+	<div class="col-md-4">
+		<div class="row">
+			<div class="col-md-6">
+			<b>Subject</b>
+			</div>
+			<div class="col-md-6">
+			<b>Target</b>
+			</div>
+		</div>	
+		<%= f.fields_for :user_targets do |builder| %>
+			<div class="row">
+				<div class="col-md-6">
+					<%= builder.collection_select(:subject_id, Subject.all, :id, :subject,{}, {class: 'form-control'}) %> 
+				</div>
+				<div class="col-md-6">
+					<%= builder.collection_select(:target, Result.all, :id, :grade,{}, {class: 'form-control'}) %>
+				</div>
+			</div>
+		<% end -%>
+	</div>
+</div>
+  <%= f.submit %>
+<% end %>

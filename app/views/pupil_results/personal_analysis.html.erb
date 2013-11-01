@@ -1,0 +1,91 @@
+<%if !@pupil_results.empty?%>
+<%= @pupil.user_info.forename%>
+<%= @pupil.user_info.surname%>
+| Target: 
+<%@t=@pupil.user_targets.first%>
+<%if @t%>
+<%=@t.result.grade%>
+<%end%>
+<hr>
+<div class="row">
+	<%(1..12).each do |k|%>
+		<div class="col-md-1 text-center">
+		<%@title =@titles.where(col_id: k).first%>
+		<%if @title %>
+			<%=@title.title%>
+		<%end%>
+		</div>
+	<%end%>
+</div>
+<%avg = Array.new%>
+<div class="row">
+	<%(1..12).each do |k|%>
+	<%@r = @pupil_results.where(col_id: k).first%>
+		<%if @r && @t%>
+			<% @difference = @r.result.aps - @t.result.aps%>
+				<%case %>
+					<%when @difference >0%>
+						<div class="col-md-1 text-center above_target cell_design">
+					<%when @difference ==0%>
+						<div class="col-md-1 text-center on_target cell_design">
+					<%when @difference <0 %>
+						<div class="col-md-1 text-center one_below_target cell_design">
+					<%when @difference <-2%>
+						<div class="col-md-1 text-center below_target cell_design">
+					<%else%>
+						<div class="col-md-1 text-center empty_result cell_design">	
+				<%end%>
+					<%=@r.result.grade%>
+					<%avg << @r.result.aps%>
+						</div>
+		<%else%>
+			<%if @r%>
+				<div class="col-md-1 text-center empty_result cell_design"><%=@r.result.grade%>	</div>	
+				<%avg << @r.result.aps%>
+			<%end%>
+		<%end%>
+		
+	<%end%>
+		
+</div>
+
+
+<div class="row">
+ <div class="col-md-1">
+ Average:
+ </div>
+<%if avg.size > 0%>
+	<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
+		<%if @t%>
+			<% @difference = avg_aps - @t.result.aps%>
+				<%case %>
+					<%when @difference >0%>
+						<div class="col-md-1 text-center above_target cell_design">
+					<%when @difference ==0%>
+						<div class="col-md-1 text-center on_target cell_design">
+					<%when @difference <0 %>
+						<div class="col-md-1 text-center one_below_target cell_design">
+					<%when @difference <-2%>
+						<div class="col-md-1 text-center below_target cell_design">
+					<%else%>
+						<div class="col-md-1 text-center empty_result cell_design">	
+					<%end%>
+							<%= Result.where(aps: avg_aps).first.grade%>
+		<%else%>
+			<div class="col-md-1 text-center empty_result cell_design">	
+				<%= Result.where(aps: avg_aps).first.grade%>
+		<%end%>
+			</div>
+<%else%>
+	<div class="col-md-1 text-center"></div>
+<%end%>
+
+<hr>
+<%else%>
+	<p>
+		There are no results for 
+		<%=UserInfo.where(user_id: @user_id).first.forename%> 
+		<%=UserInfo.where(user_id: @user_id).first.surname%>
+		for 
+		<%=ClassName.where(id: @class_id).first.class_name%>
+<%end%>

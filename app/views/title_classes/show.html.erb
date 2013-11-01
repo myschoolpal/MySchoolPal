@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @title_class.title %>
+</p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @title_class.class_id %>
+</p>
+
+<p>
+  <strong>Col:</strong>
+  <%= @title_class.col_id %>
+</p>
+
+<%= link_to 'Edit', edit_title_class_path(@title_class) %> |
+<%= link_to 'Back', title_classes_path %>

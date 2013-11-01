@@ -1,0 +1,103 @@
+<table>
+  <tr>
+    <th>User ID</th>
+    <th>Email</th>
+    <th>Forename</th>
+	<th>Surname</th>
+	<th>Year</th>
+	<th>Gender</th>
+    <th>Ks2 English</th>
+    <th>Ks2 Maths</th>
+	<th>Ks2 Science</th>
+	<th>Ks1 English</th>
+    <th>Ks1 Maths</th>
+	<th>Ks1 Reading</th>
+	<th>Ks1 Writing</th>
+	<th>Pupil</th>
+	<th>Teacher</th>
+  </tr>
+  <% for users in @users %>
+    <tr>
+	
+      
+	  <td><b><%= users.id %></b></td>
+	  <td><%= users.email %></td>
+	  
+	  
+	  <% if !users.user_info.nil?%>
+	  <td><%= users.user_info.forename %></td>
+      <td><%= users.user_info.surname %></td>
+	  <td><%= users.user_info.year %></td>
+	  <td><%= users.user_info.gender %></td>
+      <td>
+	  <% if users.user_info.ks2_english%>
+	  <%= @results[users.user_info.ks2_english].grade %></td>
+	  <%end%>
+	  <td>
+	  <% if users.user_info.ks2_maths%>
+      <%= @results[users.user_info.ks2_maths].grade %>
+	  <%end%>
+	  </td>
+	  <td>
+	  <% if users.user_info.ks2_science%>
+	  <%= @results[users.user_info.ks2_science.to_i].grade %>
+	  <%end%>
+	  </td>
+	  <td>
+	  <% if users.user_info.ks1_english%>
+	  <%= @results[users.user_info.ks1_english.to_i].grade %>
+	  <%end%>
+	  </td>
+	  <td>
+	  <% if users.user_info.ks1_maths%>
+	  <%= @results[users.user_info.ks1_maths.to_i].grade %>
+	  <%end%>
+	  </td>
+      <td>
+	  <% if users.user_info.ks1_reading%>
+	  <%= @results[users.user_info.ks1_reading.to_i].grade %>
+	  <%end%>
+	  </td>
+      <td>
+	  <% if users.user_info.ks1_writing%>
+	  <%= @results[users.user_info.ks1_writing.to_i].grade %>
+	  <%end%>
+	  </td>	  
+	  
+	  <td><%= users.user_info.pupil %></td>
+	  <td><%= users.user_info.teacher %></td>
+	  <td><%= users.admin %></td>
+	  <% users.class_names.each do |c| %>
+	  <td>
+	  <%=c.class_name%>
+	  </td>
+	  <%end%>
+	  <%users.groups.each do |g| %>
+	  <td>
+	  <%=g.group%>
+	  </td>
+	  <%end%>
+	  <%users.user_targets.each do |t| %>
+	  <td>
+	  <%=t.subject.subject%>
+	  </td>
+	  <td>
+	  <%=t.result.grade%>
+	  </td>
+	  <%end%>
+      <td><%= link_to "Edit", edit_user_info_path(users, :user => users.user_info.id) %></td>
+	  <td><%= link_to "Destroy", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
+	  <%end%>
+	  <td><%= link_to "Add", new_user_info_path(users, :user => users.id) %></td>
+      
+    </tr>
+  <%end%>
+</table>
+
+<p><%= link_to "New User Info", new_user_info_path %></p>
+
+
+  <%= form_tag import_user_infos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>

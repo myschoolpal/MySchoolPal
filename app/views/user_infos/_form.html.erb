@@ -1,0 +1,47 @@
+<%= form_for @user_info do |f| %>
+  <%= f.error_messages %>
+  <p>	
+    <%= f.hidden_field :user_id, :value => @user.id %>
+  </p>
+  <p>
+    <%= f.label :forename %><br />
+    <%= f.text_field :forename %>
+  </p>
+  <p>
+    <%= f.label :surname %><br />
+    <%= f.text_field :surname %>
+  </p>
+  <p>
+    <%= f.label :ks2_english %><br />
+    <%= f.collection_select(:ks2_english, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
+  </p>
+  <p>
+    <%= f.label :ks2_maths %><br />
+    <%= f.collection_select(:ks2_maths, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
+  </p>
+  <p>
+    <%= f.label :ks1_english %><br />
+    <%= f.collection_select(:ks1_english, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
+  </p>
+  <p>
+    <%= f.label :ks1_maths %><br />
+    <%= f.collection_select(:ks1_maths, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
+  </p>
+  <p>
+    <%= f.label :ks1_writing %><br />
+    <%= f.collection_select(:ks1_writing, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
+  </p>
+  <p>
+    <%= f.label :ks1_reading %><br />
+    <%= f.collection_select(:ks1_reading, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
+  </p>
+  <p>
+  <%= f.label :pupil %><br />
+  <%= f.check_box :pupil%>
+  </p>
+  <p>
+  <%= f.label :teacher %><br />
+  <%= f.check_box :teacher%>
+  </p>
+  <p><%= f.submit %></p>
+<% end %>

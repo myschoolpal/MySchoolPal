@@ -1,0 +1,73 @@
+<%= form_for :pupil_results, :url => update_all_results_path, :html => { :method => :put } do %>
+	
+	<div class="row" style="margin-bottom:2px;">
+			<div class="col-md-1">
+				Surname
+			</div>
+			<div class="col-md-1">
+				Forname
+			</div>
+			<div class="col-md-1">
+				Target
+			</div>
+			<div class="col-md-4 text-center">
+			<%@t = TitleClass.where(:col_id => @col).where(:class_id => params[:class_id]).first%>
+				<% if @t%>
+						<%= fields_for "title_update[]", @t do |builder| %>			
+						<div class="input-group"><span class="input-group-addon">Title</span>
+								<%=builder.text_field :title, :class => "form-control"%>
+								</div>
+							</div>
+						<%end%>				
+				<%else%>
+						<%= fields_for "title[]", @title do |builder| %>			
+						<%=builder.text_field :title, :placeholder => "Enter Title", :class => "form-control"%>
+						<%=builder.hidden_field :class_id, :value => params[:class_id]%>
+						<%=builder.hidden_field :col_id, :value => @col %>
+					<%end%>
+					<%end%>
+			</div>
+		</div>
+	<%@pupils.each do |p|%>
+		
+			<div class="row" style="margin-bottom:2px;">		
+				<div class="col-md-1">
+					<%=p.user.user_info.surname%>
+				</div>
+				<div class="col-md-1">
+					<%=p.user.user_info.forename%>
+				</div>
+				<div class="col-md-1">
+					<%@t = p.user.user_targets.first%>
+						<%if @t%>
+							<%=@t.result.grade%>
+							<%end%>
+				</div>
+				<%if !p.user.pupil_results.where(:col_id => @col).where(:class_id => params[:class_id]).empty?%>
+					<%result = p.user.pupil_results.where(:col_id => @col).where(:class_id => params[:class_id]).first%>
+						<%= fields_for "update[]", result do |builder| %>			
+							<div class="col-md-4 text-center">
+							
+							<%= builder.collection_select(:result_id, Result.order("aps ASC").all,:id, :grade,{}, {class: 'form-control'}) %>
+							
+							</div>
+						<%end%>	
+					
+				<%else%>
+					<div class="col-md-4">
+						<%= fields_for "r[]", @pupil_result do |builder| %>			
+							<%=builder.text_field :result_id, :placeholder => "Enter Result", class: "form-control"%>
+							<%=builder.hidden_field :class_id, :value => params[:class_id]%>
+							<%=builder.hidden_field :col_id, :value => @col %>
+							<%=builder.hidden_field :user_id, :value => p.user_id%>
+						<%end%>
+					</div>
+				<%end%>
+			</div>
+		
+	<%end%>
+	<%=submit_tag%>
+<%end%>
+<div>
+<%=link_to("Back", pupil_results_path(class_id: 1))%>
+</div>

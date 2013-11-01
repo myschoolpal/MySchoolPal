@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @subject_class.subject_id %>
+</p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @subject_class.class_id %>
+</p>
+
+<%= link_to 'Edit', edit_subject_class_path(@subject_class) %> |
+<%= link_to 'Back', subject_classes_path %>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_target.user_id %>
+</p>
+
+<p>
+  <strong>Subject:</strong>
+  <%= @user_target.subject_id %>
+</p>
+
+<p>
+  <strong>Target:</strong>
+  <%= @user_target.target %>
+</p>
+
+<%= link_to 'Edit', edit_user_target_path(@user_target) %> |
+<%= link_to 'Back', user_targets_path %>

@@ -1,0 +1,144 @@
+<div class="row">
+	<div class="col-md-10">
+		<%=@class_name%> | <%=@subject.subject%>
+		|
+		<%@groups.each do |g|%>
+		<%=link_to(g.group, group_analysis_path(class_id: params[:class_id], group_id: g.id, col_id: 'avg'))%>
+		|
+		<%end%>
+	</div>
+	<div class="col-md-2 text-center">
+		<%if @start_col > 8%>
+			<%=link_to('<< Previous',pupil_results_path(class_id: params[:class_id], col_id: @start_col-9))%>
+			|
+		<%end%>
+		<%=link_to('Next >>',pupil_results_path(class_id: params[:class_id], col_id: @start_col+7))%>
+</div>
+<hr>
+
+	
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-1 text-center">
+				Surname
+				</div>
+				<div class="col-md-1 text-center">
+				Forename
+				</div>
+
+				<div class="col-md-1 text-center">
+				Target
+				</div>
+					<%(@start_col..@start_col+7).each do |k|%>
+						<%@t = TitleClass.where(:col_id => k).where(:class_id=>params[:class_id]).first%>						
+							<%if @t%>
+								<div class="col-md-1 text-center" style="height:20px; overflow:hidden;" id="userdata" data-toggle="tooltip" data-original-title='
+								<%=link_to('Edit', edit_pupil_result_path(k, :class_id=>params[:class_id]), :style => "color:#FFF")%>
+								 | <%= link_to "Delete", delete_many_results_path(:col_id =>k, :class_id=>params[:class_id]), :confirm => "Are you sure?" , :style => "color:#FFF" ,  :method => :put %>' data-html="true">														
+								<%=@t.title.slice(0..20)%>
+								
+								<br />
+								</div>
+								<%else%>
+								<div class="col-md-1 text-center">
+								<%=link_to('Add Results', edit_pupil_result_path(k, :class_id=>params[:class_id]))%>
+								</div>
+							<%end%>
+						
+						
+					<%end%>
+				<div class="col-md-1 text-center">
+					Average
+				</div>
+			
+			</div>
+		</div>
+	</div>
+	
+	<hr style="margin:4px;">
+	
+	<div class="row">
+		<div class="col-md-12">
+			<%@pupils.each do |p|%>
+					<div class="row">		
+						<div class="col-md-1 text-center">
+							<%=link_to(p.user.user_info.surname, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: params[:class_id]))%>
+						</div>
+						<div class="col-md-1 text-center">
+							<%=p.user.user_info.forename%>
+						</div>
+						<div class="col-md-1 text-center">
+						<%@t = p.user.user_targets.first%>
+						<%if @t%>
+							<%=@t.result.grade%>
+							<%end%>
+						</div>
+							<%avg = Array.new%>
+						<%(@start_col..@start_col+7).each do |k|%>
+							<% @r= p.user.pupil_results.where(:col_id => k).where(:class_id=>params[:class_id]).first%>
+							<% if @r && @t %>
+								<% @difference = @r.result.aps - @t.result.aps%>
+										<%case %>
+											<%when @difference >0%>
+												<div class="col-md-1 text-center above_target cell_design">
+											<%when @difference ==0%>
+												<div class="col-md-1 text-center on_target cell_design">
+											<%when @difference <0 %>
+												<div class="col-md-1 text-center one_below_target cell_design">
+											<%when @difference <-2%>
+												<div class="col-md-1 text-center below_target cell_design">
+											<%else%>
+												<div class="col-md-1 text-center empty_result cell_design">	
+										<%end%>
+													<%=@r.result.grade %>
+													
+													<%avg << @r.result.aps%>
+												</div>
+							<%else%>
+								<div class="col-md-1 text-center empty_result">
+								<%if @r%>
+								<%=@r.result.grade %>
+								<%end%>
+								</div>
+							<%end%>
+						<%end%>
+						<%if avg.size > 0%>
+						<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
+						<% @difference = avg_aps - @t.result.aps%>
+										<%case %>
+											<%when @difference >0%>
+												<div class="col-md-1 text-center above_target cell_design">
+											<%when @difference ==0%>
+												<div class="col-md-1 text-center on_target cell_design">
+											<%when @difference <0 %>
+												<div class="col-md-1 text-center one_below_target cell_design">
+											<%when @difference <-2%>
+												<div class="col-md-1 text-center below_target cell_design">
+											<%else%>
+												<div class="col-md-1 text-center empty_result cell_design">	
+										<%end%>
+							
+								
+								<%= Result.where(aps: avg_aps).first.grade%>
+						</div>
+						<%else%>
+						<div class="col-md-1 text-center"></div>
+						<%end%>
+						
+					</div>
+			<%end%>
+		</div>
+	</div>
+
+	<script>
+$('body').tooltip({
+    trigger: 'hover',
+	selector: '[id=userdata]',
+	html: true,
+	placement: 'top',
+	delay: { hide: 2000 }
+});
+
+
+</script>
