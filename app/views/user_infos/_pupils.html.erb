@@ -1,0 +1,114 @@
+<h3>Pupils</h3>
+<%= link_to 'Year 7', user_infos_path(year: 7)%> |
+<%= link_to 'Year 8', user_infos_path(year: 8)%> |
+<%= link_to 'Year 9', user_infos_path(year: 9)%> |
+<%= link_to 'Year 10', user_infos_path(year: 10)%> |
+<%= link_to 'Year 11', user_infos_path(year: 11)%> |
+<%= link_to 'Year 12', user_infos_path(year: 12)%> |
+<%= link_to 'Year 13', user_infos_path(year: 13)%> |
+<br />
+
+<%if !@pupils.empty?%>
+<%if @back_show_pupils > 0%>
+<%=link_to 'Back', user_infos_path(year: @year, show_pupils: @back_show_pupils)%> |
+<%end%>
+<%if @number_pupils +50 >= @next_show_pupils%>
+<%=link_to 'Next', user_infos_path(year: @year, show_pupils: @next_show_pupils)%>
+<%end%>
+<table>
+  <tr>
+    <th>Email</th>
+    <th>Forename</th>
+	<th>Surname</th>
+	<th>Year</th>
+	<th>Gender</th>
+    <th>Ks2 English</th>
+    <th>Ks2 Maths</th>
+	<th>Ks2 Science</th>
+	<th>Ks1 English</th>
+    <th>Ks1 Maths</th>
+	<th>Ks1 Reading</th>
+	<th>Ks1 Writing</th>
+	
+  </tr>
+  <% for users in @pupils %>
+    <tr>
+	
+      
+	  <td><%= users.email %></td>
+	  
+	  
+	  <% if !users.user_info.nil?%>
+	  <td><%= users.user_info.forename %></td>
+      <td><%= users.user_info.surname %></td>
+	  <td><%= users.user_info.year %></td>
+	  <td><%= users.user_info.gender %></td>
+      <td>
+	  <% if users.user_info.ks2_english%>
+	  <%= @results[users.user_info.ks2_english].grade %></td>
+	  <%end%>
+	  <td>
+	  <% if users.user_info.ks2_maths%>
+      <%= @results[users.user_info.ks2_maths].grade %>
+	  <%end%>
+	  </td>
+	  <td>
+	  <% if users.user_info.ks2_science%>
+	  <%= @results[users.user_info.ks2_science.to_i].grade %>
+	  <%end%>
+	  </td>
+	  <td>
+	  <% if users.user_info.ks1_english%>
+	  <%= @results[users.user_info.ks1_english.to_i].grade %>
+	  <%end%>
+	  </td>
+	  <td>
+	  <% if users.user_info.ks1_maths%>
+	  <%= @results[users.user_info.ks1_maths.to_i].grade %>
+	  <%end%>
+	  </td>
+      <td>
+	  <% if users.user_info.ks1_reading%>
+	  <%= @results[users.user_info.ks1_reading.to_i].grade %>
+	  <%end%>
+	  </td>
+      <td>
+	  <% if users.user_info.ks1_writing%>
+	  <%= @results[users.user_info.ks1_writing.to_i].grade %>
+	  <%end%>
+	  </td>	  
+	  <% users.class_names.each do |c| %>
+	  <td>
+	  <%=c.class_name%>
+	  </td>
+	  <%end%>
+	  <%users.groups.each do |g| %>
+	  <td>
+	  <%=g.group%>
+	  </td>
+	  <%end%>
+	  <%users.user_targets.each do |t| %>
+	  <td>
+	  <%=t.subject.subject%>
+	  </td>
+	  <td>
+	  <%=t.result.grade%>
+	  </td>
+	  <%end%>
+      <td><%= link_to "Edit", edit_user_info_path(users, :user => users.user_info.id) %></td>
+	  <td><%= link_to "Destroy", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
+	  <%end%>
+	  <td><%= link_to "Add", new_user_info_path(users, :user => users.id) %></td>
+      
+    </tr>
+  <%end%>
+</table>
+<%end%>
+
+
+  <%= form_tag import_user_infos_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+ <%= link_to "Download the CSV Template", user_infos_path(format: "csv") %> 
