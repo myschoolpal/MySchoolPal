@@ -3,4 +3,6 @@ class Result < ActiveRecord::Base
   
   has_many :user_targets
   has_many :pupil_results
+  
+  validates :grade, :uniqueness => {:scope => :aps}  
 end

@@ -1,19 +1,40 @@
 class UserInfosController < ApplicationController
 	before_filter :authorize_admin, only: :index
-
+	
   def index
-	@users = User.all
-	@results = Result.all.to_a
-  end
+	  if current_user.school_id
+	    @year = params[:year]
+		if params[:show_pupils].to_i >= 50
+		show_pupils = params[:show_pupils].to_i
+		else
+		show_pupils = 50
+		end
+		@back_show_pupils = (show_pupils -50)
+		@next_show_pupils = (show_pupils +50)
+		check_pupil = User.where(school_id: current_user.school_id).includes(:user_info).where("user_infos.pupil=?", true).where("user_infos.year=?", @year)
+		@number_pupils = check_pupil.all.size
+		if check_pupil
+		@pupils = check_pupil.limit(show_pupils).drop(show_pupils - 50)
+		end
+		@teachers = User.where(school_id: current_user.school_id).includes(:user_info).where("user_infos.teacher=?", true).all
+		@admin = User.where(school_id: current_user.school_id).where(admin: true).all
+	  else
+		redirect_to root_path
+	  end
+		
+		@results = Result.all.to_a
+
+		
+	end
 
   def import
-  UserInfo.import(params[:file])
-  redirect_to root_url, notice: "Users imported."
+  UserInfo.import(params[:file], current_user)
+  redirect_to user_infos_path, notice: "Users imported."
 end
 
   def new
-    @user_info = UserInfo.new
-	@user = User.find(params[:user])
+    @user = User.new
+	
   end
 
   def create

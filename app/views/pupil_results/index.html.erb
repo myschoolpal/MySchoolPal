@@ -1,6 +1,10 @@
 <div class="row">
 	<div class="col-md-10">
-		<%=@class_name%> | <%=@subject.subject%>
+		<%=@class_name%> 
+		<%if @subject%>
+		| 
+		<%=@subject.subject%>
+		<%end%>
 		|
 		<%@groups.each do |g|%>
 		<%=link_to(g.group, group_analysis_path(class_id: params[:class_id], group_id: g.id, col_id: 'avg'))%>
@@ -99,29 +103,37 @@
 								<div class="col-md-1 text-center empty_result">
 								<%if @r%>
 								<%=@r.result.grade %>
+								<%avg << @r.result.aps%>
 								<%end%>
 								</div>
 							<%end%>
 						<%end%>
 						<%if avg.size > 0%>
-						<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
-						<% @difference = avg_aps - @t.result.aps%>
-										<%case %>
-											<%when @difference >0%>
-												<div class="col-md-1 text-center above_target cell_design">
-											<%when @difference ==0%>
-												<div class="col-md-1 text-center on_target cell_design">
-											<%when @difference <0 %>
-												<div class="col-md-1 text-center one_below_target cell_design">
-											<%when @difference <-2%>
-												<div class="col-md-1 text-center below_target cell_design">
-											<%else%>
-												<div class="col-md-1 text-center empty_result cell_design">	
-										<%end%>
-							
+							<%if @t%>
+							<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
+							<% @difference = avg_aps - @t.result.aps%>
+											<%case %>
+												<%when @difference >0%>
+													<div class="col-md-1 text-center above_target cell_design">
+												<%when @difference ==0%>
+													<div class="col-md-1 text-center on_target cell_design">
+												<%when @difference <0 %>
+													<div class="col-md-1 text-center one_below_target cell_design">
+												<%when @difference <-2%>
+													<div class="col-md-1 text-center below_target cell_design">
+												<%else%>
+													<div class="col-md-1 text-center empty_result cell_design">	
+											<%end%>
 								
-								<%= Result.where(aps: avg_aps).first.grade%>
-						</div>
+									
+									<%= Result.where(aps: avg_aps).first.grade%>
+							</div>
+							<%else%>
+								<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
+								<div class="col-md-1 text-center">
+									<%= Result.where(aps: avg_aps).first.grade%>
+								</div>
+							<%end%>
 						<%else%>
 						<div class="col-md-1 text-center"></div>
 						<%end%>

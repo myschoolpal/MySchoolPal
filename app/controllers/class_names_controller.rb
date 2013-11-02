@@ -4,12 +4,12 @@ class ClassNamesController < ApplicationController
   # GET /class_names
   # GET /class_names.json
   def index
-    @class_names = ClassName.all
+    @class_names = ClassName.where(school_id: current_user.school_id).all
   end
 
   def import
-  ClassName.import(params[:file])
-  redirect_to root_url, notice: "Classes have been imported."
+  ClassName.import(params[:file], current_user)
+  redirect_to :back, notice: "Classes have been imported."
 end
   
   # GET /class_names/1
@@ -17,6 +17,11 @@ end
   def show
   end
 
+  def delete_many_cl
+  @class_name = ClassName.where(school_id: current_user.school_id).delete_all
+  redirect_to :back
+  end
+  
   # GET /class_names/new
   def new
     @class_name = ClassName.new
@@ -26,14 +31,15 @@ end
   def edit
   end
 
+  
   # POST /class_names
   # POST /class_names.json
   def create
     @class_name = ClassName.new(class_name_params)
-
+	@class_name.school_id = current_user.school_id
     respond_to do |format|
       if @class_name.save
-        format.html { redirect_to @class_name, notice: 'Class name was successfully created.' }
+        format.html { redirect_to class_names_path, notice: 'Class name was successfully created.' }
         format.json { render action: 'show', status: :created, location: @class_name }
       else
         format.html { render action: 'new' }

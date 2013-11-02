@@ -1,3 +1,7 @@
-<% title "User Infos" %>
-
+<%=current_user.school.name%>
 <%= render 'admin'%>
+<%= render 'teachers'%>
+<%= render 'pupils'%>
+<%=link_to 'Add Classes', class_names_path%>
+<%=link_to 'Add Subjects', subjects_path%>
+<%=link_to 'Add Groups', groups_path%>

@@ -4,4 +4,6 @@ class PupilResult < ActiveRecord::Base
   belongs_to :user
   belongs_to :class_name
   belongs_to :result
+  
+  validates_uniqueness_of :user_id, :scope => [:col_id, :class_id]  
 end

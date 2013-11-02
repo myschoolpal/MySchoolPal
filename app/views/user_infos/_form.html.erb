@@ -1,8 +1,6 @@
-<%= form_for @user_info do |f| %>
+<%= form_for @user do |f| %>
   <%= f.error_messages %>
-  <p>	
-    <%= f.hidden_field :user_id, :value => @user.id %>
-  </p>
+  
   <p>
     <%= f.label :forename %><br />
     <%= f.text_field :forename %>

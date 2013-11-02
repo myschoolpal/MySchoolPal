@@ -1,5 +1,5 @@
-<h1>Listing class_names</h1>
-
+<h1>Classes</h1>
+<%=link_to('Delete All',{:controller => :class_names, :action => :delete_many_cl}, data: { confirm: 'Are you sure?' })%>
 <table>
   <thead>
     <tr>
@@ -53,4 +53,4 @@ Then click import.
 
 
 <%= link_to 'New Class name', new_class_name_path %>
-
+<%= link_to 'Back', user_infos_path%>

@@ -6,13 +6,16 @@ MSP::Application.routes.draw do  get "static_pages/home"
   	match 'pupil_results' => 'pupil_results#update_all_results', :as => :update_all_results, :via => :put
 	match 'delete_many_results' => 'pupil_results#delete_many_results', :as => :delete_many_results, :via => :put
 	match 'edit_many_results' => 'pupil_results#edit_many_results', :as => :edit_many_results, :via => :put
-
 	get 'users/results_overview', to: 'users#results_overview', as: 'results_overview'
 	get 'user_groups/group_analysis', to: 'user_groups#group_analysis', as: 'group_analysis'
 	get 'pupil_results/personal_analysis', to: 'pupil_results#personal_analysis', as: 'personal_analysis'
+	
   resources :results
   resources :class_names do
-  collection { post :import }
+  collection do 
+  post :import 
+  get 'delete_many_cl'
+  end
   end
   resources :subjects do
   collection { post :import }

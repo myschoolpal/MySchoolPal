@@ -4,7 +4,7 @@ class SubjectsController < ApplicationController
   # GET /subjects
   # GET /subjects.json
   def index
-    @subjects = Subject.all
+    @subjects = Subject.where(school_id: current_user.school_id).all
   end
 
   # GET /subjects/1
@@ -25,10 +25,10 @@ class SubjectsController < ApplicationController
   # POST /subjects.json
   def create
     @subject = Subject.new(subject_params)
-
+	@subject.school_id = current_user.school_id
     respond_to do |format|
       if @subject.save
-        format.html { redirect_to @subject, notice: 'Subject was successfully created.' }
+        format.html { redirect_to subjects_path, notice: 'Subject was successfully created.' }
         format.json { render action: 'show', status: :created, location: @subject }
       else
         format.html { render action: 'new' }

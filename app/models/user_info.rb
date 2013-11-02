@@ -14,13 +14,16 @@ class UserInfo < ActiveRecord::Base
   accepts_nested_attributes_for :user_targets
   validates :user_id, uniqueness: true
   
-def self.import(file)
+  
+def self.import(file, current_user)
  
   CSV.foreach(file.path, headers: true) do |row|
-     if User.where(email: row[0].downcase).first
+		
+	 if User.where(email: row[0].downcase).first
 	user = User.where(email: row[0].downcase).first.id
 	 else
 		u = User.new
+		u.school_id = current_user.school_id
 		u.email = row[0]
 		u.password = row[1]
 		u.save   
@@ -70,7 +73,7 @@ def self.import(file)
 				end
 			end
 		
-		for i in 35..44
+		for i in 35..54
 				if !row[i].nil?
 					if Group.where(:group => row[i]).first
 						g = UserGroup.new
@@ -81,16 +84,20 @@ def self.import(file)
 				end	 
 			end
 	
-			i=45
-			while i < 85
+			i=55
+			while i < 95
 				if !row[i].nil?
 					if Subject.where(:subject => row[i]).first
 						t = UserTarget.new
 						t.user_id = user
-						t.subject_id = Subject.where(:subject => row[i]).first.id 
-						j=i+1
-						t.target = Result.where(:grade => [row[i+1]]).first.id
-						t.save   
+						if s = Subject.where(:subject => row[i]).first 
+							t.subject_id = s.id 
+							j=i+1
+							if r = Result.where(:grade => [row[i+1]]).first
+								t.target = r.id
+								t.save   
+							end
+						end
 					end
 				end
 			i+=1
@@ -158,14 +165,18 @@ def self.import(file)
 	
 			i=45
 			while i < 85
-				if !row[i].nil?
+			if !row[i].nil?
 					if Subject.where(:subject => row[i]).first
 						t = UserTarget.new
 						t.user_id = user
-						t.subject_id = Subject.where(:subject => row[i]).first.id 
-						j=i+1
-						t.target = Result.where(:grade => [row[i+1]]).first.id
-						t.save   
+						if s = Subject.where(:subject => row[i]).first 
+							t.subject_id = s.id 
+							j=i+1
+							if r = Result.where(:grade => [row[i+1]]).first
+								t.target = r.id
+								t.save   
+							end
+						end
 					end
 				end
 			i+=1

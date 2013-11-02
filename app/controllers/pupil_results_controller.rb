@@ -1,6 +1,8 @@
 class PupilResultsController < ApplicationController
   before_action :set_pupil_result, only: [:show, :update, :destroy]
-		before_filter :authorize_teacher, only: :index
+		before_filter :authorize_user
+		before_filter :authorize_teacher, only: [:index, :show, :edit, :new]
+		before_filter :authorize_correct_teacher, only: [:index, :show, :edit, :new]
   # GET /pupil_results
   # GET /pupil_results.json
   def index

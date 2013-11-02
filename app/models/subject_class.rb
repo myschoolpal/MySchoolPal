@@ -3,7 +3,8 @@ class SubjectClass < ActiveRecord::Base
   
   belongs_to :subject
   belongs_to :class_name, :foreign_key => "class_id"
-  
+
+validates :subject_id, :uniqueness => {:scope => :class_id}    
   
   def self.import(file)
   classname = ClassName.all

@@ -42,53 +42,31 @@
 		</div>
 
 		<%@pupils.each do |p|%>
-			<%if p.user.user_classes.where(class_id: params[:class_id]).first%>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-2 text-center">
-						<%=p.user.user_info.surname%>
-					</div>
-					<div class="col-md-2 text-center">
-						<%=p.user.user_info.forename%>
-					</div>
-					
-					<div class="col-md-2 text-center">
-						<%@t = p.user.user_targets.first%>
-							<%if @t%>
-								<%=@t.result.grade%>
-							<%end%>
-					</div>
-						<%if @col_id == 'avg'%>
-							<%avg = Array.new%>
-							<%p.user.pupil_results.where(:class_id => @class_id).each do |r|%>
-							<%avg << r.result.aps %>
-							<%end%>
-							<%if avg.size > 0%>
-								<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
-								<% @difference = avg_aps - @t.result.aps%>
-								<%case %>
-									<%when @difference >0%>
-										<div class="col-md-4 text-center above_target cell_design">
-									<%when @difference ==0%>
-										<div class="col-md-4 text-center on_target cell_design">
-									<%when @difference <0 %>
-										<div class="col-md-4 text-center one_below_target cell_design">
-									<%when @difference <-2%>
-										<div class="col-md-4 text-center below_target cell_design">
-									<%else%>
-									<div class="col-md-4 text-center empty_result cell_design">	
+			<%if p.user%>	
+				<%if p.user.user_classes.where(class_id: params[:class_id]).first%>
+					<div class="row">
+						<div class="col-md-2 col-md-offset-2 text-center">
+							<%=p.user.user_info.surname%>
+						</div>
+						<div class="col-md-2 text-center">
+							<%=p.user.user_info.forename%>
+						</div>
+						
+						<div class="col-md-2 text-center">
+							<%@t = p.user.user_targets.first%>
+								<%if @t%>
+									<%=@t.result.grade%>
 								<%end%>
-								<%= Result.where(aps: avg_aps).first.grade%>
-									
-							<%else%>
-								<div class="col-md-4 text-center empty_result cell_design">	
-									N/A
-							<%end%>
-							</div>
-							
-						<%else%>
-						<%@r =p.user.pupil_results.where(col_id: @col_id).first%>
-							<%if @r%>
-								<% @difference = @r.result.aps - @t.result.aps%>
+						</div>
+							<%if @col_id == 'avg'%>
+								<%avg = Array.new%>
+								<%p.user.pupil_results.where(:class_id => @class_id).each do |r|%>
+								<%avg << r.result.aps %>
+								<%end%>
+								<%if avg.size > 0%>
+									<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
+									<%if @t%>
+										<% @difference = avg_aps - @t.result.aps%>
 										<%case %>
 											<%when @difference >0%>
 												<div class="col-md-4 text-center above_target cell_design">
@@ -99,15 +77,51 @@
 											<%when @difference <-2%>
 												<div class="col-md-4 text-center below_target cell_design">
 											<%else%>
-												<div class="col-md-4 text-center empty_result cell_design">	
+											<div class="col-md-4 text-center empty_result cell_design">	
 										<%end%>
-										<%=@r.result.grade %>
-										</div>
+										<%= Result.where(aps: avg_aps).first.grade%>
+									<%else%>
+									<div class="col-md-4 text-center empty_result cell_design">	
+										<%= Result.where(aps: avg_aps).first.grade%>
+									</div>
+									<%end%>
+
+								<%else%>
+									<div class="col-md-4 text-center empty_result cell_design">	
+										N/A
+								<%end%>
+								</div>
+								
 							<%else%>
-								<div class="col-md-4 text-center empty_result"></div>
+							<%@r =p.user.pupil_results.where(col_id: @col_id).first%>
+								<%if @r%>
+									<%if @t%>	
+										<% @difference = @r.result.aps - @t.result.aps%>
+												<%case %>
+													<%when @difference >0%>
+														<div class="col-md-4 text-center above_target cell_design">
+													<%when @difference ==0%>
+														<div class="col-md-4 text-center on_target cell_design">
+													<%when @difference <0 %>
+														<div class="col-md-4 text-center one_below_target cell_design">
+													<%when @difference <-2%>
+														<div class="col-md-4 text-center below_target cell_design">
+													<%else%>
+														<div class="col-md-4 text-center empty_result cell_design">	
+												<%end%>
+												<%=@r.result.grade %>
+												</div>
+									<%else%>
+									<div class="col-md-4 text-center empty_result cell_design">	
+									<%=@r.result.grade %>
+									</div>
+									<%end%>
+								<%else%>
+									<div class="col-md-4 text-center empty_result"></div>
+								<%end%>
 							<%end%>
-						<%end%>
-				</div>	
+					</div>	
+				<%end%>
 			<%end%>
 		<%end%>
 	</div>

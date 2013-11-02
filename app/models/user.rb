@@ -5,6 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 		 
 		 has_one :user_info, dependent: :destroy
+		 belongs_to :school
 		 accepts_nested_attributes_for :user_info
 		 has_many :user_classes, dependent: :destroy
 		 has_many :class_names, through: :user_classes
@@ -14,7 +15,7 @@ class User < ActiveRecord::Base
 		 has_many :groups, through: :user_groups
 		 has_many :pupil_results, dependent: :destroy
 		 
-		 attr_accessible :email, :password, :admin, :password_confirmation, :user_info_attributes, :user_classes_attributes, :user_groups_attributes, 
+		 attr_accessible :email, :password, :school_id, :password_confirmation, :user_info_attributes, :user_classes_attributes, :user_groups_attributes, 
 		 :user_targets_attributes, :pupil_results_attributes
 		 
 		 

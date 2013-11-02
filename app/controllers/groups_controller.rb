@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
   # GET /groups
   # GET /groups.json
   def index
-    @groups = Group.all
+    @groups = Group.where(school_id: current_user.school_id).all
   end
 
   
@@ -26,10 +26,10 @@ class GroupsController < ApplicationController
   # POST /groups.json
   def create
     @group = Group.new(group_params)
-
+	@group.school_id = current_user.school_id
     respond_to do |format|
       if @group.save
-        format.html { redirect_to @group, notice: 'Group was successfully created.' }
+        format.html { redirect_to groups_path, notice: 'Group was successfully created.' }
         format.json { render action: 'show', status: :created, location: @group }
       else
         format.html { render action: 'new' }

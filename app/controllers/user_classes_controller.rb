@@ -1,6 +1,6 @@
 class UserClassesController < ApplicationController
   before_action :set_user_class, only: [:show, :edit, :update, :destroy]
-
+	before_filter :authorize_user
   # GET /user_classes
   # GET /user_classes.json
   def index
