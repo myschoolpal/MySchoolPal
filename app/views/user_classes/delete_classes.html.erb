@@ -1,0 +1,14 @@
+
+
+<%@user_classes.each do |c|%>
+<%if c.class_name%>
+<%=c.class_name.class_name%>
+<%end%>
+        <%= link_to 'Destroy', c, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<br />
+<%end%>
+
+
+
+
+<%=link_to 'Back', edit_user_info_path(params[:user_id], :user_infos => params[:user_infos])%>

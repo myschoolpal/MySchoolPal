@@ -1,0 +1,13 @@
+
+
+<%@user_groups.each do |g|%>
+<%=g.group.group%>
+
+        <%= link_to 'Destroy', g, method: :delete, data: { confirm: 'Are you sure?' } %>
+		<br />
+<%end%>
+
+
+
+
+<%=link_to 'Back', edit_user_info_path(params[:user_id], :user_infos => params[:user_infos])%>
