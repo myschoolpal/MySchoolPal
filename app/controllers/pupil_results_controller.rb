@@ -3,6 +3,7 @@ class PupilResultsController < ApplicationController
 		before_filter :authorize_user
 		before_filter :authorize_teacher, only: [:index, :show, :edit, :new]
 		before_filter :authorize_correct_teacher, only: [:index, :show, :edit, :new]
+		
   # GET /pupil_results
   # GET /pupil_results.json
   def index
@@ -76,6 +77,8 @@ class PupilResultsController < ApplicationController
 		@pupil = @pupil_results.first.user
 	end
 	@titles = TitleClass.where(class_id: @class_id)
+	
+ 
 	
   end
   

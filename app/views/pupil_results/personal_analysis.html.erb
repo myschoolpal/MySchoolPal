@@ -89,3 +89,6 @@
 		for 
 		<%=ClassName.where(id: @class_id).first.class_name%>
 <%end%>
+
+<%=link_to('Back', pupil_results_path(class_id: @class_id))%>
+</div>

@@ -15,7 +15,8 @@ gem 'protected_attributes'
 #CSV
 gem 'roo'
 
-
+#Google Visualization
+gem "google_visualr", "~> 2.1.0"
 
 #Nifty Generator
 gem "nifty-generators", "~> 0.4.6"

@@ -79,7 +79,7 @@
 	  </td>	  
 	  <% users.user_classes.each do |c| %>
 	  <td>
-	  <%=c.class_name.class_name%>
+	  <%=link_to c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id)%>
 	  </td>
 	  <%end%>
 	  <%users.groups.each do |g| %>

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= content_for?(:title) ? yield(:title) : "Untitled" %></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <title><%= content_for?(:title) ? yield(:title) : "MySchoolPal" %></title>
 	<%= stylesheet_link_tag "application"%>
     <%= javascript_include_tag "application" %>
+	
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>

@@ -1,4 +1,8 @@
 <%=current_user.school.name%>
+<br />
+<%=link_to 'Add Classes', class_names_path%>
+<br />
+<%=link_to 'Add Classes to Subjects', subject_classes_path%>
 <%= render 'admin'%>
 <%= render 'teachers'%>
 <%= render 'pupils'%>
