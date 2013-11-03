@@ -15,7 +15,12 @@
     <% @subject_classes.each do |subject_class| %>
       <tr>
         <td><%= subject_class.subject.subject %></td>
-        <td><%= subject_class.class_name.class_name %></td>
+        <td>
+		<%if subject_class.class_name%>
+		<%= subject_class.class_name.class_name %>
+		<%end%>
+		</td>
+		
         <td><%= link_to 'Show', subject_class %></td>
         <td><%= link_to 'Edit', edit_subject_class_path(subject_class) %></td>
         <td><%= link_to 'Destroy', subject_class, method: :delete, data: { confirm: 'Are you sure?' } %></td>

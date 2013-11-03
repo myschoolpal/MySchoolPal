@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
   end
   end
   
+  def after_update_path_for(resource)
+  user_classes_path
+end
+  
   def authorize_admin
     redirect_to(user_classes_path) if current_user.admin != true
     #redirects to previous page
@@ -30,5 +34,7 @@ class ApplicationController < ActionController::Base
   redirect_to(root_path) if !current_user
   
   end
+  
+  
 
 end

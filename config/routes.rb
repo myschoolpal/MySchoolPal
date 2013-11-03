@@ -55,7 +55,7 @@ MSP::Application.routes.draw do  get "static_pages/home"
   collection { post :import }
   end
   
-  devise_for :users do
+  devise_for :users, :controllers => { :registrations => :registrations } do
   collection { post :import }
   end
   resources :users

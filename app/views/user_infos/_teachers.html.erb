@@ -21,7 +21,7 @@
 	  <%=c.class_name%>
 	  </td>
 	  <%end%>
-	  <td><%= link_to "Edit", edit_user_info_path(users, :user => users.user_info.id) %></td>
+		<td><%= link_to "Edit", edit_user_info_path(users, :user_infos => users.user_info.id) %></td>
 	  <td><%= link_to "Destroy", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
 	  <%end%>
 	  <td><%= link_to "Add", new_user_info_path(users, :user => users.id) %></td>

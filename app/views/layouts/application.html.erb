@@ -15,6 +15,7 @@
 		<ul class="nav">
 			<% if current_user%>
 				<li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
+				<li><%= link_to "Change your password", edit_user_registration_path %></li>
 			<%else%>
 				<li><%= link_to('Home', static_pages_home_path) %></li>
 				<li><%= link_to('About', static_pages_about_path) %></li>
