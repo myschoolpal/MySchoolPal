@@ -31,7 +31,7 @@
 	<th>Ks1 Writing</th>
 	
   </tr>
-  <% for users in @pupils %>
+  <% @pupils.each do |users| %>
     <tr>
 	
       
@@ -44,42 +44,42 @@
 	  <td><%= users.user_info.year %></td>
 	  <td><%= users.user_info.gender %></td>
       <td>
-	  <% if users.user_info.ks2_english%>
+	  <% if !users.user_info.ks2_english.blank?%>
 	  <%= @results[users.user_info.ks2_english].grade %></td>
 	  <%end%>
 	  <td>
-	  <% if users.user_info.ks2_maths%>
+	  <% if !users.user_info.ks2_maths.blank?%>
       <%= @results[users.user_info.ks2_maths].grade %>
 	  <%end%>
 	  </td>
 	  <td>
-	  <% if users.user_info.ks2_science%>
+	  <% if !users.user_info.ks2_science.blank?%>
 	  <%= @results[users.user_info.ks2_science.to_i].grade %>
 	  <%end%>
 	  </td>
 	  <td>
-	  <% if users.user_info.ks1_english%>
+	  <% if !users.user_info.ks1_english.blank?%>
 	  <%= @results[users.user_info.ks1_english.to_i].grade %>
 	  <%end%>
 	  </td>
 	  <td>
-	  <% if users.user_info.ks1_maths%>
+	  <% if !users.user_info.ks1_maths.blank?%>
 	  <%= @results[users.user_info.ks1_maths.to_i].grade %>
 	  <%end%>
 	  </td>
       <td>
-	  <% if users.user_info.ks1_reading%>
+	  <% if !users.user_info.ks1_reading.blank?%>
 	  <%= @results[users.user_info.ks1_reading.to_i].grade %>
 	  <%end%>
 	  </td>
       <td>
-	  <% if users.user_info.ks1_writing%>
+	  <% if !users.user_info.ks1_writing.blank?%>
 	  <%= @results[users.user_info.ks1_writing.to_i].grade %>
 	  <%end%>
 	  </td>	  
-	  <% users.class_names.each do |c| %>
+	  <% users.user_classes.each do |c| %>
 	  <td>
-	  <%=c.class_name%>
+	  <%=c.class_name.class_name%>
 	  </td>
 	  <%end%>
 	  <%users.groups.each do |g| %>
@@ -95,7 +95,7 @@
 	  <%=t.result.grade%>
 	  </td>
 	  <%end%>
-      <td><%= link_to "Edit", edit_user_info_path(users, :user => users.user_info.id) %></td>
+      <td><%= link_to "Edit", edit_user_info_path(users, :user_infos => users.user_info.id) %></td>
 	  <td><%= link_to "Destroy", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
 	  <%end%>
 	  <td><%= link_to "Add", new_user_info_path(users, :user => users.id) %></td>

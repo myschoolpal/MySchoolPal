@@ -59,7 +59,7 @@ end
 # gem 'debugger', group: [:development, :test]
 
 
-
+ruby '2.0.0'
 group :production, :staging do
       gem 'pg'
       gem 'rails_12factor'

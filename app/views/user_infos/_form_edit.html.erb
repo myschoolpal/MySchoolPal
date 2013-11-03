@@ -15,15 +15,15 @@
 	</div>
 	<div class="col-md-2">	
 			<%= f.label :ks2_english %><br />
-			<%= f.collection_select(:ks2_english, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+			<%= f.collection_select(:ks2_english, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
 	<div class="col-md-2">
 			<%= f.label :ks2_maths %><br />
-			<%= f.collection_select(:ks2_maths, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+			<%= f.collection_select(:ks2_maths, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
 	<div class="col-md-2">
 			<%= f.label :ks2_science %><br />
-			<%= f.collection_select(:ks2_science, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+			<%= f.collection_select(:ks2_science, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
 </div>	
 <br />
@@ -39,22 +39,23 @@
 
 	<div class="col-md-2">
 		<%= f.label :ks1_english %><br />
-		<%= f.collection_select(:ks1_english, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+		<%= f.collection_select(:ks1_english, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
 	<div class="col-md-2">	
 		<%= f.label :ks1_maths %><br />
-		<%= f.collection_select(:ks1_maths, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+		<%= f.collection_select(:ks1_maths, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
 	<div class="col-md-2">
 		<%= f.label :ks1_writing %><br />
-		<%= f.collection_select(:ks1_writing, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+		<%= f.collection_select(:ks1_writing, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
 	<div class="col-md-2">
 		<%= f.label :ks1_reading %><br />
-		<%= f.collection_select(:ks1_reading, Result.order("aps asc").all, :id, :grade, {:prompt => 'Select'}, {class: 'form-control'})%>
+		<%= f.collection_select(:ks1_reading, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
 </div>
 <br />
+
 <div class="row">
 	<div class="col-md-2">
 		<b>Classes:</b>
@@ -63,6 +64,12 @@
 			<%= builder.collection_select(:class_id, ClassName.all, :id, :class_name,{}, {class: 'form-control'}) %>
 		  </div>
 		<% end -%>
+		Add a Class
+		<%= fields_for :new_class, @new_class do |builder| %>
+			<%= builder.collection_select(:class_id, ClassName.all, :id, :class_name,{prompt: 'Select a Class'}, {class: 'form-control'}) %>
+			<%=builder.hidden_field :user_id, :value => params[:id]%>
+		<%end%>
+		<%=link_to 'Delete Classes', :controller => :user_classes, :action => :delete_classes, :user_id => params[:id], :user_infos => params[:user_infos]%>
 	</div>
 	<div class="col-md-2">
 		<b>Groups:</b>
@@ -95,3 +102,4 @@
 </div>
   <%= f.submit %>
 <% end %>
+<%=link_to 'Back', user_infos_path%>

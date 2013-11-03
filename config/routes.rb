@@ -30,7 +30,10 @@ MSP::Application.routes.draw do  get "static_pages/home"
   collection { post :import }
   end
   resources :user_classes do
-  collection { post :import }
+  collection do
+  post :import
+  get 'delete_classes'
+  end
   end
   resources :user_groups do
   collection { post :import }

@@ -14,7 +14,7 @@ class UserInfosController < ApplicationController
 		check_pupil = User.where(school_id: current_user.school_id).includes(:user_info).where("user_infos.pupil=?", true).where("user_infos.year=?", @year)
 		@number_pupils = check_pupil.all.size
 		if check_pupil
-		@pupils = check_pupil.limit(show_pupils).drop(show_pupils - 50)
+		@pupils = check_pupil.order("user_infos.surname asc").limit(show_pupils).drop(show_pupils - 50)
 		end
 		@teachers = User.where(school_id: current_user.school_id).includes(:user_info).where("user_infos.teacher=?", true).all
 		@admin = User.where(school_id: current_user.school_id).where(admin: true).all
@@ -39,7 +39,7 @@ end
 
   def create
       @user_info = UserInfo.new(params[:user_info])
-	    if @user_info.save
+    if @user_info.save
       redirect_to user_infos_url, :notice => "Successfully created user info."
     else
       render :action => 'new'
@@ -47,7 +47,8 @@ end
   end
 
   def edit
-    @user_info = UserInfo.find(params[:user])
+    @user_info = UserInfo.find(params[:user_infos])
+	@new_class = UserClass.new
 	
   end
 
@@ -56,8 +57,11 @@ end
 	@user_info.user.user_classes.build
 	@user_info.user.user_groups.build
 	@user_info.user.user_targets.build
-    if @user_info.update_attributes(params[:user_info])
+	@new_class = UserClass.new(params[:new_class])
+	@new_class.save
 	
+  
+    if @user_info.update_attributes(params[:user_info])
       redirect_to :back, :notice  => "Successfully updated user info."
     else
       render :action => 'edit'
