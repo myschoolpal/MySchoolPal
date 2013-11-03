@@ -61,14 +61,16 @@
 		<b>Classes:</b>
 		  <%= f.fields_for :user_classes do |builder| %>
 		   <div class="field" style="margin-bottom:5px">
-			<%= builder.collection_select(:class_id, ClassName.all, :id, :class_name,{}, {class: 'form-control'}) %>
+			<%= builder.collection_select(:class_id, ClassName.all, :id, :class_name,{:include_blank => true}, {class: 'form-control'}) %>
 		  </div>
 		<% end -%>
+		<div>
 		Add a Class
 		<%= fields_for :new_class, @new_class do |builder| %>
 			<%= builder.collection_select(:class_id, ClassName.all, :id, :class_name,{prompt: 'Select a Class'}, {class: 'form-control'}) %>
 			<%=builder.hidden_field :user_id, :value => params[:id]%>
 		<%end%>
+		</div>
 		<%=link_to 'Delete Classes', :controller => :user_classes, :action => :delete_classes, :user_id => params[:id], :user_infos => params[:user_infos]%>
 	</div>
 	<div class="col-md-2">
@@ -76,9 +78,18 @@
 		  <%= f.fields_for :user_groups do |builder| %>
 		   <div class="field" style="margin-bottom:5px">
 			<%= builder.collection_select(:group_id, Group.all, :id, :group,{}, {class: 'form-control'}) %>
-		  </div>
+			</div>
 		<% end -%>
-	</div>
+			<div>
+		  Add a Groups
+		<%= fields_for :new_group, @new_group do |builder| %>
+			<%= builder.collection_select(:group_id, Group.all, :id, :group,{prompt: 'Select a Group'}, {class: 'form-control'}) %>
+			<%=builder.hidden_field :user_id, :value => params[:id]%>
+		<%end%>
+		</div>
+		<%=link_to 'Delete Groups', :controller => :user_groups, :action => :delete_groups, :user_id => params[:id], :user_infos => params[:user_infos]%>
+		</div>
+	
 	<div class="col-md-4">
 		<div class="row">
 			<div class="col-md-6">
@@ -98,6 +109,22 @@
 				</div>
 			</div>
 		<% end -%>
+		
+		<div>
+		  Add a Subject with a Target
+		<%= fields_for :new_subject_target, @new_subject_target do |builder| %>
+			<%=builder.hidden_field :user_id, :value => params[:id]%>
+			<div class="row">
+				<div class="col-md-6">
+				<%= builder.collection_select(:subject_id, Subject.all, :id, :subject,{prompt: 'Select a Subject'}, {class: 'form-control'}) %>
+				</div>
+				<div class="col-md-6">
+				<%= builder.collection_select(:target, Result.all, :id, :grade,{prompt: 'Select a Target'}, {class: 'form-control'}) %>
+				</div>
+			</div>
+		<%end%>
+		</div>
+				<%=link_to 'Delete Targets', :controller => :user_targets, :action => :delete_subject_targets, :user_id => params[:id], :user_infos => params[:user_infos]%>
 	</div>
 </div>
   <%= f.submit %>

@@ -26,6 +26,10 @@ end
   def edit
   end
 
+  def delete_subject_targets
+	@user_targets = User.where(id: params[:user_id]).first.user_targets
+  end
+  
   # POST /user_targets
   # POST /user_targets.json
   def create
@@ -61,7 +65,7 @@ end
   def destroy
     @user_target.destroy
     respond_to do |format|
-      format.html { redirect_to user_targets_url }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end

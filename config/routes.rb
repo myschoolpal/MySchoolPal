@@ -36,10 +36,16 @@ MSP::Application.routes.draw do  get "static_pages/home"
   end
   end
   resources :user_groups do
-  collection { post :import }
+  collection do
+  post :import
+  get 'delete_groups'
+  end
   end
   resources :user_targets do
-  collection { post :import }
+  collection do
+  post :import
+  get 'delete_subject_targets'
+  end
   end
   resources :groups do
   collection { post :import }

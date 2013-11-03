@@ -1,5 +1,6 @@
 <div class="row">
 	<div class="col-md-10">
+		<%=link_to 'Back', user_classes_path%> |
 		<%=@class_name%> 
 		<%if @subject%>
 		| 
@@ -12,11 +13,11 @@
 		<%end%>
 	</div>
 	<div class="col-md-2 text-center">
-		<%if @start_col > 8%>
-			<%=link_to('<< Previous',pupil_results_path(class_id: params[:class_id], col_id: @start_col-9))%>
+		<%if @start_col > 7%>
+			<%=link_to('<< Previous',pupil_results_path(class_id: params[:class_id], col_id: @start_col-8))%>
 			|
 		<%end%>
-		<%=link_to('Next >>',pupil_results_path(class_id: params[:class_id], col_id: @start_col+7))%>
+		<%=link_to('Next >>',pupil_results_path(class_id: params[:class_id], col_id: @start_col+6))%>
 </div>
 <hr>
 
@@ -24,17 +25,20 @@
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row">
-				<div class="col-md-1 text-center">
-				Surname
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-6">
+							Surname
+						</div>
+						<div class="col-md-6">
+							Forename
+						</div>
+					</div>
 				</div>
-				<div class="col-md-1 text-center">
-				Forename
-				</div>
-
 				<div class="col-md-1 text-center">
 				Target
 				</div>
-					<%(@start_col..@start_col+7).each do |k|%>
+					<%(@start_col..@start_col+6).each do |k|%>
 						<%@t = TitleClass.where(:col_id => k).where(:class_id=>params[:class_id]).first%>						
 							<%if @t%>
 								<div class="col-md-1 text-center" style="height:20px; overflow:hidden;" id="userdata" data-toggle="tooltip" data-original-title='
@@ -46,7 +50,7 @@
 								</div>
 								<%else%>
 								<div class="col-md-1 text-center">
-								<%=link_to('Add Results', edit_pupil_result_path(k, :class_id=>params[:class_id]))%>
+								<%=link_to('New', edit_pupil_result_path(k, :class_id=>params[:class_id]))%>
 								</div>
 							<%end%>
 						
@@ -65,12 +69,17 @@
 	<div class="row">
 		<div class="col-md-12">
 			<%@pupils.each do |p|%>
+					<%if p.user.user_info.pupil==true%>
 					<div class="row">		
-						<div class="col-md-1 text-center">
-							<%=link_to(p.user.user_info.surname, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: params[:class_id]))%>
-						</div>
-						<div class="col-md-1 text-center">
-							<%=p.user.user_info.forename%>
+						<div class="col-md-3">
+							<div class="row">		
+								<div class="col-md-6">
+									<%=link_to(p.user.user_info.surname.downcase.titleize.slice(0..12), personal_analysis_path(user_id: p.user.user_info.user_id, class_id: params[:class_id]))%>
+								</div>
+								<div class="col-md-6">
+									<%=link_to(p.user.user_info.forename, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: params[:class_id]))%>
+								</div>
+							</div>
 						</div>
 						<div class="col-md-1 text-center">
 						<%@t = p.user.user_targets.first%>
@@ -79,7 +88,7 @@
 							<%end%>
 						</div>
 							<%avg = Array.new%>
-						<%(@start_col..@start_col+7).each do |k|%>
+						<%(@start_col..@start_col+6).each do |k|%>
 							<% @r= p.user.pupil_results.where(:col_id => k).where(:class_id=>params[:class_id]).first%>
 							<% if @r && @t %>
 								<% @difference = @r.result.aps - @t.result.aps%>
@@ -139,6 +148,7 @@
 						<%end%>
 						
 					</div>
+				<%end%>
 			<%end%>
 		</div>
 	</div>
@@ -151,6 +161,4 @@ $('body').tooltip({
 	placement: 'top',
 	delay: { hide: 2000 }
 });
-
-
 </script>

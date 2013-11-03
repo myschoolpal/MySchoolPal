@@ -13,6 +13,10 @@ class UserGroupsController < ApplicationController
   @col_id = params[:col_id]
   @pupils = UserGroup.where(group_id: @group_id).all
   end
+
+  def delete_groups
+	@user_groups = User.where(id: params[:user_id]).first.user_groups
+  end
   
   def import
   UserGroup.import(params[:file])
@@ -68,7 +72,7 @@ end
   def destroy
     @user_group.destroy
     respond_to do |format|
-      format.html { redirect_to user_groups_url }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end

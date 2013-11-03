@@ -49,7 +49,8 @@ end
   def edit
     @user_info = UserInfo.find(params[:user_infos])
 	@new_class = UserClass.new
-	
+	@new_group = UserGroup.new
+	@new_subject_target = UserTarget.new
   end
 
   def update
@@ -57,8 +58,20 @@ end
 	@user_info.user.user_classes.build
 	@user_info.user.user_groups.build
 	@user_info.user.user_targets.build
+	if !params[:new_class][:class_id].empty?	
 	@new_class = UserClass.new(params[:new_class])
 	@new_class.save
+	end
+	
+	if !params[:new_group][:group_id].empty?	
+	@new_group = UserGroup.new(params[:new_group])
+	@new_group.save
+	end
+	
+	if !params[:new_subject_target][:subject_id].empty?	&& !params[:new_subject_target][:subject_id].empty?	&& !params[:new_subject_target][:user_id].empty?	
+	@new_subject_target = UserTarget.new(params[:new_subject_target])
+	@new_subject_target.save
+	end
 	
   
     if @user_info.update_attributes(params[:user_info])

@@ -68,7 +68,7 @@ end
   end
 
   def delete_classes
-	@user_classes = User.where(id: params[:user_id])
+	@user_classes = User.where(id: params[:user_id]).first.user_classes
   end
   
   private
