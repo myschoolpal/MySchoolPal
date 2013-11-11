@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131101195501) do
+ActiveRecord::Schema.define(version: 20131109202554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(version: 20131101195501) do
     t.integer  "school_id"
   end
 
+  create_table "lock_columns", force: true do |t|
+    t.integer  "class_id"
+    t.integer  "col_id"
+    t.string   "title"
+    t.boolean  "readonly_result"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "readonly_title"
+  end
+
   create_table "pupil_results", force: true do |t|
     t.integer  "user_id"
     t.integer  "class_id"
@@ -39,9 +49,37 @@ ActiveRecord::Schema.define(version: 20131101195501) do
     t.datetime "updated_at"
   end
 
+  create_table "requisitions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "period_id"
+    t.integer  "day_id"
+    t.integer  "class_id"
+    t.integer  "room_id"
+    t.integer  "wb_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "school_id"
+    t.text     "content"
+  end
+
   create_table "results", force: true do |t|
     t.string   "grade"
     t.integer  "aps"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "rooms", force: true do |t|
+    t.string   "room_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "school_id"
+  end
+
+  create_table "school_days", force: true do |t|
+    t.integer  "school_id"
+    t.integer  "week_id"
+    t.integer  "period_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,6 +90,8 @@ ActiveRecord::Schema.define(version: 20131101195501) do
     t.boolean  "secondary"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "number_weeks"
+    t.integer  "number_periods"
   end
 
   create_table "subject_classes", force: true do |t|
@@ -66,6 +106,17 @@ ActiveRecord::Schema.define(version: 20131101195501) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "school_id"
+  end
+
+  create_table "timetables", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "period_id"
+    t.integer  "day_id"
+    t.integer  "week_id"
+    t.integer  "class_id"
+    t.integer  "room_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "title_classes", force: true do |t|
@@ -136,5 +187,11 @@ ActiveRecord::Schema.define(version: 20131101195501) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "wbs", force: true do |t|
+    t.date     "week_beginning"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

@@ -14,10 +14,10 @@
 			<%@t = TitleClass.where(:col_id => @col).where(:class_id => params[:class_id]).first%>
 				<% if @t%>
 						<%= fields_for "title_update[]", @t do |builder| %>			
-						<div class="input-group"><span class="input-group-addon">Title</span>
-								<%=builder.text_field :title, :class => "form-control"%>
-								</div>
+							<div class="input-group"><span class="input-group-addon">Title</span>
+									<%=builder.text_field :title, :class => "form-control"%>
 							</div>
+							
 						<%end%>				
 				<%else%>
 						<%= fields_for "title[]", @title do |builder| %>			
@@ -29,7 +29,7 @@
 			</div>
 		</div>
 	<%@pupils.each do |p|%>
-		
+		<%if p.user.user_info.pupil==true%>
 			<div class="row" style="margin-bottom:2px;">		
 				<div class="col-md-1">
 					<%=p.user.user_info.surname%>
@@ -64,7 +64,7 @@
 					</div>
 				<%end%>
 			</div>
-		
+		<%end%>
 	<%end%>
 	<%=submit_tag%>
 <%end%>

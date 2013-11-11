@@ -3,11 +3,13 @@ class UserClass < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :class_name, :foreign_key => "class_id"
+  has_many :subject_classes, :primary_key => "class_id", :foreign_key => "class_id"
+  has_many :pupil_results, :primary_key => "class_id", :foreign_key => "class_id"
 
 validates :user_id, uniqueness: { scope: :class_id}
   
-  def self.import(file)
-  classname = ClassName.all
+  def self.import(file, current_user)
+  classname = ClassName.where(school_id: current_user.school_id).all
   CSV.foreach(file.path, headers: true) do |row|
      for i in 1..20
 	 if !row[i].nil?

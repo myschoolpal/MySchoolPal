@@ -1,17 +1,71 @@
 class UserGroupsController < ApplicationController
   before_action :set_user_group, only: [:show, :edit, :update, :destroy]
-
+		before_filter :authorize_teacher
   # GET /user_groups
   # GET /user_groups.json
   def index
     @user_groups = UserGroup.all
   end
+  
+  def gender_analysis
+  @title_count = TitleClass.where(:class_id=>@class_id).count
+	  @show_menu = 1
+	  if params[:start_col]
+		@start_col = params[:start_col].to_i
+	  else
+		@start_col = 1
+	  end
+	  @class_id = params[:class_id]
+	  @class_name = ClassName.find(@class_id)
+	  @col_id = params[:col_id]
+	  if params[:gender]
+	  @gender = params[:gender]
+	  else
+	  @gender = 'F'
+	  end
+	  
+	@pupils = UserClass.where(class_id: params[:class_id]).all
+	  if @gender=='M'
+	  @group = 'Boys'
+	  else
+	  @group = 'Girls'
+	  end
+	  
+	  
+	   if s = SubjectClass.where(:class_id => params[:class_id]).first
+			@s = s.subject
+			if @s
+				@subject =@s.subject
+			end
+		end
+  
+	  
+  end
 
   def group_analysis
-  @group_id = params[:group_id]
-  @class_id = params[:class_id]
-  @col_id = params[:col_id]
-  @pupils = UserGroup.where(group_id: @group_id).all
+	@title_count = TitleClass.where(:class_id=>@class_id).count
+	  @show_menu = 1
+	  if params[:start_col]
+		@start_col = params[:start_col].to_i
+	  else
+		@start_col = 1
+	  end
+	  @group_id = params[:group_id]
+	  @class_id = params[:class_id]
+	  @class_name = ClassName.find(@class_id)
+	  @subject = 'P'
+	  @col_id = params[:col_id]
+	  
+	  @pupils = UserGroup.where(group_id: @group_id).all
+	  @group = Group.where(id: @group_id).first.group
+	  
+	  
+	   if s = SubjectClass.where(:class_id => params[:class_id]).first
+			@s = s.subject
+			if @s
+				@subject =@s.subject
+			end
+		end
   end
 
   def delete_groups
@@ -19,8 +73,8 @@ class UserGroupsController < ApplicationController
   end
   
   def import
-  UserGroup.import(params[:file])
-  redirect_to root_url, notice: "Groups have been linked to users"
+  UserGroup.import(params[:file], current_user)
+  redirect_to :back, notice: "Groups have been linked to users"
 end
 
   # GET /user_groups/1

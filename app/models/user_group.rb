@@ -6,8 +6,8 @@ class UserGroup < ActiveRecord::Base
 
 validates :user_id, uniqueness: { scope: :group_id}  
   
-  def self.import(file)
-	group_name = Group.all
+  def self.import(file, current_user)
+	group_name = Group.where(school_id: current_user.school_id).all
   CSV.foreach(file.path, headers: true) do |row|
      for i in 1..20
 	 if !row[i].nil?

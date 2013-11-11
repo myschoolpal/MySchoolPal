@@ -23,7 +23,8 @@ class UserInfosController < ApplicationController
 	  end
 		
 		@results = Result.all.to_a
-
+		
+			
 		
 	end
 

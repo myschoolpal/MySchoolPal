@@ -15,6 +15,7 @@ gem 'protected_attributes'
 #CSV
 gem 'roo'
 
+
 #Google Visualization
 gem "google_visualr", "~> 2.1.0"
 
@@ -59,7 +60,7 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-ruby '2.0.0'
+
 
 group :production, :staging do
       gem 'pg'

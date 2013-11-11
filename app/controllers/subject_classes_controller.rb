@@ -8,8 +8,8 @@ class SubjectClassesController < ApplicationController
   end
 
   def import
-  SubjectClass.import(params[:file])
-  redirect_to root_url, notice: "Subject for Classes imported."
+  SubjectClass.import(params[:file], current_user)
+  redirect_to :back, notice: "Subject for Classes imported."
 end
 
   # GET /subject_classes/1

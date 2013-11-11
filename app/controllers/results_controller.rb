@@ -1,5 +1,5 @@
 class ResultsController < ApplicationController
-  
+before_filter :authorize_admin  
 
   # GET /results
   # GET /results.json

@@ -1,15 +1,23 @@
 class UserClassesController < ApplicationController
   before_action :set_user_class, only: [:show, :edit, :update, :destroy]
 	before_filter :authorize_user
+
   # GET /user_classes
   # GET /user_classes.json
   def index
-    @user_classes = UserClass.where(:user_id => current_user.id).all
+	redirect_to user_infos_path if current_user.admin == true
+	
+    @user_classes = current_user.user_classes.first
+	if uc = @user_classes.class_name
+	@manage_classes = uc.id
+	else 
+	@manage_classes = 0
+	end
 	
   end
 
   def import
-  UserClass.import(params[:file])
+  UserClass.import(params[:file], current_user)
   redirect_to root_url, notice: "Classes have been linked to Users."
 end
   # GET /user_classes/1

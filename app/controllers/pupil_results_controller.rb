@@ -7,7 +7,11 @@ class PupilResultsController < ApplicationController
   # GET /pupil_results
   # GET /pupil_results.json
   def index
-    @class_name = ClassName.where(:id =>params[:class_id]).first.class_name
+	@show_menu = 1
+	@class_id = params[:class_id]
+	
+	@class_name = ClassName.where(:id =>params[:class_id]).first.class_name
+	
 	col_id = params[:col_id].to_i
 	if col_id > 4
 	@start_col = ((col_id/7.0).ceil * 7)+1
@@ -15,14 +19,44 @@ class PupilResultsController < ApplicationController
 	@start_col = 1
 	end
 	@groups = Group.all
-	if s = SubjectClass.where(:class_id => params[:class_id]).first
-	@subject = s.subject
+	 if s = SubjectClass.where(:class_id => params[:class_id]).first
+	@s = s.subject
+	if @s
+	@subject =@s.subject
+	end
 	end
 	@pupils = UserClass.where(class_id: params[:class_id]).all
 	@pupil_result = PupilResult.new
 	@title = TitleClass.new	
+	@user_classes = current_user.user_classes.all
   end
 
+  def year_analysis
+	@year_id = params[:year_id]
+	@group_id = params[:group_id]
+	@class_id = params[:class_id]
+	if @year_id && !@class_id
+		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).all
+	elsif @year_id && @class_id && !@group_id
+		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).includes(:user_classes).where("user_classes.class_id =?", @class_id).all
+	elsif @year_id && @class_id && @group_id
+		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).includes(:user_classes).where("user_classes.class_id =?", @class_id).includes(:user_groups).where("user_groups.group_id =?", @group_id).all
+	end
+	Subject.first.subject_classes.includes(:user_classes).where("user_classes.class_id = ?",1630).all
+	@subjects = User.includes(:subject_classes).where("subject_classes.subject_id=?",3).includes(:user_info).where("user_infos.year = ?", @year_id).all
+	@subjects.each do |s|
+	s.pupil_results.where(col_id: 1).first
+	end
+	@k = Array.new
+	SubjectClass.where(subject_id: 1).each do |s|
+		s.user_classes.each do |k|
+			@a =k.pupil_results.each do |j|
+				@k<< j.result.grade
+			end
+		end
+	end
+	
+  end
   # GET /pupil_results/1
   # GET /pupil_results/1.json
   def show
@@ -70,18 +104,22 @@ class PupilResultsController < ApplicationController
   end
   
   def personal_analysis
+	@show_menu = 1
 	@user_id = params[:user_id]
 	@class_id = params[:class_id]
+	@class_name = ClassName.find(@class_id)
 	@pupil_results = PupilResult.where(user_id: @user_id).where(class_id: @class_id).order("col_id ASC")
 	if !@pupil_results.empty?
 		@pupil = @pupil_results.first.user
 	end
 	@titles = TitleClass.where(class_id: @class_id)
-	
- 
-	
+	 if s = SubjectClass.where(:class_id => params[:class_id]).first
+	@s = s.subject
+		if @s
+			@subject =@s.subject
+		end
+	end
   end
-  
   def delete_many_results
   PupilResult.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).delete_all
   TitleClass.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).delete_all

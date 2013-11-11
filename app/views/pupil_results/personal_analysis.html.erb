@@ -1,94 +1,373 @@
 <%if !@pupil_results.empty?%>
-<%= @pupil.user_info.forename%>
-<%= @pupil.user_info.surname%>
-| Target: 
-<%@t=@pupil.user_targets.first%>
-<%if @t%>
-<%=@t.result.grade%>
-<%end%>
-<hr>
-<div class="row">
-	<%(1..12).each do |k|%>
-		<div class="col-md-1 text-center">
-		<%@title =@titles.where(col_id: k).first%>
-		<%if @title %>
-			<%=@title.title%>
-		<%end%>
-		</div>
+	<ul class="nav nav-tabs" id="myTab">
+
+			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id])%></li>
+	</ul>
+	<div style="margin-top:20px; margin-bottom:20px;">
+	<%= @pupil.user_info.forename%>
+	<%= @pupil.user_info.surname%>
+	| Target: 
+	<%@t=@pupil.user_targets.first%>
+	<%if @t%>
+		<%=@t.result.grade%>
 	<%end%>
 </div>
 <%avg = Array.new%>
-<div class="row">
-	<%(1..12).each do |k|%>
-	<%@r = @pupil_results.where(col_id: k).first%>
-		<%if @r && @t%>
-			<% @difference = @r.result.aps - @t.result.aps%>
-				<%case %>
-					<%when @difference >0%>
-						<div class="col-md-1 text-center above_target cell_design">
-					<%when @difference ==0%>
-						<div class="col-md-1 text-center on_target cell_design">
-					<%when @difference <0 %>
-						<div class="col-md-1 text-center one_below_target cell_design">
-					<%when @difference <-2%>
-						<div class="col-md-1 text-center below_target cell_design">
-					<%else%>
-						<div class="col-md-1 text-center empty_result cell_design">	
-				<%end%>
-					<%=@r.result.grade%>
-					<%avg << @r.result.aps%>
+	<div class="row">
+		<div class="col-xs-6 col-md-6">
+			<%(0..9).each do |i|%>
+				<div class="row">
+					<%((i*6+1)..(i*6+6)).each do |k|%>
+						<div class="col-xs-2 col-md-2 text-center">
+							<%@title =@titles.where(col_id: k).first%>
+							<%if @title %>
+								<%=@title.title%>
+							<%end%>
 						</div>
-		<%else%>
-			<%if @r%>
-				<div class="col-md-1 text-center empty_result cell_design"><%=@r.result.grade%>	</div>	
-				<%avg << @r.result.aps%>
-			<%end%>
-		<%end%>
-		
-	<%end%>
-		
-</div>
-
-
-<div class="row">
- <div class="col-md-1">
- Average:
- </div>
-<%if avg.size > 0%>
-	<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
-		<%if @t%>
-			<% @difference = avg_aps - @t.result.aps%>
-				<%case %>
-					<%when @difference >0%>
-						<div class="col-md-1 text-center above_target cell_design">
-					<%when @difference ==0%>
-						<div class="col-md-1 text-center on_target cell_design">
-					<%when @difference <0 %>
-						<div class="col-md-1 text-center one_below_target cell_design">
-					<%when @difference <-2%>
-						<div class="col-md-1 text-center below_target cell_design">
-					<%else%>
-						<div class="col-md-1 text-center empty_result cell_design">	
 					<%end%>
-							<%= Result.where(aps: avg_aps).first.grade%>
-		<%else%>
-			<div class="col-md-1 text-center empty_result cell_design">	
-				<%= Result.where(aps: avg_aps).first.grade%>
-		<%end%>
-			</div>
-<%else%>
-	<div class="col-md-1 text-center"></div>
-<%end%>
+				</div>
+				
 
-<hr>
+				<div class="row">
+					<%((i*6+1)..(i*6+6)).each do |k|%>
+						<%@r = @pupil_results.where(col_id: k).first%>
+						<%if @r && @t%>
+							<% @difference = @r.result.aps - @t.result.aps%>
+								<%case %>
+									<%when @difference >0%>
+										<div class="col-xs-2 col-md-2 text-center above_target cell_design">
+									<%when @difference ==0%>
+										<div class="col-xs-2 col-md-2 text-center on_target cell_design">
+									<%when @difference <0 && @difference >=-2%>
+										<div class="col-xs-2 col-md-2 text-center one_below_target cell_design">
+									<%when @difference <-2%>
+										<div class="col-xs-2 col-md-2 text-center below_target cell_design">
+									<%else%>
+										<div class="col-xs-2 col-md-2 text-center empty_result cell_design">	
+								<%end%>
+									<%=@r.result.grade%>
+									<%avg << @r.result.aps%>
+										</div>
+						<%else%>
+							<%if @r%>
+								<div class="col-xs-2 col-md-2 text-center empty_result cell_design"><%=@r.result.grade%>	</div>	
+								<%avg << @r.result.aps%>
+							<%end%>
+						<%end%>	
+					<%end%>
+				</div>
+			<%end%>
+		<br/>
+		
+			<div class="row">
+				<div class="col-xs-2 col-md-2">
+					Average:
+				</div>
+				<%if avg.size > 0%>
+					<%avg_aps =(avg.inject{|sum,x| sum + x }.to_f/avg.size).round(0)%>
+						<%if @t%>
+							<% @difference = avg_aps - @t.result.aps%>
+								<%case %>
+									<%when @difference >0%>
+										<div class="col-xs-2 col-md-2 text-center above_target cell_design">
+									<%when @difference ==0%>
+										<div class="col-xs-2 col-md-2 text-center on_target cell_design">
+									<%when @difference <0 && @difference >=-2 %>
+										<div class="col-xs-2 col-md-2 text-center one_below_target cell_design">
+									<%when @difference <-2%>
+										<div class="col-xs-2 col-md-2 text-center below_target cell_design">
+									<%else%>
+										<div class="col-xs-2 col-md-2 text-center empty_result cell_design">	
+									<%end%>
+											<%= Result.where(aps: avg_aps).first.grade%>
+						<%else%>
+										<div class="col-xs-2 col-md-2 text-center empty_result cell_design">	
+											<%= Result.where(aps: avg_aps).first.grade%>
+						<%end%>
+										</div>
+				<%else%>
+					<div class="col-xs-2 col-md-2 text-center">
+					</div>
+				<%end%>
+			</div>
+		</div>
 <%else%>
-	<p>
-		There are no results for 
-		<%=UserInfo.where(user_id: @user_id).first.forename%> 
-		<%=UserInfo.where(user_id: @user_id).first.surname%>
-		for 
-		<%=ClassName.where(id: @class_id).first.class_name%>
+	<div class="row">
+		<div class="col-xs-6 col-md-6">
+			<p>
+				There are no results for 
+				<%=UserInfo.where(user_id: @user_id).first.forename%> 
+				<%=UserInfo.where(user_id: @user_id).first.surname%>
+				for 
+				<%=ClassName.where(id: @class_id).first.class_name%>
+			</p>
+		</div>
 <%end%>
+		
+<script type='text/javascript'>
+    var aps = '<%=avg_aps%>'
+	$(document).ready(function () {
+	if (aps>0 && aps<54)
+	{
+    $("#chart1").hide();
+	$("#no_data").hide();
+	}
+	else if (aps>79)
+	{
+	$("#chart2").hide();
+	$("#no_data").hide();
+	}
+	else if (aps==0)
+	{
+	$("#chart2").hide();
+	$("#chart1").hide();
+	}
+});
+</script>
+		<div class="col-xs-6 col-md-6 text-center">
+		
+		
+			<div id="chart2" style="width:550px; height:350px;"></div>
+			<div id="chart1"  style="width:550px; height:350px;"></div>
+			<div id="no_data" style="width:550px;">No Data</div>
+		</div>
+	</div>
+
+
+
 
 <%=link_to('Back', pupil_results_path(class_id: @class_id))%>
 </div>
+
+		
+<script>
+$(document).ready(function(){
+  var line1 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+			<%if @title && @r%>		
+  ['<%=@title.title%>', <%=@r.result.aps-80%>],<%end%>  
+  <%end%>
+];
+  var line2 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+  <%if @title && @r%>		
+  ['<%=@title.title%>', <%if @t%><%=@t.result.aps-80%><%end%>],
+  <%end%>  
+  <%end%>
+  ];
+ 
+	 tickFormatter = function (format, val) { 
+	 if(val==8)
+	 {return "A*";}
+	else if(val==7)
+	 {return "A";}
+	 else if(val==6)
+	 {return "B";}
+	 else if(val==5)
+	 {return "C";}
+	 else if(val==4)
+	 {return "D";}
+	 else if(val==3)
+	 {return "E";}
+	 else if(val==2)
+	 {return "F";}
+	 else if(val==1)
+	 {return "G";}
+	 else if(val==0)
+	 {return "U";}
+  }
+  
+  var plot1 = $.jqplot('chart1', [line1, line2], {
+    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+	title:'Assessment Results ',
+    axesDefaults: {
+		min: 0,
+		max: 8,
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+        tickOptions: {
+          angle: 30
+        }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		label:'Assessment Titles', 
+          labelOptions:{
+            fontFamily:'Helvetica',
+            fontSize: '12pt'
+          },
+      },
+      x2axis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		tickOptions: {
+          show: false,
+		  showLabel: false,
+		  textColor: '#ffffff'
+        },
+				  showTicks: false,
+				    showTickMarks: false
+      },
+      yaxis: {
+         label: 'Grade',
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+		  tickOptions: {
+		  formatter: tickFormatter
+		  },
+		   tickInterval : 1,
+		  
+      },
+      y2axis: {
+        autoscale:true,
+		tickOptions: {
+		  formatter: tickFormatter
+		  },
+		  tickInterval : 1,
+      }
+    },
+	 highlighter: {
+        show: true,
+        sizeAdjust: 7.5,
+		tooltipAxes: 'y',
+		formatString: 'Grade: %s'
+      }
+      
+
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  var line1 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+			<%if @title && @r%>		
+  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
+  <%end%>
+];
+  var line2 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+  <%if @title && @r%>		
+  ['<%=@title.title%>', <%if @t%><%=@t.result.aps%><%end%>],
+  <%end%>  
+  <%end%>
+  ];
+ 
+	 tickFormatter = function (format, val) { 
+	 if(val>=53)
+	 {return "8a";}
+	 else if(val>=51)
+	 {return "8b";}
+	 else if(val>=49)
+	 {return "8c";}
+	 else if(val>=47)
+	 {return "7a";}
+	 else if(val>=45)
+	 {return "7b";}
+	 else if(val>=43)
+	 {return "7c";}
+	 else if(val>=41)
+	 {return "6a";}
+	 else if(val>=39)
+	 {return "6b";}
+	 else if(val>=37)
+	 {return "6c";}
+	 else if(val>=35)
+	 {return "5a";}
+	 else if(val>=33)
+	 {return "5b";}
+	 else if(val>=31)
+	 {return "5c";}
+	 else if(val>=29)
+	 {return "4a";}
+	 else if(val>=27)
+	 {return "4b";}
+	 else if(val>=25)
+	 {return "4c";}
+	 else if(val>=23)
+	 {return "3a";}
+	 else if(val>=21)
+	 {return "3b";}
+	 else if(val>=19)
+	 {return "3c";}
+	 else if(val>=17)
+	 {return "2a";}
+	 else if(val>=15)
+	 {return "2b";}
+	 else if(val>=13)
+	 {return "2c";}
+	 else if(val>=11)
+	 {return "1a";}
+	 else if(val>=9)
+	 {return "1b";}
+	 else if(val>=7)
+	 {return "1c";}
+	 else if(val>=3)
+	 {return "W";}
+  }
+  
+  var plot2 = $.jqplot('chart2', [line1, line2], {
+    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+	title:'Assessment Results ',
+    axesDefaults: {
+		min: 3,
+		max: 53,
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+        tickOptions: {
+          angle: 30
+        }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		label:'Assessment Titles', 
+          labelOptions:{
+            fontFamily:'Helvetica',
+            fontSize: '12pt'
+          },
+      },
+      x2axis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		tickOptions: {
+          show: false,
+		  showLabel: false,
+		  textColor: '#ffffff'
+        },
+				  showTicks: false,
+				    showTickMarks: false
+      },
+      yaxis: {
+         label: 'Grade',
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+		  tickOptions: {
+		  formatter: tickFormatter
+		  },
+		   tickInterval : 2,
+		  
+      },
+      y2axis: {
+        autoscale:true,
+		tickOptions: {
+		  formatter: tickFormatter
+		  },
+		  tickInterval : 2,
+      }
+    },
+	 highlighter: {
+        show: true,
+        sizeAdjust: 7.5,
+		tooltipAxes: 'y',
+		formatString: 'Grade: %s'
+      }
+      
+
+  });
+});
+</script>

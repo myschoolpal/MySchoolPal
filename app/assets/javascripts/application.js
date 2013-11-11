@@ -12,7 +12,16 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require excanvas.min.js
 //= require turbolinks
 //= require twitter/bootstrap
 //= require jasny-bootstrap
-
+//= require raphael-min.js
+//= require jquery.jqplot.min.js
+//= require jqplot.pointLabels.min.js
+//= require jqplot.categoryAxisRenderer.min.js
+//= require jqplot.barRenderer.min.js
+//= require jqplot.highlighter.min.js
+//= require jqplot.canvasTextRenderer.min.js
+//= require jqplot.canvasAxisLabelRenderer.min.js
+//= require jqplot.pieRenderer.min.js

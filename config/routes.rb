@@ -4,12 +4,37 @@ MSP::Application.routes.draw do  get "static_pages/home"
   get "static_pages/help"
   
   	match 'pupil_results' => 'pupil_results#update_all_results', :as => :update_all_results, :via => :put
+	match 'lock_columns' => 'lock_columns#update_many_locks', :as => :update_many_locks, :via => :put
 	match 'delete_many_results' => 'pupil_results#delete_many_results', :as => :delete_many_results, :via => :put
 	match 'edit_many_results' => 'pupil_results#edit_many_results', :as => :edit_many_results, :via => :put
 	get 'users/results_overview', to: 'users#results_overview', as: 'results_overview'
 	get 'user_groups/group_analysis', to: 'user_groups#group_analysis', as: 'group_analysis'
 	get 'pupil_results/personal_analysis', to: 'pupil_results#personal_analysis', as: 'personal_analysis'
-	
+	get 'lock_columns/show_locked_classes', to: 'lock_columns#show_locked_classes', as: 'show_locked_classes'
+
+  
+  resources :requisitions do 
+  collection do 
+  get 'add_requisition'
+  get 'tech_view'
+  get 'tech_week_choice'
+  end
+  end
+  resources :timetables do 
+  collection do
+  post :import
+  get 'import_classes'
+  get 'view_timetables'
+  get 'my_timetable'
+  end
+  end
+  resources :rooms do 
+  collection do 
+  post :import
+  end
+  end
+  resources :wbs
+  resources :lock_columns
   resources :results
   resources :class_names do
   collection do 
@@ -21,7 +46,10 @@ MSP::Application.routes.draw do  get "static_pages/home"
   collection { post :import }
   end
   resources :pupil_results do
-  collection { post :import }
+  collection do
+  post :import 
+  get 'year_analysis'
+  end
   end
   resources :subject_classes do
   collection { post :import }
@@ -39,6 +67,7 @@ MSP::Application.routes.draw do  get "static_pages/home"
   collection do
   post :import
   get 'delete_groups'
+  get 'gender_analysis'
   end
   end
   resources :user_targets do

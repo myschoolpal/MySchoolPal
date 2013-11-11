@@ -64,10 +64,10 @@ def self.import(file, current_user)
 		
 		for i in 15..34
 				if !row[i].nil?
-					if ClassName.where(:class_name => row[i]).first
+					if ClassName.where(school_id: current_user.school_id).where(:class_name => row[i]).first
 						c = UserClass.new
 						c.user_id = user
-						c.class_id = ClassName.where(:class_name => row[i]).first.id
+						c.class_id = ClassName.where(school_id: current_user.school_id).where(:class_name => row[i]).first.id
 						c.save   
 					end
 				end
@@ -143,10 +143,10 @@ def self.import(file, current_user)
 	 
 			for i in 15..34
 				if !row[i].nil?
-					if ClassName.where(:class_name => row[i]).first
+					if ClassName.where(school_id: current_user.school_id).where(:class_name => row[i]).first
 						c = UserClass.new
 						c.user_id = user
-						c.class_id = ClassName.where(:class_name => row[i]).first.id
+						c.class_id = ClassName.where(school_id: current_user.school_id).where(:class_name => row[i]).first.id
 						c.save   
 					end
 				end

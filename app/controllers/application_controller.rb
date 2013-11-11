@@ -21,18 +21,25 @@ end
 	end
 	
   def authorize_teacher
-    if current_user.admin !=true
-	if current_user.user_info
-    redirect_to(root_path) if current_user.user_info.teacher != true
+	if current_user
+		if current_user.admin !=true
+			if current_user.user_info
+				redirect_to(root_path) if current_user.user_info.teacher != true
+			else
+			redirect_to(root_path)
+			end
+    	end
 	else
-	redirect_to(root_path)
+			redirect_to(root_path)
 	end
-    #redirects to previous page
-	end
-	end
+  end
   def authorize_correct_teacher
-	if current_user.admin !=true
-	redirect_to(user_classes_path) if !current_user.user_classes.find_by_class_id(params[:class_id])
+	if current_user
+		if current_user.admin !=true
+			redirect_to(user_classes_path) if !current_user.user_classes.find_by_class_id(params[:class_id])
+		end
+	else
+		redirect_to(root_path)
 	end
   end
 	
