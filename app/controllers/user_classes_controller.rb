@@ -8,8 +8,8 @@ class UserClassesController < ApplicationController
 	redirect_to user_infos_path if current_user.admin == true
 	
     @user_classes = current_user.user_classes.first
-	if uc = @user_classes.class_name
-	@manage_classes = uc.id
+	if uc = @user_classes
+	@manage_classes = uc.class_name.id
 	else 
 	@manage_classes = 0
 	end
