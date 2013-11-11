@@ -1,0 +1,2 @@
+module LockColumnsHelper
+end

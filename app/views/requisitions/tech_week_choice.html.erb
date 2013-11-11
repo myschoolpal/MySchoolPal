@@ -1,0 +1,8 @@
+<%Wb.all.each do |wb|%>
+
+<%if Date.today < wb.week_beginning && Date.today + 1.year%>
+Check Requisition - <%= link_to wb.week_beginning , tech_view_requisitions_path(wb_id: wb.id) %>
+<br/>
+
+<%end%>
+<%end%>

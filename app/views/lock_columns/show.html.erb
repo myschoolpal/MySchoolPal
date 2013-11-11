@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @lock_column.class_id %>
+</p>
+
+<p>
+  <strong>Col:</strong>
+  <%= @lock_column.col_id %>
+</p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @lock_column.title %>
+</p>
+
+<p>
+  <strong>Readonly result:</strong>
+  <%= @lock_column.readonly_result %>
+</p>
+
+<%= link_to 'Edit', edit_lock_column_path(@lock_column) %> |
+<%= link_to 'Back', lock_columns_path %>

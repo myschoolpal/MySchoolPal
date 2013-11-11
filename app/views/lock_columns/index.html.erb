@@ -1,0 +1,46 @@
+<%=link_to 'View Locked Classes', show_locked_classes_path%> | <%=link_to 'Back - Class Lists', user_infos_path%>
+
+<%= form_for :lock_columns, :url => update_many_locks_path, :html => { :method => :put } do %>
+	<div class="row">
+		<div class="col-md-2 text-center">
+			<b>Class</b>
+		</div>
+		<div class="col-md-2 text-center">
+			<b>Readonly Title?</b>
+		</div>
+		<div class="col-md-2 text-center">
+			<b>Readonly Results?</b>
+		</div>
+		<div class="col-md-3 text-center">
+						<b>Title: </b><%=text_field_tag :title%>
+					</div>
+		<div class="col-md-2 text-center">
+			<b>Col Id: </b><%= select_tag :col_id, options_for_select((1..100), {:include_blank => 'true'}) %>
+		</div>
+	</div>
+	<hr style="margin:6px"> 
+		<%@class_names.each do |c|%>
+			<%= fields_for "add_classes[]", @lock_column_new do |builder| %>			
+				<div class="row">
+					<div class="col-md-2 text-center">
+						<%=c.class_name%>
+					</div>					
+					<div class="col-md-2 text-center">	
+						<%=builder.check_box :readonly_title%>
+					</div>
+					<div class="col-md-2 text-center">	
+						<%=builder.check_box :readonly_result%>
+					</div>
+				</div>
+				<%=builder.hidden_field :class_id, value: c.id%>
+			<%end%>
+			<hr style="margin:2px;">
+		<%end%>
+		<div class="row">
+			<div class="col-md-6 text-center">
+				<%=submit_tag%>
+			</div>
+			<div class="col-md-6">
+			</div>
+		</div>
+<%end%>

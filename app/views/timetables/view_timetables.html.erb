@@ -1,0 +1,38 @@
+
+
+<%(1..current_user.school.number_weeks).each do |k|%>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<h3>Week <%=k%><h3>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-2 text-center"></div>
+		<div class="col-md-2 text-center">Monday</div>
+		<div class="col-md-2 text-center">Tuesday</div>
+		<div class="col-md-2 text-center">Wednesday</div>
+		<div class="col-md-2 text-center">Thursday</div>
+		<div class="col-md-2 text-center">Friday</div>
+	</div>
+	
+	<%(1..current_user.school.number_periods).each do |i|%>
+		<div class="row">
+		<div class="col-md-2 text-center">Period <%=i%></div>
+			<%(1..5).each do |j|%>	
+				<div class="col-md-2 text-center">
+					<%Timetable.where(user_id: @user_id).where(period_id: i).where(day_id: j).where(week_id: k).each do |t|%>
+						<%if c = t.class_name%>
+						<%=c.class_name%>
+						<%end%>
+						<%if r = t.room%>
+						<%=r.room_name%>
+						<%end%>
+						<%= link_to 'Edit', edit_timetable_path(t, user_id: @user_id) %>
+					<%end%>
+				</div>
+			<%end%>
+		</div>
+	<%end%>
+<%end%>
+
+<%=link_to 'Back', timetables_path%>

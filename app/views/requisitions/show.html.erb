@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @requisition.user_id %>
+</p>
+
+<p>
+  <strong>Period:</strong>
+  <%= @requisition.period_id %>
+</p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @requisition.day_id %>
+</p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @requisition.class_id %>
+</p>
+
+<p>
+  <strong>Room:</strong>
+  <%= @requisition.room_id %>
+</p>
+
+<p>
+  <strong>Wb:</strong>
+  <%= @requisition.wb_id %>
+</p>
+
+<%= link_to 'Edit', edit_requisition_path(@requisition) %> |
+<%= link_to 'Back', requisitions_path %>

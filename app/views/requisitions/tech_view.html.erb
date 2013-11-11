@@ -1,0 +1,86 @@
+<b>Week Beginning:</b> <%=@week_beginning%>
+<br />
+<br />
+	<ul class="nav nav-tabs hidden-print">
+		<li class="active"><a href="#1" data-toggle="tab">Monday</a></li>	
+		<li><a href="#2" data-toggle="tab">Tuesday</a></li>	
+		<li><a href="#3" data-toggle="tab">Wednesday</a></li>	
+		<li><a href="#4" data-toggle="tab">Thursday</a></li>	
+		<li><a href="#5" data-toggle="tab">Friday</a></li>	
+	</ul>
+
+	
+<div class="tab-content" style="overflow:hidden">
+	<%if !@room_array.empty?%>	
+		<%(1..5).each do |day|%>
+			<%if day ==1%>
+				<div class="tab-pane active" id="<%=day%>">
+			<%else%>
+				<div class="tab-pane" id="<%=day%>">
+			<%end%>
+				<div class="row text-center">
+					<%case day%>
+						<%when 1%>
+							<h3>Monday</h3>
+						<%when 2%>
+							<h3>Tuesday</h3>
+						<%when 3%>
+							<h3>Wednesday</h3>
+						<%when 4%>
+							<h3>Thursday</h3>
+						<%when 5%>
+							<h3>Friday</h3>
+					<%end%>
+				</div>
+				<div class="row">
+					<div class="col-xs-2 col-md-2">
+					Room
+					</div>
+					<%(1..current_user.school.number_periods).each do |i|%>
+						<div class="col-xs-2 col-md-2">
+						Period <%=i%>
+						</div>
+					<%end%>
+				</div>
+				<hr style="margin:3px;">
+				<!-- Requisitions per room --!>
+				
+				<%(0..@room_array.count-1).each do |r|%>
+					<div class="alert-block">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						<div class="row">
+							<div class="col-xs-2 col-md-2">
+								<p class="tech">
+									<%if @room_array[r]%>
+										<%=Room.find(@room_array[r].to_i).room_name%>
+									<%end%>
+								</p>
+							</div>
+						<%(1..current_user.school.number_periods).each do |i|%>
+								<div class="col-xs-2 col-md-2">
+									<p class="tech">
+										<%if req = Requisition.where(period_id: i).where(day_id: day).where(wb_id: @wb_id).where(room_id: @room_array[r]).all%>
+											<%req.each do |re|%>
+													<%=re.user.user_info.surname%>
+													<%=re.user.user_info.forename%>
+													<br />
+													<%if re.class_name%>
+														<%=re.class_name.class_name%>
+													<%end%>
+													<br />
+													<%= re.content%>
+											<%end%>
+										<%end%>
+									</p>
+								</div>
+							<%end%>
+						</div>	
+					</div>
+					<hr style="margin:3px;">
+				<%end%>
+			</div>
+		<%end%>
+	<%end%>
+</div>
+
+

@@ -1,0 +1,28 @@
+<%= form_for(@timetable) do |f| %>
+  <% if @timetable.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@timetable.errors.count, "error") %> prohibited this timetable from being saved:</h2>
+
+      <ul>
+      <% @timetable.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    
+  
+  
+  <div class="field">
+    <%= f.label :class_id %><br>
+    <%= f.collection_select :class_id, ClassName.all, :id, :class_name, {}, class: "form-control"%>
+  </div>
+  <div class="field">
+    <%= f.label :room_id %><br>
+    <%= f.collection_select :room_id, Room.all, :id, :room_name, {}, class: "form-control"%>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

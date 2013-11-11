@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  class_id: 1
+  col_id: 1
+  title: MyString
+  readonly_result: false
+
+two:
+  class_id: 1
+  col_id: 1
+  title: MyString
+  readonly_result: false

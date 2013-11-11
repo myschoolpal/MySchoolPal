@@ -1,0 +1,55 @@
+<%if current_user.school.number_weeks >1%>
+<%=link_to 'Week 1', add_requisition_requisitions_path(wb_id: @wb_id, week: 1)%>
+<%=link_to 'Week 2', add_requisition_requisitions_path(wb_id: @wb_id, week: 2)%>
+<%end%>
+
+
+
+<div class="row">
+	<div class="col-md-12 text-center">
+		<h3>Week <%=@week%><h3>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-2 text-center"></div>
+	<div class="col-md-2 text-center">Monday</div>
+	<div class="col-md-2 text-center">Tuesday</div>
+	<div class="col-md-2 text-center">Wednesday</div>
+	<div class="col-md-2 text-center">Thursday</div>
+	<div class="col-md-2 text-center">Friday</div>
+</div>
+
+<%(1..current_user.school.number_periods).each do |i|%>
+	<div class="row">
+	<div class="col-md-2 text-center">Period <%=i%></div>
+		<%(1..5).each do |j|%>	
+			<div class="col-md-2 text-center">
+				<%t = Timetable.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(week_id: @week).first%>
+					<%if c = t.class_name%>
+						<%=c.class_name%>
+					<%end%>
+					<%if req = Requisition.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(wb_id: @wb_id)%>
+						<%req.limit(1).each do |re|%>
+							<%=@room_check = re.room.room_name%>
+							<br />
+							<%=@content = re.content%>
+							<br />
+							<%= link_to 'Edit', edit_requisition_path(re,period_id: i, day_id: j, room_id: t.room_id, class_id: t.class_id, wb_id: @wb_id, week: @week) %>
+						<%end%>
+					<%end%>
+					<%if r = t.room%>
+						<%if @room_check%>
+						<%else%>
+							<%=r.room_name%>
+						<%=@content%>
+						<%end%>
+						<%= link_to 'New', new_requisition_path(period_id: i, day_id: j, room_id: t.room_id, class_id: t.class_id, wb_id: @wb_id, week: @week) %>
+					<%end%>
+					
+					
+			</div>
+		<%end%>
+	</div>
+	<hr style="margin:4px;">
+<%end%>
+

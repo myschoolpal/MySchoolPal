@@ -1,0 +1,21 @@
+<%= form_for(@wb) do |f| %>
+  <% if @wb.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wb.errors.count, "error") %> prohibited this wb from being saved:</h2>
+
+      <ul>
+      <% @wb.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :week_beginning %><br>
+    <%= f.date_select :week_beginning %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,37 @@
+<%=link_to 'Back', lock_columns_path%>
+
+	<div class="row">
+		<div class="col-md-2">
+			<b>Class</b>
+		</div>
+		<div class="col-md-2">
+			<b>Column Locked</b>
+		</div>
+		<div class="col-md-2">
+			<b>Title Locked</b>
+		</div>
+		<div class="col-md-2">
+			<b>Result Locked</b>
+		</div>
+	</div>
+	<hr style="margin:5px">
+<%@lock_columns.each do |l|%>
+	<div class="row">
+		<div class="col-md-2">
+			<% if !l.class_name.nil?%>
+				<%=l.class_name.class_name%>
+			<%end%>
+		</div>
+		<div class="col-md-2">
+			<%=l.col_id%>
+		</div>
+		<div class="col-md-2">
+			<%=l.readonly_title%>
+		</div>
+		<div class="col-md-2">
+			<%=l.readonly_result%>
+		</div>
+			<%= link_to 'Destroy', l, method: :delete, data: { confirm: 'Are you sure?' } %>
+	</div>
+<%end%>
+

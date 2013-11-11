@@ -1,0 +1,56 @@
+<h1>Listing rooms</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Room name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rooms.each do |room| %>
+      <tr>
+        <td><%= room.room_name %></td>
+        <td><%= link_to 'Show', room %></td>
+        <td><%= link_to 'Edit', edit_room_path(room) %></td>
+        <td><%= link_to 'Destroy', room, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Room', new_room_path %>
+<div class="row-fluid">
+	<div class="span6">
+	</div>
+	<div class="span4 center">
+		<div style="margin-top:40px;">
+			<H5>Import your data</H5>
+			<br />
+			Click on select file to browse to the file you have now filled with room names. 
+			Then click import.
+		</div>
+		<div style="margin-top:50px">
+			<%= form_tag import_rooms_path, multipart: true do %>
+				<div class="fileupload fileupload-new" data-provides="fileupload">
+					<div class="input-append">
+						<div class="uneditable-input span3">
+							<i class="icon-file fileupload-exists"></i> 
+							<span class="fileupload-preview"></span>
+						</div>
+						<span class="btn btn-file">
+							<span class="fileupload-new">Select file</span>
+							<span class="fileupload-exists">Change</span>
+							<%= file_field_tag :file %>
+						</span>
+					<%= submit_tag "Import", class: "btn fileupload-exists btn-danger" %>
+				</div>
+			<%end%>
+		</div>
+	</div>
+</div>

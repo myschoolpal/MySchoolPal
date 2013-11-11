@@ -1,0 +1,32 @@
+<%= form_for(@requisition) do |f| %>
+  <% if @requisition.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@requisition.errors.count, "error") %> prohibited this requisition from being saved:</h2>
+
+      <ul>
+      <% @requisition.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+	<%=f.hidden_field :class_id, value: @class_id%>
+	<%=f.hidden_field :period_id, value: @period_id%>
+	<%=f.hidden_field :day_id, value: @day_id%>
+	<%=f.hidden_field :wb_id, value: @wb_id%>
+	<%=ClassName.find(@class_id).class_name%>
+	<br />
+	<%=@day%> -
+	Period <%=@period_id%>
+  <div class="field">
+    <%= f.label :room_id %><br>
+    <%= f.collection_select :room_id, Room.all, :id, :room_name, {selected: Room.find(@room_id).id}, class: "form-control"%>
+  </div>
+    <div class="field">
+    <%= f.label :content %><br>
+    <%= f.text_area :content, class: "form-control" %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

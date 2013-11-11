@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @timetable.user_id %>
+</p>
+
+<p>
+  <strong>Period:</strong>
+  <%= @timetable.period_id %>
+</p>
+
+<p>
+  <strong>Day:</strong>
+  <%= @timetable.day_id %>
+</p>
+
+<p>
+  <strong>Week:</strong>
+  <%= @timetable.week_id %>
+</p>
+
+<p>
+  <strong>Class:</strong>
+  <%= @timetable.class_id %>
+</p>
+
+<p>
+  <strong>Room:</strong>
+  <%= @timetable.room_id %>
+</p>
+
+<%= link_to 'Edit', edit_timetable_path(@timetable) %> |
+<%= link_to 'Back', timetables_path %>

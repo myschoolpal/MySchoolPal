@@ -1,0 +1,27 @@
+<h1>Listing wbs</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Week beginning</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @wbs.each do |wb| %>
+      <tr>
+        <td><%= wb.week_beginning %></td>
+        <td><%= link_to 'Show', wb %></td>
+        <td><%= link_to 'Edit', edit_wb_path(wb) %></td>
+        <td><%= link_to 'Destroy', wb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Wb', new_wb_path %>

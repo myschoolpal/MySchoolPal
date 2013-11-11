@@ -1,0 +1,9 @@
+<%@user.each do |u|%>
+<%if u.user_info%>
+<%=link_to u.user_info.surname, view_timetables_timetables_path(user_id: u.id)%>
+<%=link_to u.user_info.forename, view_timetables_timetables_path(user_id: u.id)%>
+<br/>
+<%end%>
+<%end%>
+
+<%=link_to 'Back', user_infos_path%>
