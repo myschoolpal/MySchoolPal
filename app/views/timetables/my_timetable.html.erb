@@ -22,7 +22,7 @@
 				<div class="col-md-2 text-center">
 					<%Timetable.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(week_id: k).each do |t|%>
 						<%if c = t.class_name%>
-						<%=link_to c.class_name, pupil_results_path(:class_id=>c.id)%>
+						<%=link_to(c.class_name, pupil_results_path(class_id: c.id))%>
 						<%end%>
 						<%if r = t.room%>
 						<%=r.room_name%>
