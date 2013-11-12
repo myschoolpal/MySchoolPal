@@ -5,7 +5,6 @@ class Timetable < ActiveRecord::Base
   validates :period_id, presence: true
   validates :day_id, presence: true
   validates :week_id, presence: true
-  validates :class_id, presence: true
 
 validates_uniqueness_of :user_id, :scope => [:period_id, :day_id, :week_id]  
 	  belongs_to :class_name, :foreign_key => "class_id"

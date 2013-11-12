@@ -28,7 +28,6 @@
 						<%=r.room_name%>
 						<%end%>
 						<%= link_to 'Edit', edit_timetable_path(t, user_id: @user_id) %>
-						<%= link_to 'Delete', t, method: :delete, data: { confirm: 'Are you sure?' } %>
 					<%end%>
 				</div>
 			<%end%>
