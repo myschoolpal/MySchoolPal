@@ -16,11 +16,11 @@
   
   <div class="field">
     <%= f.label :class_id %><br>
-    <%= f.collection_select :class_id, ClassName.all, :id, :class_name, {}, class: "form-control"%>
+    <%= f.collection_select :class_id, ClassName.all, :id, :class_name, {:include_blank => true}, class: "form-control"%>
   </div>
   <div class="field">
     <%= f.label :room_id %><br>
-    <%= f.collection_select :room_id, Room.all, :id, :room_name, {}, class: "form-control"%>
+    <%= f.collection_select :room_id, Room.all, :id, :room_name, {:include_blank => true}, class: "form-control"%>
   </div>
   <div class="actions">
     <%= f.submit %>
