@@ -4,8 +4,7 @@
 <script class="include" type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <title><%= content_for?(:title) ? yield(:title) : "MySchoolPal" %></title>
-	<%= stylesheet_link_tag "application"%>
-	<%= stylesheet_link_tag 'application-print', :media => 'print'%>
+	<%= stylesheet_link_tag "application",  :media => 'all'%>
 	<%= javascript_include_tag "application" %>
 	
     <%= csrf_meta_tag %>
