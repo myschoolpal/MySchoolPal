@@ -28,8 +28,8 @@
 					<%if c = t.class_name%>
 						<%=c.class_name%>
 					<%end%>
-					<%if req = Requisition.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(wb_id: @wb_id)%>
-						<%req.limit(1).each do |re|%>
+					<%if Requisition.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(wb_id: @wb_id)%>
+						<%Requisition.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(wb_id: @wb_id).limit(1).each do |re|%>
 							<%=@room_check = re.room.room_name%>
 							<br />
 							<%=@content = re.content%>
@@ -39,12 +39,13 @@
 						<%end%>
 					<%end%>
 					<%if r = t.room%>
-						<%if @room_check.nil? || @room_check.empty?%>
+						<%if Requisition.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(wb_id: @wb_id)%>
 							<%=r.room_name%>
-							
-						<%else%>
-						<%end%>
 						<%= link_to 'New', new_requisition_path(period_id: i, day_id: j, room_id: t.room_id, class_id: t.class_id, wb_id: @wb_id, week: @week) %>
+						<%else%>
+						
+						<%end%>
+						
 						
 						
 					<%end%>
