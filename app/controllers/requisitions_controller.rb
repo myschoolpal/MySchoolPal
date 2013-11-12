@@ -47,7 +47,7 @@ class RequisitionsController < ApplicationController
 	@day_id = params[:day_id]
 	@class_id = params[:class_id]
 	@wb_id = params[:wb_id]
-	
+	@wb_for_create = params[:wb_for_create]
 	case @day_id.to_i
 		when 1
 			@day = 'Monday'
@@ -87,12 +87,13 @@ class RequisitionsController < ApplicationController
   # POST /requisitions
   # POST /requisitions.json
   def create
-    @requisition = Requisition.new(requisition_params)
+    @wb_id = params[:requisition][:wb_id]
+	@requisition = Requisition.new(requisition_params)
 	@requisition.user_id = current_user.id
 	@requisition.school_id = current_user.school_id
     respond_to do |format|
       if @requisition.save
-        format.html { redirect_to :back, notice: 'Requisition was successfully created.' }
+        format.html { redirect_to add_requisition_requisitions_path(wb_id: @wb_id), notice: 'Requisition was successfully created.' }
         format.json { render action: 'show', status: :created, location: @requisition }
       else
         format.html { redirect_to :back, notice: 'Requisition already exists.' }
@@ -104,9 +105,10 @@ class RequisitionsController < ApplicationController
   # PATCH/PUT /requisitions/1
   # PATCH/PUT /requisitions/1.json
   def update
+  @wb_id = params[:requisition][:wb_id]
     respond_to do |format|
       if @requisition.update(requisition_params)
-        format.html { redirect_to :back, notice: 'Requisition was successfully updated.' }
+        format.html { redirect_to add_requisition_requisitions_path(wb_id: @wb_id), notice: 'Requisition was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -120,7 +122,7 @@ class RequisitionsController < ApplicationController
   def destroy
     @requisition.destroy
     respond_to do |format|
-      format.html { redirect_to requisitions_url }
+      format.html { redirect_to :back }
       format.json { head :no_content }
     end
   end

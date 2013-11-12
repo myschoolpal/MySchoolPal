@@ -35,6 +35,7 @@
 							<%=@content = re.content%>
 							<br />
 							<%= link_to 'Edit', edit_requisition_path(re,period_id: i, day_id: j, room_id: t.room_id, class_id: t.class_id, wb_id: @wb_id, week: @week) %>
+							<%= link_to 'Delete', re, method: :delete, data: { confirm: 'Are you sure?' } %>
 						<%end%>
 					<%end%>
 					<%if r = t.room%>
@@ -43,7 +44,9 @@
 							<%=r.room_name%>
 						<%=@content%>
 						<%end%>
+						<%if @content.nil?%>
 						<%= link_to 'New', new_requisition_path(period_id: i, day_id: j, room_id: t.room_id, class_id: t.class_id, wb_id: @wb_id, week: @week) %>
+						<%end%>
 					<%end%>
 					
 					
