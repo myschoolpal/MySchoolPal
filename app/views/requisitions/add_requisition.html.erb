@@ -39,14 +39,14 @@
 						<%end%>
 					<%end%>
 					<%if r = t.room%>
-						<%if @room_check%>
-						<%else%>
+						<%if @room_check.nil?%>
 							<%=r.room_name%>
-						<%=@content%>
+							<%= link_to 'New', new_requisition_path(period_id: i, day_id: j, room_id: t.room_id, class_id: t.class_id, wb_id: @wb_id, week: @week) %>
+						<%else%>
 						<%end%>
-						<%if !@content%>
-						<%= link_to 'New', new_requisition_path(period_id: i, day_id: j, room_id: t.room_id, class_id: t.class_id, wb_id: @wb_id, week: @week) %>
-						<%end%>
+						
+						
+						
 					<%end%>
 					
 					
