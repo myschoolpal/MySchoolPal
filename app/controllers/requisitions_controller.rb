@@ -26,7 +26,7 @@ class RequisitionsController < ApplicationController
   def tech_view
   @wb_id = params[:wb_id]
   @week_beginning = Wb.find(@wb_id).week_beginning
-  @req = Requisition.where(school_id: current_user.school_id).where(wb_id: @wb_id).all
+  @req = Requisition.where(school_id: current_user.school_id).where(wb_id: @wb_id).order("room_id ASC").all
   @room_array = Array.new
   @req.each do |r|
   @room_array << r.room_id
