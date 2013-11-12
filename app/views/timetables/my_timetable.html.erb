@@ -23,9 +23,11 @@
 					<%Timetable.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(week_id: k).each do |t|%>
 						<%if c = t.class_name%>
 						<%=link_to(c.class_name, pupil_results_path(class_id: c.id))%>
+						<%else%>
 						<%end%>
 						<%if r = t.room%>
 						<%=r.room_name%>
+						<%else%>
 						<%end%>
 
 					<%end%>
