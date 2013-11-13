@@ -42,19 +42,22 @@ class PupilResultsController < ApplicationController
 	elsif @year_id && @class_id && @group_id
 		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).includes(:user_classes).where("user_classes.class_id =?", @class_id).includes(:user_groups).where("user_groups.group_id =?", @group_id).all
 	end
-	Subject.first.subject_classes.includes(:user_classes).where("user_classes.class_id = ?",1630).all
-	@subjects = User.includes(:subject_classes).where("subject_classes.subject_id=?",3).includes(:user_info).where("user_infos.year = ?", @year_id).all
-	@subjects.each do |s|
-	s.pupil_results.where(col_id: 1).first
-	end
-	@k = Array.new
-	SubjectClass.where(subject_id: 1).each do |s|
-		s.user_classes.each do |k|
-			@a =k.pupil_results.each do |j|
-				@k<< j.result.grade
-			end
+	
+	@pupils.each do |p|
+		p.pupil_results.where('col_id = 1').each do |t|
+			t.result.grade
 		end
 	end
+
+	@k = Array.new
+	@l = Array.new
+	@j = Array.new
+	SubjectClass.where(subject_id: 1).each do |s|
+		s.user_class.pupil_results.includes(:user).where(col_id: 1).each do |p|
+			@l << p.result.grade
+		end
+	end
+	
 	
   end
   # GET /pupil_results/1

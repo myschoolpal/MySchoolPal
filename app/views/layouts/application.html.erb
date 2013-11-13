@@ -10,7 +10,7 @@
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>
-  <body>
+  <body class="<%= @home ? 'home' : ''%>">
 
 	<div class="navbar navbar-static-top">
         <div class="navbar-inner">
@@ -20,24 +20,47 @@
 			
 				<li><%= link_to "Start", user_classes_path %></li>
 				<li style="width:300px; color:#000;"><%= link_to "Change your password", edit_user_registration_path %></li>
-						
-					
-				
-				
-				
 				<li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
 				
 			<%else%>
+				<%if @home%>
+				<li class="active"><%= link_to('Home', static_pages_home_path, :class =>"active") %></li>
+				<%else%>
 				<li><%= link_to('Home', static_pages_home_path) %></li>
+				<%end%>
 				<li><%= link_to('About', static_pages_about_path) %></li>
 				<li><%= link_to('Contact', static_pages_contact_path) %></li>
-				<li><%= link_to('Help', static_pages_help_path) %></li>
+				<li><%= link_to('Features', static_pages_features_path) %></li>
 				<li><%= link_to('Login', new_user_session_path) %></li>
 			<%end%>    
 		</ul>
 		</div>
 	</div>
   </div>
+  <%if @about %>
+  <div class="top">
+  	<p class="about-title">About</p>
+	<p class="about-subtitle">Helping students make progress, whilst keeping things simple</p>
+  </div>
+  <%end%>
+  <%if @contact %>
+  <div class="top">
+  	<p class="about-title">Contact</p>
+	<p class="about-subtitle">Give us a call to see how we can help</p>
+  </div>
+  <%end%>
+  <%if @features %>
+  <div class="top">
+  	<p class="about-title">Features</p>
+	<p class="about-subtitle">Interactive features that support your students progress</p>
+  </div>
+  <%end%>
+  <%if @sign_in %>
+  <div class="top">
+  	<p class="about-title">Login</p>
+	<p class="about-subtitle">Sign in to use the interactive tools</p>
+  </div>
+  <%end%>
   <div class="container">
 	
         <% flash.each do |name, msg| %>

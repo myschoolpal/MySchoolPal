@@ -11,7 +11,11 @@ font-size:10px;
 }
 }
 
+
+
 /* mixins, variables, etc. */
+
+$background:#222B5C;
 
 $above_target_color_1:rgba(87,173,194,1);
 $above_target_color_2:rgba(73,165,191,1);
@@ -27,10 +31,7 @@ $below_target_color_2: rgba(252,70,70,1);
   box-sizing: border-box;
 }
 
-body{
-background-color:#fff;
-font-family:Gill Sans MT;
-}
+
 
 .background
 {
@@ -46,14 +47,24 @@ font-family:Gill Sans MT;
       .navbar .nav {
         margin: 0;
         display: table;
-		background-color:#6D696E;
+		background-color:$background;
+		border-bottom:1px dashed #000;
 		width:100%;
+		
 		
       }
       .navbar .nav li {
         display: table-cell;
         float: none;
       }
+	  
+	  .navbar .nav li.active{
+        display: table-cell;
+        float: none;
+		background-color:#eee;
+		
+      }  
+	  
       .navbar .nav li a {
         font-size:16px;
         text-align: center;
@@ -62,9 +73,13 @@ font-family:Gill Sans MT;
 		color:#FFF;
 		
       }
-	  .navbar .nav li a:hover {
+	  .navbar .nav li a.active {
 	  color:#000;
 	  }
+	  .navbar .nav li a:hover {
+	  color:#000;
+	    }
+	  
       .navbar .nav li:first-child a {
         border-left: 0;
         border-radius: 3px 0 0 3px;
@@ -147,4 +162,53 @@ background-color:#fff;
 /*Technician View*/
 p.tech {
 font-size:11px;
+}
+
+/*Homepage*/
+
+p.title {
+font-family: Gill Sans mt;
+font-size:100px;
+color:#fff;
+
+
+margin-bottom:0px;
+}
+
+p.sub-title {
+font-family: Gill Sans mt;
+font-size:50px;
+color:#fff;
+opacity:0.8;
+margin-top:0px;
+}
+body.home {
+background-color:$background;
+font-family:Gill Sans MT;
+}
+
+div.top {
+margin-top:-28px;
+background-color:$background;
+padding-bottom:20px;
+padding-top:40px;
+
+}
+
+p.about-title {
+font-family: Gill Sans mt;
+font-size:60px;
+color:#fff;
+margin-left:50px;
+margin-top:20px;
+margin-bottom:0px;
+}
+
+p.about-subtitle {
+font-family: Gill Sans mt;
+font-size:30px;
+color:#fff;
+margin-left:50px;
+margin-top:0px;
+opacity:0.8;
 }
