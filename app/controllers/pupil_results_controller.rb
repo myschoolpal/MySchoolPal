@@ -35,6 +35,8 @@ class PupilResultsController < ApplicationController
 	@year_id = params[:year_id]
 	@group_id = params[:group_id]
 	@class_id = params[:class_id]
+	@col_id = params[:col_id]
+	@subject_id = params[:subject_id]
 	if @year_id && !@class_id
 		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).all
 	elsif @year_id && @class_id && !@group_id
@@ -43,18 +45,21 @@ class PupilResultsController < ApplicationController
 		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).includes(:user_classes).where("user_classes.class_id =?", @class_id).includes(:user_groups).where("user_groups.group_id =?", @group_id).all
 	end
 	
-	@pupils.each do |p|
-		p.pupil_results.where('col_id = 1').each do |t|
-			t.result.grade
-		end
+	@subjects = Subject.all
+	@year = Hash.new
+	if current_user.school.secondary == true
+		@year = [7,8,9,10,11,12,13]
 	end
-
-	@k = Array.new
-	@l = Array.new
-	@j = Array.new
-	SubjectClass.where(subject_id: 1).each do |s|
-		s.user_class.pupil_results.includes(:user).where(col_id: 1).each do |p|
-			@l << p.result.grade
+	if current_user.school.primary == true
+		@year = [1,2,3,4,5,6]
+	end
+	@results = Hash.new
+	
+	SubjectClass.where(subject_id: @subject_id).each do |s|
+		s.user_class.pupil_results.where(col_id: @col_id).each do |p|
+			if p.user.user_info.year == @year_id
+			@results[p.user_id] = p.result.grade
+			end
 		end
 	end
 	

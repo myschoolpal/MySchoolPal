@@ -4,9 +4,11 @@
 			<ul class="nav nav-tabs" id="myTab">
 				
 				<li class="active">
-				
+				<%if @subject%>
 				<%=link_to @class_name +' - '+  @subject , pupil_results_path(:class_id=>@class_id)%></li>
-								
+				<%else%>
+					<%=link_to @class_name, pupil_results_path(:class_id=>@class_id)%></li>
+				<%end%>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					  Groups<span class="caret"></span>

@@ -1,1 +1,33 @@
-<%=@l%>
+<div class="row-fluid">
+	<div class="col-md-6 col-xs-6">
+		<%@results.each do|id,r|%>
+			<div class="row">
+				<div class="col-xs-4 col-md-4">
+					<%=UserInfo.where(user_id: id).first.surname%>
+				</div>
+				<div class="col-xs-4 col-md-4">
+					<%=UserInfo.where(user_id: id).first.forename%>
+				</div>
+				<div class="col-xs-4 col-md-4">
+					<%=r%>
+				</div>
+				<div class="col-xs-6 col-md-6">
+				
+				</div>
+			</div>
+		<%end%>
+	</div>
+	<div class="col-md-6 col-xs-6">
+		<%@subjects.each do |subject|%>
+			<%=link_to subject.subject, year_analysis_pupil_results_path(year_id: @year_id, subject_id: subject.id)%>
+		<%end%>
+		<br />
+		<%@year.each do |y|%>
+		<%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: @col_id)%>
+		<%end%>
+		<br />
+		<%(1..10).each do |t|%>
+			<%=link_to 'Title ' + t.to_s, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, col_id: t)%>
+		<%end%>
+	</div>
+</div>
