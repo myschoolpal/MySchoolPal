@@ -4,7 +4,8 @@ class UserTarget < ActiveRecord::Base
   belongs_to :user
   belongs_to :subject
   belongs_to :result, foreign_key: "target"
-  
+  has_one :user_class, :primary_key => "class_id", :foreign_key => "class_id"
+
   validates :user_id, uniqueness: { scope: :subject_id}
   
   def self.import(file)

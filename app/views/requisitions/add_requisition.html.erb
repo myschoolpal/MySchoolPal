@@ -24,7 +24,8 @@
 	<div class="col-md-2 text-center">Period <%=i%></div>
 		<%(1..5).each do |j|%>	
 			<div class="col-md-2 text-center">
-				<%t = Timetable.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(week_id: @week).first%>
+			
+				<% if t = Timetable.where(user_id: current_user.id).where(period_id: i).where(day_id: j).where(week_id: @week).first%>
 					<%if c = t.class_name%>
 						<%=c.class_name%>
 					<%end%>
@@ -50,7 +51,7 @@
 						
 					<%end%>
 					
-					
+				<%end%>	
 			</div>
 		<%end%>
 	</div>

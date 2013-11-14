@@ -1,15 +1,32 @@
 <div class="row-fluid">
 	<div class="col-md-6 col-xs-6">
+		<div class="row">
+			<div class="col-xs-3 col-md-3">
+			Surname
+			</div>
+			<div class="col-xs-3 col-md-3">
+			Forename
+			</div>
+			<div class="col-xs-3 col-md-3">
+			Target
+			</div>
+			<div class="col-xs-3 col-md-3">
+			Result
+			</div>
+		</div>
 		<%@results.each do|id,r|%>
 			<div class="row">
-				<div class="col-xs-4 col-md-4">
+				<div class="col-xs-3 col-md-3">
 					<%=UserInfo.where(user_id: id).first.surname%>
 				</div>
-				<div class="col-xs-4 col-md-4">
+				<div class="col-xs-3 col-md-3">
 					<%=UserInfo.where(user_id: id).first.forename%>
 				</div>
-				<div class="col-xs-4 col-md-4">
-					<%=r%>
+				<div class="col-xs-3 col-md-3">
+					<%=r[1]%>
+				</div>
+				<div class="col-xs-3 col-md-3">
+					<%=r[0]%>
 				</div>
 				<div class="col-xs-6 col-md-6">
 				
@@ -19,15 +36,19 @@
 	</div>
 	<div class="col-md-6 col-xs-6">
 		<%@subjects.each do |subject|%>
-			<%=link_to subject.subject, year_analysis_pupil_results_path(year_id: @year_id, subject_id: subject.id)%>
+			<%=link_to subject.subject, year_analysis_pupil_results_path(year_id: @year_id, subject_id: subject.id, col_id: 1)%>
 		<%end%>
 		<br />
 		<%@year.each do |y|%>
-		<%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: @col_id)%>
+		<%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: 1)%>
+		<%end%>
+		<br />
+		<%@groups.each do |g|%>
+		<%=link_to g.group, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,group_id: g.id, col_id: 1)%>
 		<%end%>
 		<br />
 		<%(1..10).each do |t|%>
-			<%=link_to 'Title ' + t.to_s, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, col_id: t)%>
+			<%=link_to 'Title ' + t.to_s, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: t)%>
 		<%end%>
 	</div>
 </div>

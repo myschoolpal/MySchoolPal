@@ -30,7 +30,10 @@ class PupilResultsController < ApplicationController
 	@title = TitleClass.new	
 	@user_classes = current_user.user_classes.all
   end
-
+  
+  def subject_choice
+  
+  end
   def year_analysis
 	@year_id = params[:year_id]
 	@group_id = params[:group_id]
@@ -46,6 +49,7 @@ class PupilResultsController < ApplicationController
 	end
 	
 	@subjects = Subject.all
+	@groups = Group.all
 	@year = Hash.new
 	if current_user.school.secondary == true
 		@year = [7,8,9,10,11,12,13]
@@ -55,10 +59,53 @@ class PupilResultsController < ApplicationController
 	end
 	@results = Hash.new
 	
+	if @col_id == 'avg'
+		SubjectClass.where(subject_id: @subject_id).each do |s|
+			s.user_class.pupil_results.each do |p|
+				if p.user.user_info.year == @year_id
+					if @group_id
+						result = Array.new
+							if UserGroup.where(group_id: @group_id).where(user_id: p.user_id).first
+								result << p.result.grade
+								if t = p.user.user_targets.where(subject_id: @subject_id).first
+									result << t.result.grade
+								end
+								@results[p.user_id] = result
+							end
+					else
+						result = Array.new
+						result << p.result.grade
+						if r = p.user.user_targets.where(subject_id: @subject_id).first
+						result << r.result.grade
+						end
+						@results[p.user_id] = result
+					end
+				end
+			end
+		end
+	end
+	
 	SubjectClass.where(subject_id: @subject_id).each do |s|
 		s.user_class.pupil_results.where(col_id: @col_id).each do |p|
 			if p.user.user_info.year == @year_id
-			@results[p.user_id] = p.result.grade
+				if @group_id
+					result = Array.new
+					if UserGroup.where(group_id: @group_id).where(user_id: p.user_id).first
+						result << p.result.grade
+					 if r = p.user.user_targets.where(subject_id: @subject_id).first
+					 result << r.result.grade
+					 end
+					 @results[p.user_id] = result
+					end
+				else
+					result = Array.new
+					result << p.result.grade
+					if r = p.user.user_targets.where(subject_id: @subject_id).first
+					result << r.result.grade
+					end
+					@results[p.user_id] = result
+					
+				end
 			end
 		end
 	end
