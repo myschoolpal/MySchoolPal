@@ -29,6 +29,7 @@
 						<%end%>
 						<%= link_to 'Edit', edit_timetable_path(t, user_id: @user_id) %>
 					<%end%>
+					<%= link_to 'new', new_timetable_path(t, user_id: @user_id) %>
 				</div>
 			<%end%>
 		</div>

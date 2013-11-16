@@ -32,7 +32,7 @@ class PupilResultsController < ApplicationController
   end
   
   def subject_choice
-  
+	@subjects = Subject.all
   end
   def year_analysis
 	@year_id = params[:year_id]
@@ -40,13 +40,6 @@ class PupilResultsController < ApplicationController
 	@class_id = params[:class_id]
 	@col_id = params[:col_id]
 	@subject_id = params[:subject_id]
-	if @year_id && !@class_id
-		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).all
-	elsif @year_id && @class_id && !@group_id
-		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).includes(:user_classes).where("user_classes.class_id =?", @class_id).all
-	elsif @year_id && @class_id && @group_id
-		@pupils = User.includes(:user_info).where("user_infos.year = ?", @year_id).where("user_infos.pupil = ?", true).includes(:user_classes).where("user_classes.class_id =?", @class_id).includes(:user_groups).where("user_groups.group_id =?", @group_id).all
-	end
 	
 	@subjects = Subject.all
 	@groups = Group.all
@@ -83,33 +76,33 @@ class PupilResultsController < ApplicationController
 				end
 			end
 		end
-	end
-	
-	SubjectClass.where(subject_id: @subject_id).each do |s|
-		s.user_class.pupil_results.where(col_id: @col_id).each do |p|
-			if p.user.user_info.year == @year_id
-				if @group_id
-					result = Array.new
-					if UserGroup.where(group_id: @group_id).where(user_id: p.user_id).first
+
+	else
+		SubjectClass.where(subject_id: @subject_id).each do |s|
+			s.user_class.pupil_results.where(col_id: @col_id).each do |p|
+				if p.user.user_info.year == @year_id
+					if @group_id
+						result = Array.new
+						if UserGroup.where(group_id: @group_id).where(user_id: p.user_id).first
+							result << p.result.grade
+						 if r = p.user.user_targets.where(subject_id: @subject_id).first
+						 result << r.result.grade
+						 end
+						 @results[p.user_id] = result
+						end
+					else
+						result = Array.new
 						result << p.result.grade
-					 if r = p.user.user_targets.where(subject_id: @subject_id).first
-					 result << r.result.grade
-					 end
-					 @results[p.user_id] = result
+						if r = p.user.user_targets.where(subject_id: @subject_id).first
+						result << r.result.grade
+						end
+						@results[p.user_id] = result
+						
 					end
-				else
-					result = Array.new
-					result << p.result.grade
-					if r = p.user.user_targets.where(subject_id: @subject_id).first
-					result << r.result.grade
-					end
-					@results[p.user_id] = result
-					
 				end
 			end
 		end
 	end
-	
 	
   end
   # GET /pupil_results/1
