@@ -24,7 +24,12 @@ class TimetablesController < ApplicationController
 
   # GET /timetables/new
   def new
-    @timetable = Timetable.new
+    @user_id = params[:user_id]
+	@week_id = params[:week_id]
+	@day_id = params[:day_id]
+	@period_id = params[:period_id]
+	@timetable = Timetable.new
+	
   end
 
   # GET /timetables/1/edit
@@ -35,11 +40,12 @@ class TimetablesController < ApplicationController
   # POST /timetables
   # POST /timetables.json
   def create
+	@user_id = params[:timetable][:user_id]
     @timetable = Timetable.new(timetable_params)
 
     respond_to do |format|
       if @timetable.save
-        format.html { redirect_to @timetable, notice: 'Timetable was successfully created.' }
+        format.html { redirect_to view_timetables_timetables_path(user_id: @user_id), notice: 'Timetable was successfully created.' }
         format.json { render action: 'show', status: :created, location: @timetable }
       else
         format.html { render action: 'new' }

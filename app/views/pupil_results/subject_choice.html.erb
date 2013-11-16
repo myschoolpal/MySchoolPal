@@ -1,0 +1,3 @@
+		<%@subjects.each do |subject|%>
+			<%=link_to subject.subject, year_analysis_pupil_results_path(year_id: @year_id, subject_id: subject.id, col_id: 1)%>
+		<%end%>

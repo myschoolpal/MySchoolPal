@@ -1,0 +1,21 @@
+<%@results.each do|id,r|%>
+	<%u = UserInfo.where(user_id: id).first%>
+	<div class="row">
+		<div class="col-xs-3 col-md-3">
+			<%=u.surname%>
+		</div>
+		<div class="col-xs-3 col-md-3">
+			<%=u.forename%>
+			<%=m=u.ks2_maths%>
+			<%=e=u.ks2_english%>
+			<%=avg = m+e%>
+			
+		</div>
+		<div class="col-xs-3 col-md-3">
+			<%=r[1]%>
+		</div>
+		<div class="col-xs-3 col-md-3">
+			<%=r[0]%>
+		</div>
+	</div>
+<%end%>
