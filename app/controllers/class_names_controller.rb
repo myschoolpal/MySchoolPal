@@ -53,7 +53,7 @@ end
   def update
     respond_to do |format|
       if @class_name.update(class_name_params)
-        format.html { redirect_to @class_name, notice: 'Class name was successfully updated.' }
+        format.html { redirect_to class_names_path, notice: 'Class name was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -80,6 +80,6 @@ end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def class_name_params
-      params.require(:class_name).permit(:class_name)
+      params.require(:class_name).permit(:class_name, :subject_id)
     end
 end

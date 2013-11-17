@@ -46,16 +46,16 @@
 	  <td><%= users.user_info.gender %></td>
       <td>
 	  <% if !users.user_info.ks2_english.blank?%>
-	  <%= @results[users.user_info.ks2_english].grade %></td>
+	  <%= Result.where(id: users.user_info.ks2_english).first.grade%></td>
 	  <%end%>
 	  <td>
 	  <% if !users.user_info.ks2_maths.blank?%>
-      <%= @results[users.user_info.ks2_maths].grade %>
+      <%= Result.where(id: users.user_info.ks2_maths).first.grade %>
 	  <%end%>
 	  </td>
 	  <td>
 	  <% if !users.user_info.ks2_science.blank?%>
-	  <%= @results[users.user_info.ks2_science.to_i].grade %>
+	  <%= Result.where(id: users.user_info.ks2_science).first.grade %>
 	  <%end%>
 	  </td>
 	  <td>

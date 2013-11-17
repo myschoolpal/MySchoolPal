@@ -22,7 +22,7 @@ class UserInfosController < ApplicationController
 		redirect_to root_path
 	  end
 		
-		@results = Result.all.to_a
+
 		
 			
 		

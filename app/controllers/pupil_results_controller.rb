@@ -40,7 +40,6 @@ class PupilResultsController < ApplicationController
 	@class_id = params[:class_id]
 	@col_id = params[:col_id]
 	@subject_id = params[:subject_id]
-	
 	@subjects = Subject.all
 	@groups = Group.all
 	@year = Hash.new
@@ -50,59 +49,25 @@ class PupilResultsController < ApplicationController
 	if current_user.school.primary == true
 		@year = [1,2,3,4,5,6]
 	end
-	@results = Hash.new
 	
-	if @col_id == 'avg'
-		SubjectClass.where(subject_id: @subject_id).each do |s|
-			s.user_class.pupil_results.each do |p|
-				if p.user.user_info.year == @year_id
-					if @group_id
-						result = Array.new
-							if UserGroup.where(group_id: @group_id).where(user_id: p.user_id).first
-								result << p.result.grade
-								if t = p.user.user_targets.where(subject_id: @subject_id).first
-									result << t.result.grade
-								end
-								@results[p.user_id] = result
-							end
-					else
-						result = Array.new
-						result << p.result.grade
-						if r = p.user.user_targets.where(subject_id: @subject_id).first
-						result << r.result.grade
-						end
-						@results[p.user_id] = result
-					end
-				end
-			end
-		end
-
-	else
-		SubjectClass.where(subject_id: @subject_id).each do |s|
-			s.user_class.pupil_results.where(col_id: @col_id).each do |p|
-				if p.user.user_info.year == @year_id
-					if @group_id
-						result = Array.new
-						if UserGroup.where(group_id: @group_id).where(user_id: p.user_id).first
-							result << p.result.grade
-						 if r = p.user.user_targets.where(subject_id: @subject_id).first
-						 result << r.result.grade
-						 end
-						 @results[p.user_id] = result
-						end
-					else
-						result = Array.new
-						result << p.result.grade
-						if r = p.user.user_targets.where(subject_id: @subject_id).first
-						result << r.result.grade
-						end
-						@results[p.user_id] = result
-						
-					end
-				end
+	
+	@u = User.includes(:user_info).where("user_infos.year" => @year_id).joins(:pupil_results).where("pupil_results.col_id" =>@col_id).
+	joins(:class_names).where("class_names.subject_id" => @subject_id).all
+	if @group_id
+	@u = User.includes(:user_info).where("user_infos.year" => @year_id).joins(:pupil_results).where("pupil_results.col_id" =>@col_id).
+	joins(:class_names).where("class_names.subject_id" => @subject_id).includes(:user_groups).where("user_groups.group_id" => @group_id).all
+	end
+	# matrix
+p_array = Array.new
+	@u.each do |p|
+		(30..53).each do |i|
+			if  p.user_info.ks2_maths.to_i == Result.where(aps: i).first.id.to_i
+				p_array	 << p.user_info.surname
 			end
 		end
 	end
+	
+	@pupils = p_array
 	
   end
   # GET /pupil_results/1

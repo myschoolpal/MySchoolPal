@@ -13,10 +13,16 @@
   <tbody>
     <% @class_names.each do |class_name| %>
       <tr>
-        <td><%= class_name.class_name %></td>
-        <td><%= link_to 'Show', class_name %></td>
+	  <td>
+		<%=link_to class_name.class_name, pupil_results_path(:class_id=>class_name.id)%>
+		</td>
+		<td>
+		<%if c = class_name.subject%>
+		<%= c.subject %>
+		<%end%>
+		</td>
         <td><%= link_to 'Edit', edit_class_name_path(class_name) %></td>
-        <td><%= link_to 'Destroy', class_name, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        
       </tr>
     <% end %>
   </tbody>

@@ -1,5 +1,5 @@
 class UserInfo < ActiveRecord::Base
-  attr_accessible :forename, :surname, :user_id, :ks2_english, :ks2_maths, :ks1_english, :ks1_maths, :ks1_reading, :ks1_writing, :pupil, :teacher, 
+  attr_accessible :forename, :surname, :user_id, :ks2_english, :ks2_maths, :ks1_english, :ks1_maths, :ks1_reading, :ks1_writing, :pupil, :teacher, :year,
   :admin, :gender, :user_classes_attributes, :user_groups_attributes, :user_targets_attributes, :pupil_results_attributes
   
   belongs_to :user

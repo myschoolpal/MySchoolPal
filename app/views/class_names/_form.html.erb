@@ -13,7 +13,11 @@
 
   <div class="field">
     <%= f.label :class_name %><br>
-    <%= f.text_field :class_name %>
+    <%= f.text_field :class_name, :class => "form-control" %>
+  </div>
+    <div class="field">
+    <%= f.label :subject_id %><br>
+    <%= f.collection_select :subject_id, Subject.all, :id, :subject, {:include_blank => true}, :class => "form-control" %>
   </div>
   <div class="actions">
     <%= f.submit %>
