@@ -4,33 +4,17 @@
 		<ul class="nav nav-tabs" id="myTab">
 
 			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id])%></li>
-			<%(@start_col..@start_col+6).each do |k|%>
-				<%@t = TitleClass.where(:col_id => k).where(:class_id=>@class_id).first%>						
-				<%if @t%>
-					<%if k == @col_id.to_i%>
-						<%if @t.title.size < 20%>
-							<li class="active"><%=link_to(@t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: k, start_col: @start_col))%></li>
-						<%else%>
-							<li class="active"><%=link_to(@t.title.slice(0..20)+'....', gender_analysis_user_groups_path(class_id: @class_id, col_id: k, start_col: @start_col))%></li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					Assessments<span class="caret"></span>
+				</a>	
+				<ul class="dropdown-menu">
+						<%@titles.each do |t|%>
+							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender)%></li>
 						<%end%>
-					<%else%>
-						<%if @t.title.size < 20%>
-							<li><%=link_to(@t.title, gender_analysis_user_groups_path(class_id: @class_id,  col_id: k, start_col: @start_col))%></li>
-						<%else%>
-							<li><%=link_to(@t.title.slice(0..20)+'....', gender_analysis_user_groups_path(class_id: @class_id, col_id: k, start_col: @start_col))%></li>
-						<%end%>
-					<%end%>
-				<%end%>
-			<%end%>
-			<%if @col_id == 'avg'%>
-				<li class="active"><%=link_to('Average', gender_analysis_user_groups_path(class_id: @class_id,  col_id: 'avg', start_col: @start_col))%></li>
-			<%else%>
-				<li><%=link_to('Average', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg', start_col: @start_col))%></li>
-			<%end%>
-			<%if @title_count >6 %>
-				<li class="pull-right"><%=link_to('Next', gender_analysis_user_groups_path(class_id: @class_id, start_col: @start_col+6))%></li>
-				<li class="pull-right"><%=link_to('Previous', gender_analysis_user_groups_path(class_id: @class_id, start_col: @start_col-6))%></li>
-			<%end%>
+					<li><%=link_to('Average', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg', gender: @gender))%></li>
+				</ul>
+			</li>
 		</ul>
 		
 	</div>

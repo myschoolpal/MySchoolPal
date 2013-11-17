@@ -1,0 +1,375 @@
+<ul class="nav nav-tabs" id="myTab">
+			<li><%=link_to @class + " - " + @subject, pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
+			<li class="active"><%=link_to 'Levels of Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
+			<li class="dropdown">
+				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					Assessments<span class="caret"></span>
+				</a>	
+				<ul class="dropdown-menu">
+						<%@titles.each do |t|%>
+							<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, col_id: t.col_id)%></li>
+						<%end%>
+				</ul>
+			</li>
+</ul>
+<div class="row-fluid" style="margin-top:20px;">
+	<div class="col-md-6 col-xs-6">
+		<div class="row">
+			<div class="col-xs-3 col-md-3">
+			Surname
+			</div>
+			<div class="col-xs-3 col-md-3">
+			Forename
+			</div>
+			<div class="col-xs-2 col-md-2">
+			Target
+			</div>
+			<div class="col-xs-2 col-md-2">
+			Result
+			</div>
+			<div class="col-xs-2 col-md-2">
+			Levels of Progress
+			</div>
+		</div>
+		
+		<%aps = Array.new%>
+		<%@u.each do |p|%>
+			<%if a = p.user_info%>
+				<div class="row">
+					<div class="col-xs-3">
+						<%=link_to(a.surname.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id))%>
+					</div>
+					<div class="col-xs-3">
+						<%=link_to(a.forename.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id))%>
+					</div>
+					<div class="col-xs-2">
+						<%if t = p.user_targets.where(subject_id: @subject_id).first%>
+							<%=t.result.grade%>
+						<%end%>
+					</div>
+					<div class="col-xs-2">
+						<%if r = p.pupil_results.where(col_id: @col_id).where(class_id: @class_id).first%>
+						
+							<%=r.result.grade%>
+							<%aps << r.result.aps%>
+						<%end%>
+					</div>
+					<div class="col-xs-2">
+							<%if k = Result.where(id: a.ks2_maths).first%>
+								<%if r %>
+									<%k.aps%>
+									<%r.result.aps%>
+									<%diff = r.result.aps- k.aps%>
+										
+										<%if r.result.aps >80%>
+											
+											<%(7..53).step(6).each do |n|%>
+												<%if k.aps >=n && k.aps <=n+5%>
+												
+													<%j=79+((n-7)/6)%>
+													<%(81..88).each do |i|%>
+														<%if r.result.aps == i%>
+															<%=i-j%>
+														<%end%>
+													<%end%>
+												<%end%>
+											
+											<%end%>
+										<%end%>
+										
+										<%if r.result.aps <54%>
+										<%if diff == 0%>
+											No Progress
+										<%end%>
+										<%if diff == 1 || diff==2%>
+											1 Sub level
+										<%end%>
+										<%(3..50).step(2).each do |i|%>
+											<%if diff==i || diff==i+1%>
+												<%=((i+1)/2)%> sub levels
+											<%end%>
+											<%if diff==(i*-1) || diff==((i+1)*-1)%>
+												<%=(((i+1)/2)*-1)%> sub levels
+											<%end%>
+											<%i=+2%>
+										<%end%>
+										<%end%>
+									
+								<%end%>
+							<%end%>
+						</div>
+				</div>
+			<%end%>		
+		<%end%>
+		
+	</div>
+	<div class="col-md-6 col-xs-6">
+			<%if !aps.empty?%>
+				<%avg_aps =(aps.inject{|sum,x| sum + x }.to_f/aps.size).round(0)%>
+			<%end%>
+				
+				<div class="row">
+					<div id="chart2" style="width:550px; height:350px;"></div>
+					<div id="chart1"  style="width:550px; height:350px;"></div>
+					<div id="no_data" style="width:550px;">No Data</div>
+				</div>	
+
+
+		
+		<br />
+	
+		<br />
+		
+	</div>
+</div>
+
+<%= render "matrix"%>
+
+
+
+		
+<script>
+$(document).ready(function(){
+  var line1 = [
+	<%@u.each do |p|%>
+		<%if a = p.user_info%>		
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+		<%end%>  
+	<%end%>
+];
+  var line2 = [
+  <%@u.each do |p|%>
+  	<%if a = p.user_info%>		
+		['<%=a.forename%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps-80%><%end%>],
+	<%end%>  
+  <%end%>
+  ];
+ 
+	 tickFormatter = function (format, val) { 
+	 if(val==8)
+	 {return "A*";}
+	else if(val==7)
+	 {return "A";}
+	 else if(val==6)
+	 {return "B";}
+	 else if(val==5)
+	 {return "C";}
+	 else if(val==4)
+	 {return "D";}
+	 else if(val==3)
+	 {return "E";}
+	 else if(val==2)
+	 {return "F";}
+	 else if(val==1)
+	 {return "G";}
+	 else if(val==0)
+	 {return "U";}
+  }
+  
+  var plot1 = $.jqplot('chart1', [line1, line2], {
+    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+	title:'Assessment Results ',
+    axesDefaults: {
+		min: 0,
+		max: 8,
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+        tickOptions: {
+          angle: 30
+        }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		label:'Students', 
+          labelOptions:{
+            fontFamily:'Helvetica',
+            fontSize: '12pt'
+          },
+      },
+      x2axis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		tickOptions: {
+          show: false,
+		  showLabel: false,
+		  textColor: '#ffffff'
+        },
+				  showTicks: false,
+				    showTickMarks: false
+      },
+      yaxis: {
+         label: 'Grade',
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+		  tickOptions: {
+		  formatter: tickFormatter
+		  },
+		   tickInterval : 1,
+		  
+      },
+      y2axis: {
+        autoscale:true,
+		tickOptions: {
+		  formatter: tickFormatter
+		  },
+		  tickInterval : 1,
+      }
+    },
+	 highlighter: {
+        show: true,
+        sizeAdjust: 7.5,
+		tooltipAxes: 'y',
+		formatString: 'Grade: %s'
+      }
+      
+
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+var line1 = [
+	<%@u.each do |p|%>
+		<%if a = p.user_info%>		
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
+		<%end%>  
+	<%end%>
+];
+  var line2 = [
+  <%@u.each do |p|%>
+  	<%if a = p.user_info%>		
+		['<%=a.forename%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%end%>],
+	<%end%>  
+  <%end%>
+  ];
+ 
+	 tickFormatter = function (format, val) { 
+	 if(val>=53)
+	 {return "8a";}
+	 else if(val>=51)
+	 {return "8b";}
+	 else if(val>=49)
+	 {return "8c";}
+	 else if(val>=47)
+	 {return "7a";}
+	 else if(val>=45)
+	 {return "7b";}
+	 else if(val>=43)
+	 {return "7c";}
+	 else if(val>=41)
+	 {return "6a";}
+	 else if(val>=39)
+	 {return "6b";}
+	 else if(val>=37)
+	 {return "6c";}
+	 else if(val>=35)
+	 {return "5a";}
+	 else if(val>=33)
+	 {return "5b";}
+	 else if(val>=31)
+	 {return "5c";}
+	 else if(val>=29)
+	 {return "4a";}
+	 else if(val>=27)
+	 {return "4b";}
+	 else if(val>=25)
+	 {return "4c";}
+	 else if(val>=23)
+	 {return "3a";}
+	 else if(val>=21)
+	 {return "3b";}
+	 else if(val>=19)
+	 {return "3c";}
+	 else if(val>=17)
+	 {return "2a";}
+	 else if(val>=15)
+	 {return "2b";}
+	 else if(val>=13)
+	 {return "2c";}
+	 else if(val>=11)
+	 {return "1a";}
+	 else if(val>=9)
+	 {return "1b";}
+	 else if(val>=7)
+	 {return "1c";}
+	 else if(val>=3)
+	 {return "W";}
+  }
+  
+  var plot2 = $.jqplot('chart2', [line1, line2], {
+    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+	title:'Assessment Results ',
+    axesDefaults: {
+		min: 3,
+		max: 53,
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+        tickOptions: {
+          angle: 30
+        }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		label:'Students	', 
+          labelOptions:{
+            fontFamily:'Helvetica',
+            fontSize: '12pt'
+          },
+      },
+      x2axis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		tickOptions: {
+          show: false,
+		  showLabel: false,
+		  textColor: '#ffffff'
+        },
+				  showTicks: false,
+				    showTickMarks: false
+      },
+      yaxis: {
+         label: 'Grade',
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+		  tickOptions: {
+		  formatter: tickFormatter
+		  },
+		   tickInterval : 2,
+		  
+      },
+      y2axis: {
+        autoscale:true,
+		tickOptions: {
+		  formatter: tickFormatter
+		  },
+		  tickInterval : 2,
+      }
+    },
+	 highlighter: {
+        show: true,
+        sizeAdjust: 7.5,
+		tooltipAxes: 'y',
+		formatString: 'Grade: %s'
+      }
+      
+
+  });
+});
+</script>
+<script type='text/javascript'>
+					var aps = '<%=avg_aps%>'
+					$(document).ready(function () {
+					if (aps>0 && aps<54)
+					{
+					$("#chart1").hide();
+					$("#no_data").hide();
+					}
+					else if (aps>79)
+					{
+					$("#chart2").hide();
+					$("#no_data").hide();
+					}
+					else if (aps==0)
+					{
+					$("#chart2").hide();
+					$("#chart1").hide();
+					}
+				});
+				</script>

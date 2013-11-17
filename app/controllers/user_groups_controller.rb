@@ -39,11 +39,11 @@ class UserGroupsController < ApplicationController
 			end
 		end
   
-	  
+		@titles = TitleClass.where(:class_id=>@class_id).all
   end
 
   def group_analysis
-	@title_count = TitleClass.where(:class_id=>@class_id).count
+	
 	  @show_menu = 1
 	  if params[:start_col]
 		@start_col = params[:start_col].to_i
@@ -66,6 +66,7 @@ class UserGroupsController < ApplicationController
 				@subject =@s.subject
 			end
 		end
+		@titles = TitleClass.where(:class_id=>@class_id).all
   end
 
   def delete_groups

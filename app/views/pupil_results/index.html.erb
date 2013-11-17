@@ -32,6 +32,7 @@
 						<%end%>
 					</ul>
 				</li>
+				<li><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
 				<li class="pull-right"><%=link_to('Next >>',pupil_results_path(class_id: @class_id, col_id: @start_col+6))%></li>
 				<%if @start_col > 7%>
 				<li class="pull-right"><%=link_to('<< Previous',pupil_results_path(class_id: @class_id, col_id: @start_col-8))%></li>

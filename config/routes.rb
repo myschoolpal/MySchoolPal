@@ -49,6 +49,7 @@ MSP::Application.routes.draw do  get "static_pages/home"
   collection do
   post :import 
   get 'year_analysis'
+  get 'levels_progress'
   get 'subject_choice'
   end
   end

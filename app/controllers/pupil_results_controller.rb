@@ -57,19 +57,19 @@ class PupilResultsController < ApplicationController
 	@u = User.includes(:user_info).where("user_infos.year" => @year_id).joins(:pupil_results).where("pupil_results.col_id" =>@col_id).
 	joins(:class_names).where("class_names.subject_id" => @subject_id).includes(:user_groups).where("user_groups.group_id" => @group_id).all
 	end
-	# matrix
-p_array = Array.new
-	@u.each do |p|
-		(30..53).each do |i|
-			if  p.user_info.ks2_maths.to_i == Result.where(aps: i).first.id.to_i
-				p_array	 << p.user_info.surname
-			end
-		end
-	end
-	
-	@pupils = p_array
-	
-  end
+ end
+ 
+ def levels_progress
+ @class_id = params[:class_id]
+ @titles = TitleClass.where(:class_id=>@class_id).all
+ @col_id = params[:col_id]
+ @u = User.includes(:user_classes).where("user_classes.class_id" => @class_id).all
+ if c = ClassName.where(id: @class_id).first
+ @subject = c.subject.subject
+ @class = c.class_name
+ @subject_id = c.subject_id
+ end
+ end
   # GET /pupil_results/1
   # GET /pupil_results/1.json
   def show
