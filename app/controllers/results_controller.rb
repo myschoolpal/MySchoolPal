@@ -7,6 +7,11 @@ before_filter :authorize_admin
     @results = Result.all
   end
 
+   def import
+  Result.import(params[:file])
+  redirect_to :back, notice: "Results have been imported."
+ end
+  
   # GET /results/1
   # GET /results/1.json
   def show

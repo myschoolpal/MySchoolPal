@@ -35,7 +35,13 @@ MSP::Application.routes.draw do  get "static_pages/home"
   end
   resources :wbs
   resources :lock_columns
-  resources :results
+  
+  resources :results do 
+  collection do 
+  post :import
+  end
+  end
+  
   resources :class_names do
   collection do 
   post :import 

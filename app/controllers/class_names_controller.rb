@@ -10,7 +10,7 @@ class ClassNamesController < ApplicationController
   def import
   ClassName.import(params[:file], current_user)
   redirect_to :back, notice: "Classes have been imported."
-end
+ end
   
   # GET /class_names/1
   # GET /class_names/1.json
