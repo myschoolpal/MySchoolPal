@@ -8,7 +8,7 @@ class UserGroupsController < ApplicationController
   end
   
   def gender_analysis
-  @title_count = TitleClass.where(:class_id=>@class_id).count
+  
 	  @show_menu = 1
 	  if params[:start_col]
 		@start_col = params[:start_col].to_i
@@ -16,7 +16,7 @@ class UserGroupsController < ApplicationController
 		@start_col = 1
 	  end
 	  @class_id = params[:class_id]
-	  @class_name = ClassName.find(@class_id)
+	  @class_name = ClassName.where(id: @class_id).first
 	  @col_id = params[:col_id]
 	  if params[:gender]
 	  @gender = params[:gender]
