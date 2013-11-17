@@ -17,6 +17,7 @@ class UserGroupsController < ApplicationController
 	  end
 	  @class_id = params[:class_id]
 	  @class_name = ClassName.where(id: @class_id).first
+	  @subject = @class_name.subject.subject
 	  @col_id = params[:col_id]
 	  if params[:gender]
 	  @gender = params[:gender]
@@ -32,12 +33,6 @@ class UserGroupsController < ApplicationController
 	  end
 	  
 	  
-	   if s = SubjectClass.where(:class_id => params[:class_id]).first
-			@s = s.subject
-			if @s
-				@subject =@s.subject
-			end
-		end
   
 		@titles = TitleClass.where(:class_id=>@class_id).all
   end
