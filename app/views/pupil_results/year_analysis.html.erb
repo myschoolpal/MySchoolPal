@@ -53,7 +53,7 @@
 			<div class="col-xs-2 col-md-2">
 			Result
 			</div>
-			<div class="col-xs-2 col-md-2">
+			<div class="col-xs-4 col-md-4">
 			Levels of Progress
 			</div>
 		</div>
@@ -79,11 +79,48 @@
 							<%aps << r.result.aps%>
 						<%end%>
 					</div>
-					<div class="col-xs-2">
-							<%if k = Result.where(id: a.ks2_english).first%>
-							<%if r %>
-							<%= r.result.aps-80 - k.aps%>
-							<%end%>
+					<div class="col-xs-4">
+							<%if k = Result.where(id: a.ks2_maths).first%>
+								<%if r %>
+									<%k.aps%>
+									<%r.result.aps%>
+									<%diff = r.result.aps- k.aps%>
+										
+										<%if r.result.aps >80%>
+											
+											<%(7..53).step(6).each do |n|%>
+												<%if k.aps >=n && k.aps <=n+5%>
+												
+													<%j=79+((n-7)/6)%>
+													<%(81..88).each do |i|%>
+														<%if r.result.aps == i%>
+															<%=i-j%> Levels of Progress
+														<%end%>
+													<%end%>
+												<%end%>
+											
+											<%end%>
+										<%end%>
+										
+										<%if r.result.aps <54%>
+										<%if diff == 0%>
+											No Progress
+										<%end%>
+										<%if diff == 1 || diff==2%>
+											1 Sub level
+										<%end%>
+										<%(3..50).step(2).each do |i|%>
+											<%if diff==i || diff==i+1%>
+												<%=((i+1)/2)%> sub levels
+											<%end%>
+											<%if diff==(i*-1) || diff==((i+1)*-1)%>
+												<%=(((i+1)/2)*-1)%> sub levels
+											<%end%>
+											<%i=+2%>
+										<%end%>
+										<%end%>
+									
+								<%end%>
 							<%end%>
 						</div>
 				</div>
@@ -123,7 +160,7 @@ $(document).ready(function(){
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
 		<%end%>  
 	<%end%>
 ];
@@ -220,14 +257,14 @@ $(document).ready(function(){
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
 		<%end%>  
 	<%end%>
 ];
   var line2 = [
   <%@u.each do |p|%>
   	<%if a = p.user_info%>		
-		['<%=a.forename%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps-80%><%end%>],
+		['<%=a.forename%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%end%>],
 	<%end%>  
   <%end%>
   ];
