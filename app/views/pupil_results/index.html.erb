@@ -58,6 +58,9 @@
 				Target
 				</div>
 					<%(@start_col..@start_col+6).each do |k|%>
+						<%if @lock = LockColumn.where(:col_id => k).where(:class_id=>@class_id).first%>
+							<%=@lock.title%>
+						<%else%>
 						<%@t = TitleClass.where(:col_id => k).where(:class_id=>@class_id).first%>						
 							<%if @t%>
 								<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;" id="userdata" data-toggle="tooltip" data-original-title='
@@ -72,7 +75,7 @@
 								<%=link_to('New', edit_pupil_result_path(k, :class_id=>@class_id))%>
 								</div>
 							<%end%>
-						
+						<%end%>
 						
 					<%end%>
 				<div class="col-md-1 text-center">
