@@ -33,6 +33,12 @@
 					</ul>
 				</li>
 				<li><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
+				<%if @show == "true"%>
+				<li><%=link_to 'Hide Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
+				<%else%>
+				<li><%=link_to 'Show Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, show: true)%></li>
+				<%end%>
+				
 				<li class="pull-right"><%=link_to('Next >>',pupil_results_path(class_id: @class_id, col_id: @start_col+6))%></li>
 				<%if @start_col > 7%>
 				<li class="pull-right"><%=link_to('<< Previous',pupil_results_path(class_id: @class_id, col_id: @start_col-8))%></li>
@@ -57,11 +63,16 @@
 				<div class="col-xs-1 col-md-1 text-center">
 				Target
 				</div>
-					<%(@start_col..@start_col+6).each do |k|%>
+				<%k = @start_col%>
+					<%i=1%>
+					<% until i == 7%>
 						<%if @lock = LockColumn.where(:col_id => k).where(:class_id=>@class_id).first%>
-							<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;">
-								<%=@lock.title.slice(0..20)%>
-							</div>
+							<%if @show == "true"%>
+								<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;">
+									<%=@lock.title.slice(0..20)%>
+								</div>
+								<%i+=1%>
+							<%end%>
 						<%else%>
 						<%@t = TitleClass.where(:col_id => k).where(:class_id=>@class_id).first%>						
 							<%if @t%>
@@ -72,13 +83,15 @@
 								
 								<br />
 								</div>
+								<%i+=1%>
 							<%else%>
 								<div class="col-xs-1 col-md-1 text-center">
 								<%=link_to('New', edit_pupil_result_path(k, :class_id=>@class_id))%>
 								</div>
+								<%i+=1%>
 							<%end%>
 						<%end%>
-						
+						<%k +=1%>
 					<%end%>
 				<div class="col-md-1 text-center">
 					Average
@@ -112,34 +125,73 @@
 							<%end%>
 						</div>
 							<%avg = Array.new%>
-						<%(@start_col..@start_col+6).each do |k|%>
-							<% @r= p.user.pupil_results.where(:col_id => k).where(:class_id=>@class_id).first%>
-							<% if @r && @t %>
-								<%@difference = @r.result.aps - @t.result.aps%>
-										<%case %>
-											<%when @difference >0%>
-												<div class="col-xs-1 col-md-1 text-center above_target cell_design">
-											<%when @difference ==0%>
-												<div class="col-xs-1 col-md-1 text-center on_target cell_design">
-											<%when @difference <0 && @difference >=-2 %>
-												<div class="col-xs-1 col-md-1 text-center one_below_target cell_design">
-											<%when @difference <-2%>
-												<div class="col-xs-1 col-md-1 text-center below_target cell_design">
-											<%else%>
-												<div class="col-xs-1 col-md-1 text-center empty_result cell_design">	
-										<%end%>
-													<%=@r.result.grade %>
-													
-													<%avg << @r.result.aps%>
-												</div>
-							<%else%>
-								<div class="col-xs-1 col-md-1 text-center empty_result">
-								<%if @r%>
-								<%=@r.result.grade %>
-								<%avg << @r.result.aps%>
+						<%k = @start_col%>
+						<%i=1%>
+						<% until i == 7%>
+							<%if @lock = LockColumn.where(:col_id => k).where(:class_id=>@class_id).first%>
+								<%if @show == "true"%>
+								<% @r= p.user.pupil_results.where(:col_id => k).where(:class_id=>@class_id).first%>
+								<% if @r && @t %>
+									<%@difference = @r.result.aps - @t.result.aps%>
+											<%case %>
+												<%when @difference >0%>
+													<div class="col-xs-1 col-md-1 text-center above_target cell_design">
+												<%when @difference ==0%>
+													<div class="col-xs-1 col-md-1 text-center on_target cell_design">
+												<%when @difference <0 && @difference >=-2 %>
+													<div class="col-xs-1 col-md-1 text-center one_below_target cell_design">
+												<%when @difference <-2%>
+													<div class="col-xs-1 col-md-1 text-center below_target cell_design">
+												<%else%>
+													<div class="col-xs-1 col-md-1 text-center empty_result cell_design">	
+											<%end%>
+														<%=@r.result.grade %>
+														
+														<%avg << @r.result.aps%>
+													</div>
+													<%i+=1%>
+								<%else%>
+									<div class="col-xs-1 col-md-1 text-center empty_result">
+									<%if @r%>
+									<%=@r.result.grade %>
+									<%avg << @r.result.aps%>
+									<%end%>
+									</div>
+									<%i+=1%>
 								<%end%>
-								</div>
+								<%end%>
+							<%else%>
+								<% @r= p.user.pupil_results.where(:col_id => k).where(:class_id=>@class_id).first%>
+								<% if @r && @t %>
+									<%@difference = @r.result.aps - @t.result.aps%>
+											<%case %>
+												<%when @difference >0%>
+													<div class="col-xs-1 col-md-1 text-center above_target cell_design">
+												<%when @difference ==0%>
+													<div class="col-xs-1 col-md-1 text-center on_target cell_design">
+												<%when @difference <0 && @difference >=-2 %>
+													<div class="col-xs-1 col-md-1 text-center one_below_target cell_design">
+												<%when @difference <-2%>
+													<div class="col-xs-1 col-md-1 text-center below_target cell_design">
+												<%else%>
+													<div class="col-xs-1 col-md-1 text-center empty_result cell_design">	
+											<%end%>
+														<%=@r.result.grade %>
+														
+														<%avg << @r.result.aps%>
+													</div>
+													<%i+=1%>
+								<%else%>
+									<div class="col-xs-1 col-md-1 text-center empty_result">
+									<%if @r%>
+									<%=@r.result.grade %>
+									<%avg << @r.result.aps%>
+									<%end%>
+									</div>
+								<%i+=1%>
+								<%end%>
 							<%end%>
+						<%k+=1%>
 						<%end%>
 						<%if avg.size > 0%>
 							<%if @t%>

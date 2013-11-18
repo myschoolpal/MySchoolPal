@@ -9,7 +9,7 @@ class PupilResultsController < ApplicationController
   def index
 	@show_menu = 1
 	@class_id = params[:class_id]
-	
+	@show = params[:show]
 	@class_name = ClassName.where(:id =>params[:class_id]).first.class_name
 	
 	col_id = params[:col_id].to_i
