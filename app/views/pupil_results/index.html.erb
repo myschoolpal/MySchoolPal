@@ -39,9 +39,9 @@
 				<li><%=link_to 'Show Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, show: true)%></li>
 				<%end%>
 				
-				<li class="pull-right"><%=link_to('Next >>',pupil_results_path(class_id: @class_id, col_id: @start_col+6))%></li>
+				<li class="pull-right"><%=link_to('Next >>',pupil_results_path(class_id: @class_id, col_id: @start_col+6,show: @show))%></li>
 				<%if @start_col > 7%>
-				<li class="pull-right"><%=link_to('<< Previous',pupil_results_path(class_id: @class_id, col_id: @start_col-8))%></li>
+				<li class="pull-right"><%=link_to('<< Previous',pupil_results_path(class_id: @class_id, col_id: @start_col-8, show: @show))%></li>
 				<%end%>
 			</ul>
 </div>
