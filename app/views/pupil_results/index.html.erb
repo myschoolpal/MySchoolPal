@@ -59,9 +59,9 @@
 				</div>
 					<%(@start_col..@start_col+6).each do |k|%>
 						<%if @lock = LockColumn.where(:col_id => k).where(:class_id=>@class_id).first%>
-						<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;">
-						<%=@lock.title.slice(0..20)%>
-						</div>
+							<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;">
+								<%=@lock.title.slice(0..20)%>
+							</div>
 						<%else%>
 						<%@t = TitleClass.where(:col_id => k).where(:class_id=>@class_id).first%>						
 							<%if @t%>
@@ -72,7 +72,7 @@
 								
 								<br />
 								</div>
-								<%else%>
+							<%else%>
 								<div class="col-xs-1 col-md-1 text-center">
 								<%=link_to('New', edit_pupil_result_path(k, :class_id=>@class_id))%>
 								</div>

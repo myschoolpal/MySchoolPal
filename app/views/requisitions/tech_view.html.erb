@@ -66,6 +66,7 @@
 													<br />
 													<%if re.class_name%>
 														<%=re.class_name.class_name%>
+														<%=UserClass.where(class_id: re.class_name.id).count%>
 													<%end%>
 													<br />
 													
