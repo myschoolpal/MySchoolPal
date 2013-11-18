@@ -65,7 +65,7 @@
 				</div>
 				<%k = @start_col%>
 					<%i=1%>
-					<% until i == 7%>
+					<% until i == 8%>
 						<%if @lock = LockColumn.where(:col_id => k).where(:class_id=>@class_id).first%>
 							<%if @show == "true"%>
 								<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;">
@@ -127,7 +127,7 @@
 							<%avg = Array.new%>
 						<%k = @start_col%>
 						<%i=1%>
-						<% until i == 7%>
+						<% until i == 8%>
 							<%if @lock = LockColumn.where(:col_id => k).where(:class_id=>@class_id).first%>
 								<%if @show == "true"%>
 								<% @r= p.user.pupil_results.where(:col_id => k).where(:class_id=>@class_id).first%>
