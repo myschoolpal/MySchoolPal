@@ -12,9 +12,9 @@ class PupilResultsController < ApplicationController
 	@show = params[:show]
 	@class_name = ClassName.where(:id =>params[:class_id]).first.class_name
 	
-	col_id = params[:col_id].to_i
-	if col_id > 4
-	@start_col = ((col_id/7.0).ceil * 7)+1
+	@col_id = params[:col_id].to_i
+	if @col_id > 4
+	@start_col = ((@col_id/7.0).ceil * 7)+1
 	else 
 	@start_col = 1
 	end
