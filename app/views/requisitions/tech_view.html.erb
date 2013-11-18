@@ -66,7 +66,7 @@
 													<br />
 													<%if re.class_name%>
 														<%=re.class_name.class_name%>
-														<%=UserClass.where(class_id: re.class_name.id).count%>
+														<%=User.includes(:user_info).where("user_infos.pupil"=>true).includes(:user_classes).where("user_classes.class_id"=> re.class_name.id).count%>
 													<%end%>
 													<br />
 													
