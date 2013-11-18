@@ -68,7 +68,8 @@
 					<% until i == 8%>
 						<%if @lock = LockColumn.where(:col_id => k).where(:class_id=>@class_id).first%>
 							<%if @show == "true"%>
-								<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;">
+								<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;" id="userdata" data-toggle="tooltip" data-original-title='
+								<%=link_to('Edit', edit_pupil_result_path(k, :class_id=>@class_id), :style => "color:#FFF")%>' data-html="true">														
 									<%=@lock.title.slice(0..20)%>
 								</div>
 								<%i+=1%>

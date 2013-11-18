@@ -153,6 +153,7 @@ class PupilResultsController < ApplicationController
   # GET /pupil_results/1/edit
   def edit
   @col = params[:id]
+  @class_id =  params[:class_id]
   @pupils = UserClass.where(class_id: params[:class_id]).all
   @pupil_result = PupilResult.new
   @title = TitleClass.new
