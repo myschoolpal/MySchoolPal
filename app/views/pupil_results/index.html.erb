@@ -107,6 +107,7 @@
 	<div class="row">
 		<div class="col-xs-12 col-md-12">
 			<%@pupils.each do |p|%>
+				<%if p.user.user_info%>
 					<%if p.user.user_info.pupil==true%>
 					<div class="row">		
 						<div class="col-xs-3 col-md-3">
@@ -225,6 +226,7 @@
 						<%end%>
 						
 					</div>
+				<%end%>
 				<%end%>
 			<hr style="margin:2px;">
 			<%end%>
