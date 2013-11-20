@@ -1,5 +1,5 @@
 class ClassName < ActiveRecord::Base
-  attr_accessible :class_name, :school_id, :subject_id
+  attr_accessible :class_name, :school_id, :subject_id, :year_id
   
   has_many :lock_columns
   has_many :subject_classes

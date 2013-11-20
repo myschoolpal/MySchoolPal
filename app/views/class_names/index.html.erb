@@ -4,8 +4,8 @@
   <thead>
     <tr>
       <th>Class name</th>
-      <th></th>
-      <th></th>
+      <th>Subject</th>
+      <th>Year</th>
       <th></th>
     </tr>
   </thead>
@@ -20,6 +20,9 @@
 		<%if c = class_name.subject%>
 		<%= c.subject %>
 		<%end%>
+		</td>
+		<td>
+		<%= class_name.year_id %>
 		</td>
         <td><%= link_to 'Edit', edit_class_name_path(class_name) %></td>
         

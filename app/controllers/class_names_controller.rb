@@ -4,7 +4,7 @@ class ClassNamesController < ApplicationController
   # GET /class_names
   # GET /class_names.json
   def index
-    @class_names = ClassName.where(school_id: current_user.school_id).all
+    @class_names = ClassName.where(school_id: current_user.school_id).order("class_names ASC").all
   end
 
   def import
@@ -80,6 +80,6 @@ class ClassNamesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def class_name_params
-      params.require(:class_name).permit(:class_name, :subject_id)
+      params.require(:class_name).permit(:class_name, :subject_id, :year_id)
     end
 end

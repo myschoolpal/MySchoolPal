@@ -39,6 +39,10 @@ class PupilResultsController < ApplicationController
 	@subjects = Subject.all
   end
   def year_analysis
+		@above = Array.new
+		@on_track = Array.new
+		@one_below = Array.new
+		@below = Array.new
 	@year_id = params[:year_id]
 	@group_id = params[:group_id]
 	@class_id = params[:class_id]
@@ -53,13 +57,17 @@ class PupilResultsController < ApplicationController
 	if current_user.school.primary == true
 		@year = [1,2,3,4,5,6]
 	end
-	
+	@classes = ClassName.where(subject_id: @subject_id.to_i).where(year_id: @year_id)
 	
 	@u = User.includes(:user_info).where("user_infos.year" => @year_id).joins(:pupil_results).where("pupil_results.col_id" =>@col_id).
 	joins(:class_names).where("class_names.subject_id" => @subject_id).all
 	if @group_id
 	@u = User.includes(:user_info).where("user_infos.year" => @year_id).joins(:pupil_results).where("pupil_results.col_id" =>@col_id).
 	joins(:class_names).where("class_names.subject_id" => @subject_id).includes(:user_groups).where("user_groups.group_id" => @group_id).all
+	end
+	if @class_id
+	@u = User.includes(:user_info).where("user_infos.year" => @year_id).joins(:pupil_results).where("pupil_results.col_id" =>@col_id).
+	joins(:class_names).where("class_names.subject_id" => @subject_id).where("class_names.id" => @class_id).all
 	end
  end
  
@@ -69,11 +77,9 @@ class PupilResultsController < ApplicationController
  @col_id = params[:col_id]
  @u = User.includes(:user_classes).where("user_classes.class_id" => @class_id).all
  if c = ClassName.where(id: @class_id).first
- if s =c.subject
+ if s = c.subject
  @subject = s.subject
  @subject_id = s.id
- else
- @subject = ""
  end
  @class = c.class_name
  
