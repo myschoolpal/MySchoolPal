@@ -43,9 +43,12 @@
 						<%=link_to(a.forename.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id))%>
 					</div>
 					<div class="col-xs-2">
+					<%if @subject_id%>
 						<%if t = p.user_targets.where(subject_id: @subject_id).first%>
+					
 							<%=t.result.grade%>
 						<%end%>
+					<%end%>
 					</div>
 					<div class="col-xs-2">
 						<%if r = p.pupil_results.where(col_id: @col_id).where(class_id: @class_id).first%>
@@ -126,7 +129,7 @@
 <%= render "matrix"%>
 
 
-
+<%if @subject_id%>
 		
 <script>
 $(document).ready(function(){
@@ -373,3 +376,5 @@ var line1 = [
 					}
 				});
 				</script>
+				
+<%end%>

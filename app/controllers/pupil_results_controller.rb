@@ -69,9 +69,14 @@ class PupilResultsController < ApplicationController
  @col_id = params[:col_id]
  @u = User.includes(:user_classes).where("user_classes.class_id" => @class_id).all
  if c = ClassName.where(id: @class_id).first
- @subject = c.subject.subject
+ if s =c.subject
+ @subject = s.subject
+ @subject_id = s.id
+ else
+ @subject = ""
+ end
  @class = c.class_name
- @subject_id = c.subject_id
+ 
  end
  end
   # GET /pupil_results/1
