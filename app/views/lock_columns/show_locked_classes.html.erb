@@ -34,6 +34,7 @@
 		<div class="col-md-2">
 			<%=l.readonly_result%>
 		</div>
+			        <td><%= link_to 'Edit', edit_lock_column_path(l) %></td>
 			<%= link_to 'Destroy', l, method: :delete, data: { confirm: 'Are you sure?' } %>
 	</div>
 <%end%>
