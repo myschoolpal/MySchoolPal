@@ -17,7 +17,11 @@ class UserGroupsController < ApplicationController
 	  end
 	  @class_id = params[:class_id]
 	  @class_name = ClassName.where(id: @class_id).first
-	  @subject = @class_name.subject.subject
+	  if s = @class_name.subject
+	  @subject = s.subject
+	  else 
+	  @subject = ""
+	  end
 	  @col_id = params[:col_id]
 	  if params[:gender]
 	  @gender = params[:gender]
