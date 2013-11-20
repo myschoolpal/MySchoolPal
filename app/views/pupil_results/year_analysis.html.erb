@@ -141,7 +141,8 @@
 													<%j=79+((n-7)/6)%>
 													<%(81..88).each do |i|%>
 														<%if r.result.aps == i%>
-															<%=i-j%> Levels of Progress
+															<%= level = i-j%> levels
+															<% @levels << level%>
 														<%end%>
 													<%end%>
 												<%end%>
@@ -184,10 +185,11 @@
 					<div id="chart2" style="width:550px; height:350px;"></div>
 					<div id="chart1"  style="width:550px; height:350px;"></div>
 					<div id="no_data" style="width:550px;">No Data</div>
-					<div id="pie_chart" style="width:550px; margin-top:40px"></div>
+					<div id="pie_chart" style="width:500px; margin-top:40px; margin-left:auto; margin-right:auto;"></div>
+					<div id="pie_chart_levels" style="width:500px; margin-top:40px; margin-left:auto; margin-right:auto;"></div>
 				</div>	
 							
-							
+				
 		
 		<br />
 	
@@ -480,3 +482,43 @@ var line1 = [
 });
 
 </script>
+
+<script type='text/javascript'>				
+				$(document).ready(function(){
+  var data = [
+	<%(-50..50).each do |i|%>
+	<%if @levels.count(i) != 0%>
+	['<%=i%> levels', <%=@levels.count(i)%>],  
+	<%end%>
+    <%end%>
+  ];
+  var plot4 = jQuery.jqplot ('pie_chart_levels', [data], 
+    { 
+      title:'Levels of Progress',
+	  seriesDefaults: {
+	  seriesColors: ["rgba(73,165,191,1)","rgba(78,230,55,1)","rgba(254,182,69,1)", "rgba(252,70,70,1)"],
+        // Make this a pie chart.
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true,
+          
+		  
+        }
+      }, 
+      legend: { show:true, location: 'e' },
+	  highlighter: {
+    show: true,
+	
+    formatString:'%s', 
+    tooltipLocation:'sw', 
+    useAxesFormatters:false
+}
+    }
+  );
+});
+
+</script>
+
+<%=@levels.count(5)%>

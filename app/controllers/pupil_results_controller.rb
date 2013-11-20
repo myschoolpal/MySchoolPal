@@ -43,6 +43,7 @@ class PupilResultsController < ApplicationController
 		@on_track = Array.new
 		@one_below = Array.new
 		@below = Array.new
+		@levels =Array.new
 	@year_id = params[:year_id]
 	@group_id = params[:group_id]
 	@class_id = params[:class_id]
