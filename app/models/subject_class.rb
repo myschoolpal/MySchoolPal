@@ -8,13 +8,12 @@ class SubjectClass < ActiveRecord::Base
 validates :subject_id, :uniqueness => {:scope => :class_id}    
   
   def self.import(file, current_user)
-  classname = ClassName.where(school_id: current_user.school_id).all
-  subject_name = Subject.all
+ 
   CSV.foreach(file.path, headers: true) do |row|
      
 	 c = SubjectClass.new
-     c.class_id = classname.where(:class_name => row[0].to_s).first.id
-	 c.subject_id = subject_name.where(:subject => row[1].to_s).first.id
+     c.class_id = ClassName.where(school_id: current_user.school_id).where(:class_name => row[0].to_s).first.id
+	 c.subject_id = Subject.where(:subject => row[1].to_s).first.id
 	 c.save   
 	 
 	 end
