@@ -13,8 +13,8 @@ validates :subject_id, :uniqueness => {:scope => :class_id}
   CSV.foreach(file.path, headers: true) do |row|
      
 	 c = SubjectClass.new
-     c.class_id = classname.where(:class_name => row[0]).first.id
-	 c.subject_id = subject_name.where(:subject => row[1]).first.id
+     c.class_id = Classname.where(:class_name => row[0]).first.id
+	 c.subject_id = Subject.where(:subject => row[1]).first.id
 	 c.save   
 	 
 	 end
