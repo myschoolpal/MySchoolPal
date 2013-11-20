@@ -32,7 +32,7 @@ class PupilResultsController < ApplicationController
 	@pupils = UserClass.where(class_id: params[:class_id]).all
 	@pupil_result = PupilResult.new
 	@title = TitleClass.new	
-	@user_classes = current_user.timetables.where('class_id IS NOT NULL')
+	@user_classes = current_user.timetables.where('class_id IS NOT NULL').uniq(:class_id)
   end
   
   def subject_choice
