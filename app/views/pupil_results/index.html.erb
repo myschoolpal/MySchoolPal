@@ -28,7 +28,9 @@
 					</a>
 					<ul class="dropdown-menu">
 						<%@user_classes.each do |c|%>
-							<li><%=link_to(c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id))%></li>
+							<%if c.class_name%>
+								<li><%=link_to(c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id))%></li>
+							<%end%>
 						<%end%>
 					</ul>
 				</li>

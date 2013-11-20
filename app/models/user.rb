@@ -16,7 +16,7 @@ class User < ActiveRecord::Base
 		 has_many :groups, through: :user_groups
 		 has_many :pupil_results, dependent: :destroy
 		 has_many :requisitions
-		 
+		 has_many :timetables
 		 attr_accessible :email, :password, :school_id, :password_confirmation, :user_info_attributes, :user_classes_attributes, :user_groups_attributes, 
 		 :user_targets_attributes, :pupil_results_attributes
 		 

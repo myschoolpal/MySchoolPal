@@ -36,7 +36,7 @@ end
   def authorize_correct_teacher
 	if current_user
 		if current_user.admin !=true
-			redirect_to(user_classes_path) if !current_user.user_classes.find_by_class_id(params[:class_id])
+			redirect_to(user_classes_path) if !current_user.timetables.find_by_class_id(params[:class_id])
 		end
 	else
 		redirect_to(root_path)

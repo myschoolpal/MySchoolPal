@@ -9,6 +9,7 @@ class Timetable < ActiveRecord::Base
 validates_uniqueness_of :user_id, :scope => [:period_id, :day_id, :week_id]  
 	  belongs_to :class_name, :foreign_key => "class_id"
 	  belongs_to :room
+	  belongs_to :user
   
     def self.import(file, current_user)
 		number_weeks = current_user.school.number_weeks
