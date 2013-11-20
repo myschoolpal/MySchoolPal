@@ -87,8 +87,9 @@
 						<%end%>
 					</div>
 					<div class="col-xs-2">
-						
-						<%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first && t%>
+						<%if t%>
+						<%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
+							
 								<%@difference = r.result.aps - t.result.aps%>
 											<%case %>
 												<%when @difference >0%>
@@ -120,6 +121,7 @@
 									</div>
 									
 									
+						<%end%>
 						<%end%>
 
 						
