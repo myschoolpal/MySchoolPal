@@ -7,7 +7,7 @@ class UserClassesController < ApplicationController
   def index
 	redirect_to user_infos_path if current_user.admin == true
 	
-    @user_classes = current_user.user_classes.first
+    @user_classes = current_user.timetables.where('class_id IS NOT NULL').first
 	if uc = @user_classes
 	@manage_classes = uc.class_name.id
 	else 
