@@ -16,6 +16,17 @@
 				</ul>
 			</li>
 			
+			<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					  Groups<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<%Group.all.each do |g|%>
+							<li><%=link_to(g.group, group_analysis_path(class_id: @class_id, group_id: g.id, col_id: 'avg'))%></li>	
+						<%end%>
+					</ul>
+				</li>
+			
 				
 			
 		</ul>
