@@ -48,6 +48,7 @@ class RequisitionsController < ApplicationController
 	@class_id = params[:class_id]
 	@wb_id = params[:wb_id]
 	@wb_for_create = params[:wb_for_create]
+	@week = params[:week]
 	case @day_id.to_i
 		when 1
 			@day = 'Monday'
