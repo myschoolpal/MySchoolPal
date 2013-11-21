@@ -9,7 +9,11 @@ class UserClassesController < ApplicationController
 	
     @user_classes = current_user.timetables.where('class_id IS NOT NULL').first
 	if uc = @user_classes
+	if uc.class_name
 	@manage_classes = uc.class_name.id
+	else 
+	@manage_classes = 0
+	end
 	else 
 	@manage_classes = 0
 	end
