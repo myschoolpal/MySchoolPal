@@ -42,7 +42,7 @@ class UserGroupsController < ApplicationController
   end
 
   def group_analysis
-	
+		
 	  @show_menu = 1
 	  if params[:start_col]
 		@start_col = params[:start_col].to_i
@@ -57,7 +57,7 @@ class UserGroupsController < ApplicationController
 	  
 	  @pupils = UserGroup.where(group_id: @group_id).all
 	  @group = Group.where(id: @group_id).first.group
-	  
+	  @locked_titles = LockColumn.where(:class_id=>@class_id).all
 	  
 	   if s = SubjectClass.where(:class_id => params[:class_id]).first
 			@s = s.subject
