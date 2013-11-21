@@ -88,12 +88,13 @@ class RequisitionsController < ApplicationController
   # POST /requisitions.json
   def create
     @wb_id = params[:requisition][:wb_id]
+	@week = params[:requisition][:week]
 	@requisition = Requisition.new(requisition_params)
 	@requisition.user_id = current_user.id
 	@requisition.school_id = current_user.school_id
     respond_to do |format|
       if @requisition.save
-        format.html { redirect_to add_requisition_requisitions_path(wb_id: @wb_id), notice: 'Requisition was successfully created.' }
+        format.html { redirect_to add_requisition_requisitions_path(wb_id: @wb_id, week: @week), notice: 'Requisition was successfully created.' }
         format.json { render action: 'show', status: :created, location: @requisition }
       else
         format.html { redirect_to :back, notice: 'Requisition already exists.' }
