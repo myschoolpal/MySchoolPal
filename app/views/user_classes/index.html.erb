@@ -1,6 +1,6 @@
 <%if current_user.user_info%>
 <%if current_user.user_info.teacher== true%>
-<%=@user_classes.class_id%>
+
 
 <%=link_to 'Manage Classes', pupil_results_path(class_id: @manage_classes)%>
 <br />
