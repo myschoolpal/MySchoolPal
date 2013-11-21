@@ -76,7 +76,7 @@ class PupilResultsController < ApplicationController
  @class_id = params[:class_id]
  @titles = TitleClass.where(:class_id=>@class_id).all
  @col_id = params[:col_id]
- @u = User.includes(:user_classes).where("user_classes.class_id" => @class_id).all
+ @u = User.includes(:user_info).where("user_infos.pupil" => true).includes(:user_classes).where("user_classes.class_id" => @class_id).all
  if c = ClassName.where(id: @class_id).first
  if s = c.subject
  @subject = s.subject
