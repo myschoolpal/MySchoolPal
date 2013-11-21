@@ -83,7 +83,7 @@ class PupilResultsController < ApplicationController
  @subject_id = s.id
  end
  @class = c.class_name
- 
+ @locked_titles = locked_columns.where(:class_id=>@class_id).all
  end
  end
   # GET /pupil_results/1

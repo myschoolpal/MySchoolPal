@@ -6,6 +6,9 @@
 					Assessments<span class="caret"></span>
 				</a>	
 				<ul class="dropdown-menu">
+						<%@locked_titles.each do |t|%>
+							<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, col_id: t.col_id)%></li>
+						<%end%>
 						<%@titles.each do |t|%>
 							<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, col_id: t.col_id)%></li>
 						<%end%>
