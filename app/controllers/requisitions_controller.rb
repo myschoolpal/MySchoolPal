@@ -69,7 +69,7 @@ class RequisitionsController < ApplicationController
 	@day_id = params[:day_id]
 	@class_id = params[:class_id]
 	@wb_id = params[:wb_id]
-	
+	@week = params[:week]
 	case @day_id.to_i
 		when 1
 			@day = 'Monday'
@@ -106,9 +106,10 @@ class RequisitionsController < ApplicationController
   # PATCH/PUT /requisitions/1.json
   def update
   @wb_id = params[:requisition][:wb_id]
+  @week = params[:requisition][:week]
     respond_to do |format|
       if @requisition.update(requisition_params)
-        format.html { redirect_to add_requisition_requisitions_path(wb_id: @wb_id), notice: 'Requisition was successfully updated.' }
+        format.html { redirect_to add_requisition_requisitions_path(wb_id: @wb_id, week: @week), notice: 'Requisition was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
