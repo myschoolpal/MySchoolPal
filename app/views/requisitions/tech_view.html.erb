@@ -58,7 +58,7 @@
 							</div>
 						<%(1..current_user.school.number_periods).each do |i|%>
 								<div class="col-xs-2 col-md-2">
-								<%=i%>
+								<%i%>
 									<p class="tech">
 										<%if req = Requisition.where(period_id: i).where(day_id: day).where(wb_id: @wb_id).where(room_id: @room_array[r]).all%>
 											<%req.each do |re|%>
