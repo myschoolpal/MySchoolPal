@@ -25,7 +25,7 @@ class WbWeeksController < ApplicationController
   # POST /wb_weeks.json
   def create
     @wb_week = WbWeek.new(wb_week_params)
-	@wb_week.school_id = current_user.school.id
+	@wb_week.school_id = current_user.school_id
     respond_to do |format|
       if @wb_week.save
         format.html { redirect_to wb_weeks_path, notice: 'Wb week was successfully created.' }
