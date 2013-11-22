@@ -13,6 +13,7 @@ MSP::Application.routes.draw do  get "static_pages/home"
 	get 'lock_columns/show_locked_classes', to: 'lock_columns#show_locked_classes', as: 'show_locked_classes'
 
   
+  resources :wb_weeks
   resources :requisitions do 
   collection do 
   get 'add_requisition'

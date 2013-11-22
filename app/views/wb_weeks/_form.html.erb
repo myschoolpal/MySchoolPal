@@ -1,0 +1,26 @@
+<%= form_for(@wb_week) do |f| %>
+  <% if @wb_week.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@wb_week.errors.count, "error") %> prohibited this wb_week from being saved:</h2>
+
+      <ul>
+      <% @wb_week.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :wb_id %><br>
+    <%= f.collection_select :wb_id, Wb.all, :id, :week_beginning, {}, :class => "form-control" %>
+  </div>
+  <div class="field">
+    <%= f.label :week_id %><br>
+    <%= f.number_field :week_id %>
+  </div>
+  
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

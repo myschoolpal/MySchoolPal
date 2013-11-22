@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  wb_id: 1
+  week_id: 1
+  school_id: 1
+
+two:
+  wb_id: 1
+  week_id: 1
+  school_id: 1

@@ -9,13 +9,14 @@ class RequisitionsController < ApplicationController
   end
   
   def add_requisition
-  @week = params[:week]
-  if @week
-	@week = @week.to_i
-	else 
-	@week = 1
-	end
+  
+  
   @wb_id = params[:wb_id]
+  if w = WbWeek.where(school_id: current_user.school_id).where(wb_id: @wb_id).first
+  @week = w.week_id
+  else
+  week = 1
+  end
   end
 
   # GET /requisitions/1

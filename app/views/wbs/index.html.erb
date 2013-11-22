@@ -13,8 +13,7 @@
   <tbody>
     <% @wbs.each do |wb| %>
       <tr>
-        <td><%= wb.week_beginning %></td>
-        <td><%= link_to 'Show', wb %></td>
+        <td><%= wb.week_beginning.strftime("%d %B, %Y") %></td>
         <td><%= link_to 'Edit', edit_wb_path(wb) %></td>
         <td><%= link_to 'Destroy', wb, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
