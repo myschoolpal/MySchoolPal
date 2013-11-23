@@ -1,23 +1,40 @@
+<div class="row">
+	<div class="col-md-12">
+			<ul class="nav nav-tabs" id="myTab">
+			<%if @locked ==true%>
+			<li class="active">
+				<%=link_to 'Locked Titles', title_classes_path(locked: true)%>
+			</li>
+			<%else%>
+			<li>
+				<%=link_to 'Locked Titles', title_classes_path(locked: true)%>
+			</li>
+			<%end%>
+			<%if @locked ==false%>
+			<li class="active">
+				<%=link_to 'Unlocked Titles', title_classes_path(locked: false)%>
+			</li>
+			<%else%>
+			<li>
+				<%=link_to 'Unlocked Titles', title_classes_path(locked: false)%>
+			</li>
+			<%end%>
+			<li>
+				<%=link_to 'New Titles', new_title_class_path%>
+			</li>
+			
+			</ul>
+	</div>
+</div>
+
 <%= form_tag delete_multiple_titles_title_classes_path,  method: :delete do %>
 <%if @locked ==true%>
-<h1>Locked Titles</h1>
+<h3>Locked Titles</h3>
 <%else%>
-<h1>Unlocked Titles</h1>
+<h3>Unlocked Titles</h3>
 <%end%>
-<div class="row">
-	<div class="col-xs-4">
-		<%if @locked == true%>
-			<%=link_to 'Show Unlocked Titles', title_classes_path(locked: false)%>
-		<%else%>
-			<%=link_to 'Show Locked Titles', title_classes_path(locked: true)%>
-		<%end%>
-	</div>
-	<div class="col-xs-4">
-		<%= link_to 'New Title class', new_title_class_path %>
-	</div>
-	<div class="col-xs-4">
-		<%=submit_tag "Delete Seleceted"%>
-	</div>
+
+
 	<br />
 	<br />
 <div class="row">
@@ -41,6 +58,9 @@
 	</div>
 	<div class="col-xs-1">
 		Delete Multiple
+	</div>
+	<div class="col-xs-1">
+		<%=submit_tag "Delete Seleceted", data: { confirm: "Are you sure?" }%>
 	</div>
 </div>
   <hr style="margin:2px;">

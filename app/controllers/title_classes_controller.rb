@@ -26,7 +26,9 @@ class TitleClassesController < ApplicationController
   end
   
   def delete_multiple_titles
-  TitleClass.destroy(params[:delete_titles])
+	if params[:delete_titles]
+	TitleClass.destroy(params[:delete_titles])
+	end
   redirect_to :back
   end
   
