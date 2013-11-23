@@ -30,7 +30,8 @@
 </div>
   <br />
     <div class="actions">
-		<%= submit_tag %>
+		<button type="button" id="check_all" class="btn btn-success">Check / Uncheck All</button>
+		<%= submit_tag 'Submit', {:class=>"btn"}%>
 	</div>
   <br />
 	<div class="row">
@@ -68,3 +69,6 @@
 	</div>
 
 <% end %>
+<script type='text/javascript'>
+    $('#check_all').on("click", function(){ $('input[type="checkbox"]').click(); });
+</script>

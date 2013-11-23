@@ -44,7 +44,7 @@
 		
 		</ul>
 		<div class="row">
-			<%=Subject.where(id: @subject_id).first.subject%> | 
+			<% if s = Subject.where(id: @subject_id).first%><%=s.subject%><%end%> | 
 			Year <%=@year_id%> | 
 			<%if @group_id%>
 				<%=Group.where(id: @group_id).first.group%> | 
@@ -88,7 +88,7 @@
 					</div>
 					<div class="col-xs-2">
 						<%if t%>
-						<%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
+						<%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
 							
 								<%@difference = r.result.aps - t.result.aps%>
 											<%case %>
