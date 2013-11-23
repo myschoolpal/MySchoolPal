@@ -1,31 +1,63 @@
-<h1>Listing title_classes</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Class</th>
-      <th>Col</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @title_classes.each do |title_class| %>
-      <tr>
-        <td><%= title_class.title %></td>
-        <td><%= title_class.class_id %></td>
-        <td><%= title_class.col_id %></td>
-        <td><%= link_to 'Show', title_class %></td>
-        <td><%= link_to 'Edit', edit_title_class_path(title_class) %></td>
-        <td><%= link_to 'Destroy', title_class, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<%= form_tag delete_multiple_titles_title_classes_path,  method: :delete do %>
+<%if @locked ==true%>
+<h1>Locked Titles</h1>
+<%else%>
+<h1>Unlocked Titles</h1>
+<%end%>
+<div class="row">
+	<div class="col-xs-4">
+		<%if @locked == true%>
+			<%=link_to 'Show Unlocked Titles', title_classes_path(locked: false)%>
+		<%else%>
+			<%=link_to 'Show Locked Titles', title_classes_path(locked: true)%>
+		<%end%>
+	</div>
+	<div class="col-xs-4">
+		<%= link_to 'New Title class', new_title_class_path %>
+	</div>
+	<div class="col-xs-4">
+		<%=submit_tag "Delete Seleceted"%>
+	</div>
+	<br />
+	<br />
+<div class="row">
+	<div class="col-xs-3">
+		Title
+	</div>
+	<div class="col-xs-1">
+		Class
+	</div>
+	<div class="col-xs-1">
+		Column
+	</div>
+	<div class="col-xs-1">
+		Locked
+	</div>
+	<div class="col-xs-1">
+		Edit
+	</div>
+	<div class="col-xs-1">
+		Delete
+	</div>
+	<div class="col-xs-1">
+		Delete Multiple
+	</div>
+</div>
+  <hr style="margin:2px;">
+    <% @title_classes.includes(:class_name).where("class_names.school_id" => current_user.school_id).where(locked: @locked).each do |title_class| %>
+		<div class="row">
+			<div class="col-xs-3"><%= title_class.title %></div>
+			<div class="col-xs-1"><%if title_class.class_name%><%= title_class.class_name.class_name %><%end%></div>
+			<div class="col-xs-1"><%= title_class.col_id %></div>
+			<div class="col-xs-1"><%= title_class.locked.to_s.upcase %></div>
+			<div class="col-xs-1"><%= link_to 'Edit', edit_title_class_path(title_class) %></div>
+			<div class="col-xs-1"><%= link_to 'Delete', title_class, method: :delete, data: { confirm: 'Are you sure?' } %></div>
+			<div class="col-xs-1"><%= check_box_tag "delete_titles[]", title_class.id%></div>
+		</div>
+		<hr style="margin:2px;">
     <% end %>
-  </tbody>
-</table>
-
+  
+<%end%>
 <br>
 
-<%= link_to 'New Title class', new_title_class_path %>
+

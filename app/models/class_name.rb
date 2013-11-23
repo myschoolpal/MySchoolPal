@@ -5,7 +5,7 @@ class ClassName < ActiveRecord::Base
   has_many :subject_classes
   belongs_to :subject
   has_many :user_classes
-  has_many :title_classes
+  has_many :title_classes, :foreign_key => "class_id"
   has_many :pupil_results
   has_many :timetables
   has_many :requisitions

@@ -1,4 +1,4 @@
-<%= form_for(@title_class) do |f| %>
+<%= form_for :titles, :url => update_lock_columns_title_classes_path, :html => { :method => :put } do %>
   <% if @title_class.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@title_class.errors.count, "error") %> prohibited this title_class from being saved:</h2>
@@ -10,20 +10,52 @@
       </ul>
     </div>
   <% end %>
+<div class="row">
+	<%= fields_for "add_titles[]", TitleClass.new do |builder| %>			
+		<%(1..16).each do |t|%>
+		<div class="col-xs-2">
+			<div class="field">
+				Title <%=t%>
+				<%= builder.text_field :title, :placeholder => 'Enter Title ...', :class =>"form-control" %>
+			</div>
+		</div>
+		<div class="col-xs-1">
+			<div class="field">
+				Column
+				<%= builder.select :col_id,(1..99),{:selected => t.to_i},:class =>"form-control" %>
+			</div>
+		</div>
+		<%end%>
+	<%end%>
+</div>
+  <br />
+    <div class="actions">
+		<%= submit_tag %>
+	</div>
+  <br />
+	<div class="row">
+		<%@years.each do |y|%>
+			<div class="col-md-1">
+			<div>
+				Year <%=y%>
+			</div>
+				<%@class_names.where(year_id: y).each do |c|%>
+					<%= fields_for "add_classes[]", TitleClass.new do |builder| %>			
+						<div class="row">
+							<div class="col-md-8 text-center">
+								<%=c.class_name%>
+								
+							</div>
+							<div class="col-md-4 text-center">	
+								<%=builder.check_box :locked%>
+							</div>
+						</div>
+						<%=builder.hidden_field :class_id, value: c.id%>
+					<%end%>
+					<hr style="margin:2px;">
+				<%end%>
+			</div>
+		<%end%>
+	</div>
 
-  <div class="field">
-    <%= f.label :title %><br>
-    <%= f.text_field :title %>
-  </div>
-  <div class="field">
-    <%= f.label :class_id %><br>
-    <%= f.number_field :class_id %>
-  </div>
-  <div class="field">
-    <%= f.label :col_id %><br>
-    <%= f.number_field :col_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

@@ -11,11 +11,7 @@
 				Target
 			</div>
 			<div class="col-md-4 text-center">
-			<%if @lock = LockColumn.where(:col_id => @col).where(:class_id=>@class_id).first%>
-			<%=@lock.title%>
-			<%else%>
-			<%@t = TitleClass.where(:col_id => @col).where(:class_id => @class_id).first%>
-			<%end%>
+			<%@t = TitleClass.where(:col_id => @col).where(:class_id => @class_id).where(locked: @locked).first%>
 				<% if @t%>
 						<%= fields_for "title_update[]", @t do |builder| %>			
 							<div class="input-group"><span class="input-group-addon">Title</span>
@@ -23,13 +19,15 @@
 							</div>
 							
 						<%end%>				
-				<%elsif @lock.title%>
+				
 				 
 				<%else%>
 						<%= fields_for "title[]", @title do |builder| %>			
 						<%=builder.text_field :title, :placeholder => "Enter Title", :class => "form-control"%>
 						<%=builder.hidden_field :class_id, :value => @class_id%>
 						<%=builder.hidden_field :col_id, :value => @col %>
+						<%=builder.hidden_field :locked, :value => @locked %>
+						
 					<%end%>
 					<%end%>
 			</div>
@@ -49,7 +47,7 @@
 							<%=@t.result.grade%>
 							<%end%>
 				</div>
-				<%if !p.user.pupil_results.where(:col_id => @col).where(:class_id => @class_id).empty?%>
+				<%if !p.user.pupil_results.where(:col_id => @col).where(:class_id => @class_id).where(locked: @locked).empty?%>
 					<%result = p.user.pupil_results.where(:col_id => @col).where(:class_id => @class_id).first%>
 						<%= fields_for "update[]", result do |builder| %>			
 							<div class="col-md-4 text-center">
@@ -66,6 +64,7 @@
 							<%=builder.hidden_field :class_id, :value => @class_id%>
 							<%=builder.hidden_field :col_id, :value => @col %>
 							<%=builder.hidden_field :user_id, :value => p.user_id%>
+							<%=builder.hidden_field :locked, :value => @locked%>
 						<%end%>
 					</div>
 				<%end%>

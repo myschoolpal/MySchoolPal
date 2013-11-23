@@ -5,6 +5,11 @@ class TitleClassesController < ApplicationController
   # GET /title_classes.json
   def index
     @title_classes = TitleClass.all
+	if params[:locked] == "false"
+		@locked = false
+	else
+		@locked = true
+	end
   end
 
   # GET /title_classes/1
@@ -15,10 +20,42 @@ class TitleClassesController < ApplicationController
   # GET /title_classes/new
   def new
     @title_class = TitleClass.new
+		@years = ClassName.order("year_id ASC").uniq.pluck(:year_id)
+		@class_names = ClassName.where(school_id: current_user.school_id).order("year_id ASC")
+		
+  end
+  
+  def delete_multiple_titles
+  TitleClass.destroy(params[:delete_titles])
+  redirect_to :back
+  end
+  
+  def update_lock_columns
+  if params['add_titles']
+	params['add_titles'].each do |title|
+		@title = title[:title]
+		@col_id = title[:col_id]
+		if !@title.empty?
+			if params['add_classes']
+				params['add_classes'].each do |id|
+					@lock_column = TitleClass.new(id)	
+					@lock_column.title = @title
+					@lock_column.col_id = @col_id
+					if @lock_column.locked
+						@lock_column.save
+					end
+				end
+			end
+		end
+	end
+  end
+redirect_to :back  
+  
   end
 
   # GET /title_classes/1/edit
   def edit
+  	@class_names = ClassName.all
   end
 
   # POST /title_classes
@@ -35,6 +72,10 @@ class TitleClassesController < ApplicationController
         format.json { render json: @title_class.errors, status: :unprocessable_entity }
       end
     end
+  end
+  
+  def lock_columns
+	@title_class = TitleClass.new
   end
 
   # PATCH/PUT /title_classes/1
@@ -69,6 +110,6 @@ class TitleClassesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def title_class_params
-      params.require(:title_class).permit(:title, :class_id, :col_id)
+      params.require(:title_class).permit(:title, :class_id, :col_id, :locked)
     end
 end

@@ -33,6 +33,12 @@ class PupilResultsController < ApplicationController
 	@pupil_result = PupilResult.new
 	@title = TitleClass.new	
 	@user_classes = current_user.timetables.where('class_id IS NOT NULL').select(:class_id).uniq
+	locked = params[:locked]
+	if locked == "true"
+	@locked = true
+	else
+	@locked = false
+	end
   end
   
   def subject_choice
@@ -168,6 +174,12 @@ class PupilResultsController < ApplicationController
   @class_id =  params[:class_id]
   @pupils = UserClass.where(class_id: params[:class_id]).all
   @pupil_result = PupilResult.new
+  locked = params[:locked]
+	if locked == "true"
+	@locked = true
+	else
+	@locked = false
+	end
   @title = TitleClass.new
   end
 

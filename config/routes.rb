@@ -64,7 +64,12 @@ MSP::Application.routes.draw do  get "static_pages/home"
   collection { post :import }
   end
   resources :title_classes do
-  collection { post :import }
+  collection do 
+  post :import 
+  get 'lock_columns'
+  put 'update_lock_columns'
+  delete 'delete_multiple_titles'
+  end
   end
   resources :user_classes do
   collection do
