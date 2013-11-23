@@ -74,6 +74,7 @@
 		<%aps = Array.new%>
 		<%@u.each do |p|%>
 			<%if a = p.user_info%>
+			<%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
 				<div class="row">
 					<div class="col-xs-2">
 						<%=a.surname%>
@@ -88,7 +89,7 @@
 					</div>
 					<div class="col-xs-2">
 						<%if t%>
-						<%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
+						
 							
 								<%@difference = r.result.aps - t.result.aps%>
 											<%case %>
@@ -210,7 +211,7 @@ $(document).ready(function(){
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
 		<%end%>  
 	<%end%>
 ];
@@ -307,7 +308,7 @@ $(document).ready(function(){
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
 		<%end%>  
 	<%end%>
 ];
