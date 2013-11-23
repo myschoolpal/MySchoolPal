@@ -22,7 +22,7 @@ class TitleClassesController < ApplicationController
     @title_class = TitleClass.new
 		@years = ClassName.order("year_id ASC").uniq.pluck(:year_id)
 		@class_names = ClassName.where(school_id: current_user.school_id).order("year_id ASC")
-		
+		@subjects = ClassName.uniq.pluck(:subject_id)
   end
   
   def delete_multiple_titles

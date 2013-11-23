@@ -39,7 +39,15 @@
 			<div>
 				Year <%=y%>
 			</div>
-				<%@class_names.where(year_id: y).each do |c|%>
+			<%@subjects.each do |s|%>
+				<div>
+				<%if !@class_names.where(year_id: y).where(subject_id:s).empty?%>
+					<%if Subject.where(id: s).first%>
+						<%=Subject.where(id: s).first.subject%>
+					<%end%>
+				<%end%>
+				</div>
+				<%@class_names.where(year_id: y).where(subject_id:s).each do |c|%>
 					<%= fields_for "add_classes[]", TitleClass.new do |builder| %>			
 						<div class="row">
 							<div class="col-md-8 text-center">
@@ -54,6 +62,7 @@
 					<%end%>
 					<hr style="margin:2px;">
 				<%end%>
+			<%end%>
 			</div>
 		<%end%>
 	</div>
