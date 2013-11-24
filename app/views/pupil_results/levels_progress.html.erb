@@ -121,8 +121,8 @@
 			<%end%>
 				
 				<div class="row">
-					<div id="chart2" style="width:550px; height:350px;"></div>
-					<div id="chart1"  style="width:550px; height:350px;"></div>
+					<div id="chart2" style="width:550px; height:450px;"></div>
+					<div id="chart1"  style="width:550px; height:450px;"></div>
 					<div id="no_data" style="width:550px;">No Data</div>
 				</div>	
 
@@ -186,7 +186,7 @@ $(document).ready(function(){
 		max: 8,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
-          angle: 30
+          angle: -90
         }
     },
     axes: {
@@ -315,7 +315,7 @@ var line1 = [
 		max: 53,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
-          angle: 30
+          angle: -90,
         }
     },
     axes: {

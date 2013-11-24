@@ -25,3 +25,4 @@
 //= require jqplot.canvasTextRenderer.min.js
 //= require jqplot.canvasAxisLabelRenderer.min.js
 //= require jqplot.pieRenderer.min.js
+//= require jqplot.canvasAxisTickRenderer.min.js
