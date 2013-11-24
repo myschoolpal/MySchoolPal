@@ -3,7 +3,7 @@
 	<div class="col-xs-12 col-xs-1 col-xs-1 col-md-12">
 		<ul class="nav nav-tabs" id="myTab">
 
-			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id])%></li>
+			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id], locked:@locked)%></li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					Assessments<span class="caret"></span>
@@ -17,7 +17,7 @@
 						<%@titles.where(locked: false).each do |t|%>
 							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender, locked:false)%></li>
 						<%end%>
-					<li><%=link_to('Average', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg', gender: @gender))%></li>
+					<li><%=link_to('Average', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg', gender: @gender, locked:@locked))%></li>
 				</ul>
 			</li>
 		</ul>
@@ -62,10 +62,10 @@
 						<%if g.upcase == @gender%>						
 							<div class="row">
 								<div class="col-xs-2 col-md-2 text-center">
-									<%=link_to(p.user.user_info.surname, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id))%>
+									<%=link_to(p.user.user_info.surname, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id, locked:@locked))%>
 								</div>
 								<div class="col-xs-2 col-md-2 text-center">
-									<%=link_to(p.user.user_info.forename, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id))%>
+									<%=link_to(p.user.user_info.forename, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id, locked:@locked))%>
 								</div>
 								
 								<div class="col-xs-2 col-md-2 text-center">
@@ -149,9 +149,9 @@
 	</div>
 	<div class="col-xs-6 col-md-6 text-center">
 		<%if @gender=='M'%>
-			<%=link_to 'Girls', gender_analysis_user_groups_path(class_id: @class_id,  col_id: 'avg', start_col: @start_col, gender: 'F'),:class=>"btn btn-success"%>
+			<%=link_to 'Girls', gender_analysis_user_groups_path(class_id: @class_id,  col_id: 'avg', start_col: @start_col, gender: 'F', locked:@locked),:class=>"btn btn-success"%>
 		<%else%>
-			<%=link_to 'Boys', gender_analysis_user_groups_path(class_id: @class_id,  col_id: 'avg', start_col: @start_col, gender: 'M'),:class=>"btn btn-success"%>
+			<%=link_to 'Boys', gender_analysis_user_groups_path(class_id: @class_id,  col_id: 'avg', start_col: @start_col, gender: 'M', locked:@locked),:class=>"btn btn-success"%>
 		<%end%>
 		
 		<br />

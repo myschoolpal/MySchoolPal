@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs" id="myTab">
-			<li><%=link_to @class.to_s + " - " + @subject.to_s, pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
-			<li class="active"><%=link_to 'Levels of Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
+			<li><%=link_to @class.to_s + " - " + @subject.to_s, pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
+			<li class="active"><%=link_to 'Levels of Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					Assessments<span class="caret"></span>
@@ -46,10 +46,10 @@
 			<%if a = p.user_info%>
 				<div class="row">
 					<div class="col-xs-3">
-						<%=link_to(a.surname.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id))%>
+						<%=link_to(a.surname.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked))%>
 					</div>
 					<div class="col-xs-3">
-						<%=link_to(a.forename.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id))%>
+						<%=link_to(a.forename.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked))%>
 					</div>
 					<div class="col-xs-2">
 					<%if @subject_id%>

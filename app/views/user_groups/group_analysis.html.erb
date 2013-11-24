@@ -3,7 +3,7 @@
 	<div class="col-xs-12 col-md-12">
 		<ul class="nav nav-tabs" id="myTab">
 
-			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id])%></li>
+			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id], locked:@locked)%></li>
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					Assessments<span class="caret"></span>
@@ -17,7 +17,7 @@
 					<%@titles.where(locked: false).each do |t|%>
 						<li><%=link_to t.title, group_analysis_path(class_id: @class_id, col_id: t.col_id,locked: false, group_id: @group_id)%></li>
 					<%end%>
-					<li><%=link_to('Average', group_analysis_path(class_id: @class_id, group_id: @group_id, col_id: 'avg'))%></li>
+					<li><%=link_to('Average', group_analysis_path(class_id: @class_id, group_id: @group_id, col_id: 'avg', locked:@locked))%></li>
 				</ul>
 			</li>
 			
@@ -27,7 +27,7 @@
 					</a>
 					<ul class="dropdown-menu">
 						<%Group.all.each do |g|%>
-							<li><%=link_to(g.group, group_analysis_path(class_id: @class_id, group_id: g.id, col_id: 'avg'))%></li>	
+							<li><%=link_to(g.group, group_analysis_path(class_id: @class_id, group_id: g.id, col_id: 'avg', locked:@locked))%></li>	
 						<%end%>
 					</ul>
 				</li>
@@ -71,10 +71,10 @@
 				<%if p.user.user_classes.where(class_id: params[:class_id]).first%>
 					<div class="row">
 						<div class="col-xs-2 col-md-2 text-center">
-							<%=link_to(p.user.user_info.surname, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id))%>
+							<%=link_to(p.user.user_info.surname, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id, locked:@locked))%>
 						</div>
 						<div class="col-xs-2 col-md-2 text-center">
-							<%=link_to(p.user.user_info.forename, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id))%>
+							<%=link_to(p.user.user_info.forename, personal_analysis_path(user_id: p.user.user_info.user_id, class_id: @class_id, locked:@locked))%>
 						</div>
 						
 						<div class="col-xs-2 col-md-2 text-center">

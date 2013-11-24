@@ -1,7 +1,7 @@
-<%if !@pupil_results.empty?%>
+
 	<ul class="nav nav-tabs" id="myTab">
 
-			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id])%></li>
+			<li><%=link_to @class_name.class_name + ' - ' +  @subject , pupil_results_path(:class_id=>params[:class_id], locked: @locked)%></li>
 			<%if @locked == true%>
 			<li class="active"><%=link_to('Show Locked Columns', personal_analysis_path(user_id: @user_id, class_id: @class_id, locked: true))%></li>
 			<li><%=link_to('Show Unlocked Columns', personal_analysis_path(user_id: @user_id, class_id: @class_id, locked: false))%></li>
@@ -11,6 +11,7 @@
 			
 			<%end%>
 	</ul>
+<%if !@pupil_results.empty?%>
 	<div style="margin-top:20px; margin-bottom:20px;">
 	<%= @pupil.user_info.forename%>
 	<%= @pupil.user_info.surname%>
@@ -63,6 +64,7 @@
 							<%end%>
 						<%end%>	
 					<%end%>
+					<hr style="margin:2px">
 				</div>
 			<%end%>
 		<br/>
@@ -141,10 +143,6 @@
 		</div>
 	</div>
 
-
-
-
-<%=link_to('Back', pupil_results_path(class_id: @class_id))%>
 </div>
 
 		
@@ -197,7 +195,7 @@ $(document).ready(function(){
 		max: 8,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
-          angle: 30
+          angle: -90
         }
     },
     axes: {
@@ -223,7 +221,8 @@ $(document).ready(function(){
          label: 'Grade',
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
 		  tickOptions: {
-		  formatter: tickFormatter
+		  formatter: tickFormatter,
+		  angle: 0,
 		  },
 		   tickInterval : 1,
 		  
@@ -231,7 +230,8 @@ $(document).ready(function(){
       y2axis: {
         autoscale:true,
 		tickOptions: {
-		  formatter: tickFormatter
+		  formatter: tickFormatter,
+		  angle: 0,
 		  },
 		  tickInterval : 1,
       }
@@ -329,7 +329,7 @@ $(document).ready(function(){
 		max: 53,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
-          angle: 30
+          angle: -90
         }
     },
     axes: {
