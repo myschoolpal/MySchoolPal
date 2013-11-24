@@ -11,11 +11,11 @@
 				<ul class="dropdown-menu">
 						<li style="text-align:center; font-weight:bold">Locked Cols</li>
 						<%@titles.where(locked: true).each do |t|%>
-							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender)%></li>
+							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender, locked:false)%></li>
 						<%end%>
 						<li style="text-align:center; font-weight:bold">Unlocked Cols</li>
 						<%@titles.where(locked: false).each do |t|%>
-							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender)%></li>
+							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender, locked:false)%></li>
 						<%end%>
 					<li><%=link_to('Average', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg', gender: @gender))%></li>
 				</ul>
@@ -127,7 +127,7 @@
 															<%else%>
 																<div class="col-xs-4 col-md-4 text-center empty_result cell_design">	
 														<%end%>
-														<%=@r.result.grade %>1
+														<%=@r.result.grade %>
 														</div>
 											<%else%>
 											<div class="col-xs-4 col-md-4 text-center empty_result cell_design">	
