@@ -15,6 +15,12 @@ class UserGroupsController < ApplicationController
 	  else
 		@start_col = 1
 	  end
+		if params[:locked] == "true"
+			@locked = true
+		else
+			@locked = false
+		end
+		
 	  @class_id = params[:class_id]
 	  @class_name = ClassName.where(id: @class_id).first
 	  if s = @class_name.subject
@@ -38,7 +44,7 @@ class UserGroupsController < ApplicationController
 	  
 	  
   
-		@titles = TitleClass.where(:class_id=>@class_id).all
+		@titles = TitleClass.where(:class_id=>@class_id)
   end
 
   def group_analysis
@@ -54,10 +60,14 @@ class UserGroupsController < ApplicationController
 	  @class_name = ClassName.find(@class_id)
 	  @subject = 'P'
 	  @col_id = params[:col_id]
-	  
-	  @pupils = UserGroup.where(group_id: @group_id).all
+		if params[:locked] == "true"
+			@locked = true
+		else
+			@locked = false
+		end
+	  @pupils = UserGroup.where(group_id: @group_id)
 	  @group = Group.where(id: @group_id).first.group
-	  @locked_titles = LockColumn.where(:class_id=>@class_id).all
+	  
 	  
 	   if s = SubjectClass.where(:class_id => params[:class_id]).first
 			@s = s.subject
@@ -65,7 +75,7 @@ class UserGroupsController < ApplicationController
 				@subject =@s.subject
 			end
 		end
-		@titles = TitleClass.where(:class_id=>@class_id).all
+		@titles = TitleClass.where(:class_id=>@class_id)
   end
 
   def delete_groups

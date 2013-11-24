@@ -9,7 +9,12 @@
 					Assessments<span class="caret"></span>
 				</a>	
 				<ul class="dropdown-menu">
-						<%@titles.each do |t|%>
+						<li style="text-align:center; font-weight:bold">Locked Cols</li>
+						<%@titles.where(locked: true).each do |t|%>
+							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender)%></li>
+						<%end%>
+						<li style="text-align:center; font-weight:bold">Unlocked Cols</li>
+						<%@titles.where(locked: false).each do |t|%>
 							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender)%></li>
 						<%end%>
 					<li><%=link_to('Average', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg', gender: @gender))%></li>
@@ -71,7 +76,7 @@
 								</div>
 									<%if @col_id == 'avg'%>
 										<%avg = Array.new%>
-										<%p.user.pupil_results.where(:class_id => @class_id).each do |r|%>
+										<%p.user.pupil_results.where(locked: @locked).where(:class_id => @class_id).each do |r|%>
 										<%avg << r.result.aps %>
 										<%end%>
 										<%if avg.size > 0%>
@@ -105,7 +110,7 @@
 										</div>
 										
 									<%else%>
-									<%@r =p.user.pupil_results.where(col_id: @col_id).first%>
+									<%@r =p.user.pupil_results.where(locked: @locked).where(col_id: @col_id).first%>
 										<%if @r%>
 											<%if @t%>	
 												<% @difference = @r.result.aps - @t.result.aps%>

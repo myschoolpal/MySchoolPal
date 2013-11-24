@@ -80,7 +80,12 @@ class PupilResultsController < ApplicationController
  
  def levels_progress
  @class_id = params[:class_id]
- @titles = TitleClass.where(:class_id=>@class_id).all
+ if params[:locked] == "true"
+	@locked = true
+	else
+	@locked = false
+	end
+ @titles = TitleClass.where(:class_id=>@class_id)
  @col_id = params[:col_id]
  @u = User.includes(:user_info).where("user_infos.pupil" => true).includes(:user_classes).where("user_classes.class_id" => @class_id).all
  if c = ClassName.where(id: @class_id).first
@@ -89,7 +94,6 @@ class PupilResultsController < ApplicationController
  @subject_id = s.id
  end
  @class = c.class_name
- @locked_titles = LockColumn.where(:class_id=>@class_id).all
  end
  end
   # GET /pupil_results/1
@@ -143,11 +147,17 @@ class PupilResultsController < ApplicationController
 	@user_id = params[:user_id]
 	@class_id = params[:class_id]
 	@class_name = ClassName.find(@class_id)
-	@pupil_results = PupilResult.where(user_id: @user_id).where(class_id: @class_id).order("col_id ASC")
+	if params[:locked] == "true"
+	@locked = true
+	else
+	@locked = false
+	end
+	@pupil_results = PupilResult.where(user_id: @user_id).where(locked: @locked).where(class_id: @class_id).order("col_id ASC")
 	if !@pupil_results.empty?
 		@pupil = @pupil_results.first.user
 	end
-	@titles = TitleClass.where(class_id: @class_id)
+	
+	@titles = TitleClass.where(class_id: @class_id).where(locked:@locked)
 	 if s = SubjectClass.where(:class_id => params[:class_id]).first
 	@s = s.subject
 		if @s

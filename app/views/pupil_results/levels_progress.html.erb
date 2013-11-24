@@ -6,12 +6,14 @@
 					Assessments<span class="caret"></span>
 				</a>	
 				<ul class="dropdown-menu">
-						<%@locked_titles.each do |t|%>
-							<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, col_id: t.col_id)%></li>
+						<li style="text-align:center; font-weight:bold">Locked Cols</li>
+						<%@titles.where(locked: true).each do |t|%>
+							<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: true, col_id: t.col_id)%></li>
 						<%end%>
-						<%@titles.each do |t|%>
-							<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, col_id: t.col_id)%></li>
-						<%end%>
+						<li style="text-align:center; font-weight:bold">Unlocked Cols</li>
+						<%@titles.where(locked: false).each do |t|%>
+							<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: false, col_id: t.col_id)%></li>
+						<%end%>	
 				</ul>
 			</li>
 </ul>
@@ -54,7 +56,7 @@
 					<%end%>
 					</div>
 					<div class="col-xs-2">
-						<%if r = p.pupil_results.where(col_id: @col_id).where(class_id: @class_id).first%>
+						<%if r = p.pupil_results.where(col_id: @col_id).where(locked:@locked).where(class_id: @class_id).first%>
 						
 							<%=r.result.grade%>
 							<%aps << r.result.aps%>
@@ -139,7 +141,7 @@ $(document).ready(function(){
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
 		<%end%>  
 	<%end%>
 ];
@@ -236,7 +238,7 @@ $(document).ready(function(){
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked:@locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
 		<%end%>  
 	<%end%>
 ];
