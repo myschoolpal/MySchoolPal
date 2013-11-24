@@ -5,9 +5,9 @@
 				
 				<li class="active">
 				<%if @subject%>
-				<%=link_to @class_name +' - '+  @subject , pupil_results_path(:class_id=>@class_id)%></li>
+				<%=link_to @class_name +' - '+  @subject , pupil_results_path(:class_id=>@class_id, locked:@locked)%></li>
 				<%else%>
-					<%=link_to @class_name, pupil_results_path(:class_id=>@class_id)%></li>
+					<%=link_to @class_name, pupil_results_path(:class_id=>@class_id, locked:@locked)%></li>
 				<%end%>
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -15,9 +15,9 @@
 					</a>
 					<ul class="dropdown-menu">
 						<%Group.all.each do |g|%>
-							<li><%=link_to(g.group, group_analysis_path(class_id: @class_id, group_id: g.id, col_id: 'avg'))%></li>	
+							<li><%=link_to(g.group, group_analysis_path(class_id: @class_id, group_id: g.id, col_id: 'avg', locked:@locked))%></li>	
 						<%end%>
-						<li><%=link_to('Gender', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg'))%></li>
+						<li><%=link_to('Gender', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg', locked:@locked))%></li>
 					</ul>
 				</li>
 				
@@ -30,12 +30,12 @@
 					<ul class="dropdown-menu">
 						<%@user_classes.each do |c|%>
 							<%if c.class_name%>
-								<li><%=link_to(c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id))%></li>
+								<li><%=link_to(c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id, locked:@locked))%></li>
 							<%end%>
 						<%end%>
 					</ul>
 				</li>
-				<li><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id)%></li>
+				<li><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
 				<%if @locked == true%>
 				<li><%=link_to 'Hide Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
 				<%else%>
@@ -82,7 +82,7 @@
 							<%else%>
 								<div class="col-xs-1 col-md-1 text-center">
 								<%if @locked !=true%>
-								<%=link_to('New', edit_pupil_result_path(k, :class_id=>@class_id))%>
+								<%=link_to('New', edit_pupil_result_path(k, :class_id=>@class_id, locked:@locked))%>
 								<%end%>
 								</div>
 								<%i+=1%>
