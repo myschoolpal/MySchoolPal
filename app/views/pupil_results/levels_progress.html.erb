@@ -30,7 +30,11 @@
 			Target
 			</div>
 			<div class="col-xs-2 col-md-2">
+			<%if title = TitleClass.where(class_id: @class_id).where(col_id: @col_id).where(locked: @locked).first%>
+			<%=title.title%>			
+			<%else%>
 			Result
+			<%end%>
 			</div>
 			<div class="col-xs-2 col-md-2">
 			Levels of Progress
