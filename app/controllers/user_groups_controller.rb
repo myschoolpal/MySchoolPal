@@ -35,7 +35,7 @@ class UserGroupsController < ApplicationController
 	  @gender = 'F'
 	  end
 	  
-	@pupils = UserClass.where(class_id: params[:class_id]).all
+	@pupils = UserClass.where(class_id: params[:class_id])
 	  if @gender=='M'
 	  @group = 'Boys'
 	  else

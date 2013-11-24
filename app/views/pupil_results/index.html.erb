@@ -17,10 +17,11 @@
 						<%Group.all.each do |g|%>
 							<li><%=link_to(g.group, group_analysis_path(class_id: @class_id, group_id: g.id, col_id: 'avg'))%></li>	
 						<%end%>
+						<li><%=link_to('Gender', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg'))%></li>
 					</ul>
 				</li>
 				
-				<li><%=link_to('Gender', gender_analysis_user_groups_path(class_id: @class_id, col_id: 'avg'))%></li>
+				
 				
 				<li class="dropdown">
 					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
