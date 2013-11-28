@@ -10,7 +10,7 @@ class LockColumnsController < ApplicationController
   end
   
   def show_locked_classes
-    @lock_columns = LockColumn.joins(:class_names).where("class_names.school_id" => current_user.school_id).all
+    @lock_columns = LockColumn.joins(:class_name).where("class_names.school_id" => current_user.school_id).all
   end
 
   def update_many_locks
