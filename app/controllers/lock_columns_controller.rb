@@ -6,7 +6,7 @@ class LockColumnsController < ApplicationController
   def index
     @lock_columns = LockColumn.all
 	@lock_column_new = LockColumn.new
-	@class_names = ClassName.all
+	@class_names = ClassName.where(school_id: current_user.school_id).all
   end
   
   def show_locked_classes
