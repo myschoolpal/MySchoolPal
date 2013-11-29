@@ -182,7 +182,7 @@ class PupilResultsController < ApplicationController
   def edit
   @col = params[:id]
   @class_id =  params[:class_id]
-  @pupils = Timetable.where(class_id: params[:class_id]).all
+  @pupils = UserClass.where(class_id: params[:class_id]).all
   @pupil_result = PupilResult.new
   locked = params[:locked]
 	if locked == "true"
