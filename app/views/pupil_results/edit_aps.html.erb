@@ -1,3 +1,5 @@
+
+<%=link_to("Back", aps_index_pupil_results_path(class_id: @class_id))%>
 <%= form_for :pupil_results, :url => update_all_results_path, :html => { :method => :put } do %>
 	
 	<div class="row" style="margin-bottom:2px;">
@@ -78,5 +80,5 @@
 	<%=submit_tag%>
 <%end%>
 <div>
-<%=link_to("Back", pupil_results_path(class_id: @class_id))%>
+
 </div>

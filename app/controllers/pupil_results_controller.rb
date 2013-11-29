@@ -178,6 +178,8 @@ class PupilResultsController < ApplicationController
 	redirect_to :back
   end
   
+  
+  
   def personal_analysis
 	@show_menu = 1
 	@user_id = params[:user_id]
