@@ -1,4 +1,13 @@
 <h3>Pupils</h3>
+<%if current_user.school.primary ==true%>
+<%= link_to 'Year 1', user_infos_path(year: 1)%> |
+<%= link_to 'Year 2', user_infos_path(year: 2)%> |
+<%= link_to 'Year 3', user_infos_path(year: 3)%> |
+<%= link_to 'Year 4', user_infos_path(year: 4)%> |
+<%= link_to 'Year 5', user_infos_path(year: 5)%> |
+<%= link_to 'Year 6', user_infos_path(year: 6)%> |
+<%end%>
+<%if current_user.school.secondary ==true%>
 <%= link_to 'Year 7', user_infos_path(year: 7)%> |
 <%= link_to 'Year 8', user_infos_path(year: 8)%> |
 <%= link_to 'Year 9', user_infos_path(year: 9)%> |
@@ -6,6 +15,7 @@
 <%= link_to 'Year 11', user_infos_path(year: 11)%> |
 <%= link_to 'Year 12', user_infos_path(year: 12)%> |
 <%= link_to 'Year 13', user_infos_path(year: 13)%> |
+<%end%>
 <%= link_to 'Hide Pupils', user_infos_path()%>
 <br />
 
