@@ -55,6 +55,7 @@ MSP::Application.routes.draw do  get "static_pages/home"
   resources :pupil_results do
   collection do
   post :import 
+  get 'aps_index'
   get 'year_analysis'
   get 'levels_progress'
   get 'subject_choice'
