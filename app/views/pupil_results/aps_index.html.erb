@@ -73,7 +73,7 @@
 							<%if @t%>
 								<div class="col-xs-1 col-md-1 text-center" style="height:20px; overflow:hidden;" id="userdata" data-toggle="tooltip" data-original-title='
 								<%=@t.title%><br />
-								<%=link_to('Edit', edit_pupil_result_path(k, :class_id=>@class_id, locked: @locked), :style => "color:#FFF")%>
+								<%=link_to('Edit', edit_aps_pupil_results_path(k, :class_id=>@class_id, locked: @locked), :style => "color:#FFF")%>
 								  <%if @locked !=true%> | <%= link_to "Delete", delete_many_results_path(:col_id =>k, :class_id=>@class_id), :confirm => "Are you sure?" , :style => "color:#FFF" ,  :method => :put %><%end%>' data-html="true">														
 								<p style="font-size:10px"><%=@t.title.slice(0..12)%></p>
 								
@@ -83,7 +83,7 @@
 							<%else%>
 								<div class="col-xs-1 col-md-1 text-center">
 								<%if @locked !=true%>
-								<%=link_to('New', edit_pupil_result_path(k, :class_id=>@class_id, locked:@locked))%>
+								<%=link_to('New', edit_aps_pupil_results_path(k, :class_id=>@class_id, locked:@locked))%>
 								<%end%>
 								</div>
 								<%i+=1%>
