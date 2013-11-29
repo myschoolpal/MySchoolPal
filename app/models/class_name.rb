@@ -17,6 +17,10 @@ class ClassName < ActiveRecord::Base
   CSV.foreach(file.path, headers: true) do |row|
      c = ClassName.new
      c.class_name = row[0]
+	 if Subject.where(subject:row[1]).first
+	 c.subject_id = Subject.where(subject:row[1]).first.id
+	 end
+	 c.year_id = row[2]
 	 c.school_id = current_user.school_id
 	 c.save   
 	 
