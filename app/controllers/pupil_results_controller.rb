@@ -42,7 +42,7 @@ class PupilResultsController < ApplicationController
   end
   
   def subject_choice
-	@subjects = Subject.all
+	@subjects = Subject.where(school_id: current_user.school_id).all
   end
   def year_analysis
 		@above = Array.new
@@ -55,8 +55,8 @@ class PupilResultsController < ApplicationController
 	@class_id = params[:class_id]
 	@col_id = params[:col_id]
 	@subject_id = params[:subject_id]
-	@subjects = Subject.all
-	@groups = Group.all
+	@subjects = Subject.where(school_id: current_user.school_id).all
+	@groups = Group.where(school_id: current_user.school_id).all
 	@year = Hash.new
 	if current_user.school.secondary == true
 		@year = [7,8,9,10,11,12,13]
