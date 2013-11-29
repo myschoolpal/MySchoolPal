@@ -58,7 +58,11 @@ class UserGroupsController < ApplicationController
 	  @group_id = params[:group_id]
 	  @class_id = params[:class_id]
 	  @class_name = ClassName.find(@class_id)
-	  @subject = 'P'
+	  if @class_name.subject
+	  @subject = @class_name.subject.subject
+	  else
+	  @subject = ""
+	  end
 	  @col_id = params[:col_id]
 		if params[:locked] == "true"
 			@locked = true
