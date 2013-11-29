@@ -16,7 +16,7 @@ validates_uniqueness_of :user_id, :scope => [:period_id, :day_id, :week_id]
 		number_periods = current_user.school.number_periods
 		CSV.foreach(file.path, headers: true) do |row|
 			 
-			if u = User.where(school_id: current_user.school_id).where(email: row[0]).first
+			if u = User.where(school_id: current_user.school_id).where(email: row[0].downcase).first
 			@user = u.id
 			end
 			i=1

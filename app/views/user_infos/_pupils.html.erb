@@ -70,22 +70,22 @@
 	  </td>
 	  <td>
 	  <% if !users.user_info.ks1_english.blank?%>
-	  <%= @results[users.user_info.ks1_english.to_i].grade %>
+	  <%= Result.where(id: users.user_info.ks1_english.to_i).first.grade %>
 	  <%end%>
 	  </td>
 	  <td>
 	  <% if !users.user_info.ks1_maths.blank?%>
-	  <%= @results[users.user_info.ks1_maths.to_i].grade %>
+	  <%= Result.where(id: users.user_info.ks1_maths.to_i).first.grade %>
 	  <%end%>
 	  </td>
       <td>
 	  <% if !users.user_info.ks1_reading.blank?%>
-	  <%= @results[users.user_info.ks1_reading.to_i].grade %>
+	  <%= Result.where(id: users.user_info.ks1_reading.to_i).first.grade %>
 	  <%end%>
 	  </td>
       <td>
 	  <% if !users.user_info.ks1_writing.blank?%>
-	  <%= @results[users.user_info.ks1_writing.to_i].grade %>
+	  <%= Result.where(id: users.user_info.ks1_writing.to_i).first.grade %>
 	  <%end%>
 	  </td>	  
 	  <% users.user_classes.each do |c| %>
