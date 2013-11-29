@@ -75,7 +75,7 @@ def self.import(file, current_user)
 		
 		for i in 35..54
 				if !row[i].nil?
-					if Group.where(:group => row[i]).first
+					if Group.where(school_id: current_user.school_id).where(:group => row[i]).first
 						g = UserGroup.new
 						g.user_id = user
 						g.group_id = Group.where(school_id: current_user.school_id).where(:group => row[i]).first.id
@@ -154,10 +154,10 @@ def self.import(file, current_user)
 	 
 			for i in 35..44
 				if !row[i].nil?
-					if Group.where(:group => row[i]).first
+					if Group.where(school_id: current_user.school_id).where(:group => row[i]).first
 						g = UserGroup.new
 						g.user_id = user
-						g.group_id = Group.where(:group => row[i]).first.id
+						g.group_id = Group.where(school_id: current_user.school_id).where(:group => row[i]).first.id
 						g.save 
 					end
 				end	 
