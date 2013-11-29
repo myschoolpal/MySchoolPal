@@ -26,7 +26,7 @@
 					  Groups<span class="caret"></span>
 					</a>
 					<ul class="dropdown-menu">
-						<%Group.all.each do |g|%>
+						<%Group.where(school_id: current_user.school_id).all.each do |g|%>
 							<li><%=link_to(g.group, group_analysis_path(class_id: @class_id, group_id: g.id, col_id: 'avg', locked:@locked))%></li>	
 						<%end%>
 					</ul>
