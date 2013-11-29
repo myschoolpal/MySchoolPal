@@ -228,6 +228,21 @@ class PupilResultsController < ApplicationController
 	end
   @title = TitleClass.new
   end
+  
+  def edit_aps
+  @col = params[:id]
+  @class_id =  params[:class_id]
+  @pupils = UserClass.where(class_id: params[:class_id]).all
+  @pupil_result = PupilResult.new
+  locked = params[:locked]
+	if locked == "true"
+	@locked = true
+	else
+	@locked = false
+	end
+  @title = TitleClass.new
+  end
+  
 
   # POST /pupil_results
   # POST /pupil_results.json
