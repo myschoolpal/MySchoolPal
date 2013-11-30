@@ -219,12 +219,9 @@ class PupilResultsController < ApplicationController
 	end
 	
 	@titles = TitleClass.where(class_id: @class_id).where(locked:@locked)
-	 if s = SubjectClass.where(:class_id => params[:class_id]).first
-	@s = s.subject
-		if @s
-			@subject =@s.subject
-		end
-	end
+	 if @class_name.subject
+	 @subject =@class_name.subject.subject
+	 end
   end
   
   def delete_many_results
