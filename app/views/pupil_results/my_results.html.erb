@@ -262,7 +262,7 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
 			<%if @title && @r%>		
-  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
+  ['<%=@title.title%>', 20],<%end%>  
   <%end%>
 ];
   var line2 = [
