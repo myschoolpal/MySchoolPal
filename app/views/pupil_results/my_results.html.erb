@@ -256,11 +256,23 @@ $(document).ready(function(){
 </script>
 <script>
 $(document).ready(function(){
-  var line1 = [['Cup Holder Pinion Bob', 7], ['Generic Fog Lamp', 9], ['HDTV Receiver', 15], 
-  ['8 Track Control Module', 12], [' Sludge Pump Fourier Modulator', 3], 
-  ['Transcender/Spice Rack', 6], ['Hair Spray Danger Indicator', 18]];
-  var line2 = [['Nickle', 28], ['Aluminum', 13], ['Xenon', 54], ['Silver', 47], 
-  ['Sulfer', 16], ['Silicon', 14], ['Vanadium', 23]];
+  var line1 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+			<%if @title && @r%>		
+  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
+  <%end%>
+];
+  var line2 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+  <%if @title && @r%>		
+  ['<%=@title.title%>', <%if @t%><%=@t.result.aps%><%end%>],
+  <%end%>  
+  <%end%>
+  ];
  
   var plot2 = $.jqplot('chart2', [line1, line2], {
     series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
