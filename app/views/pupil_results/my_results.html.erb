@@ -18,7 +18,8 @@
 	| Target: 
 	<%@t=@pupil.user_targets.first%>
 	<%if @t%>
-		<%=@t.result.grade%>
+		<%=@t.result.grade%> |
+		APS: <%=@t.result.aps%>
 	<%end%>
 </div>
 <%avg = Array.new%>
@@ -55,12 +56,13 @@
 										<div class="col-xs-2 col-md-2 text-center empty_result cell_design">	
 								<%end%>
 									<%=@r.result.grade%>
-									<%avg << @r.result.aps%>
+									<%=avg << @r.result.aps%>
 										</div>
 						<%else%>
 							<%if @r%>
-								<div class="col-xs-2 col-md-2 text-center empty_result cell_design"><%=@r.result.grade%>	</div>	
-								<%avg << @r.result.aps%>
+								<div class="col-xs-2 col-md-2 text-center empty_result cell_design"><%=@r.result.grade%>
+									<%=avg << @r.result.aps%>								
+								</div>	
 							<%end%>
 						<%end%>	
 					<%end%>
@@ -90,9 +92,11 @@
 										<div class="col-xs-2 col-md-2 text-center empty_result cell_design">	
 									<%end%>
 											<%= Result.where(aps: avg_aps).first.grade%>
+											| <%= Result.where(aps: avg_aps).first.aps%>
 						<%else%>
 										<div class="col-xs-2 col-md-2 text-center empty_result cell_design">	
 											<%= Result.where(aps: avg_aps).first.grade%>
+											| <%= Result.where(aps: avg_aps).first.aps%>
 						<%end%>
 										</div>
 				<%else%>
@@ -255,7 +259,7 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
 			<%if @title && @r%>		
-  ['<%=@title.title%>', <%=@r.result.aps-80%>],<%end%>  
+  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
   <%end%>
 ];
   var line2 = [
@@ -263,7 +267,7 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
   <%if @title && @r%>		
-  ['<%=@title.title%>', <%if @t%><%=@t.result.aps-80%><%end%>],
+  ['<%=@title.title%>', <%if @t%><%=@t.result.aps%><%end%>],
   <%end%>  
   <%end%>
   ];
