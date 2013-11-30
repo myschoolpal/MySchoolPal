@@ -203,6 +203,7 @@ class PupilResultsController < ApplicationController
   
   def my_results
 	@user_id = current_user.id
+	@pupil_classes = current_user.user_classes
 	@class_id = params[:class_id]
 	@class_name = ClassName.find(@class_id)
 	if params[:locked] == "true"
