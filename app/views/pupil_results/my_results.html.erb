@@ -68,9 +68,10 @@
 								</div>	
 							<%end%>
 						<%end%>	
+						<hr style="margin:2px">
 					<%end%>
 				</div>
-				<hr style="margin:2px">
+				
 			<%end%>
 		<br/>
 		
@@ -334,32 +335,36 @@ $(document).ready(function(){
 		max: 53,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
-          angle: 0
+          angle: 0,
         }
     },
     axes: {
       xaxis: {
         renderer: $.jqplot.CategoryAxisRenderer,
 		tickOptions: {
-          angle: 90
+          angle: 90,
         }
       },
       x2axis: {
-        renderer: $.jqplot.CategoryAxisRenderer
+        renderer: $.jqplot.CategoryAxisRenderer,
 		tickOptions: {
-		textColor: '#ffffff'
+		textColor: '#ffffff',
 		}
       },
       yaxis: {
         autoscale:true,
 			  tickOptions: {
-		  formatter: tickFormatter
+		  formatter: tickFormatter,
 		  },
 		   tickInterval : 2,
 	
       },
       y2axis: {
         autoscale:true
+		tickOptions: {
+		  formatter: tickFormatter,
+		  },
+		   tickInterval : 2,
       }
     }
   });
