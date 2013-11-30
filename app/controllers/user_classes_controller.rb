@@ -8,6 +8,8 @@ class UserClassesController < ApplicationController
 	redirect_to user_infos_path if current_user.admin == true
 	
     @user_classes = current_user.timetables.where('class_id IS NOT NULL').first
+	
+	@pupil_classes = current_user.user_classes
 	if uc = @user_classes
 	if uc.class_name
 	@manage_classes = uc.class_name.id

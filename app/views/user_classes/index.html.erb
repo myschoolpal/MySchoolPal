@@ -13,8 +13,10 @@
 <%=link_to 'Check Requisitions', tech_week_choice_requisitions_path%>
 <br />
 <%elsif current_user.user_info.pupil== true%>
-<%@user_classes.each do |c|%>
+<%@pupil_classes.each do |c|%>
+<%if c.class_name%>
 <%=c.class_name.class_name%>
+<%end%>
 <br />
 <%end%>
 <%end%>
