@@ -235,10 +235,21 @@ $(document).ready(function(){
   });
 });
 </script>
-
+<%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+			<%if @title && @r%>		
+  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
+  <%end%>
 <script>
 $(document).ready(function(){
-  var line1 = [['title', 22]
+  var line1 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+			<%if @title && @r%>		
+  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
+  <%end%>
 ];
   var line2 = [
   <%(1..12).each do |k|%>
