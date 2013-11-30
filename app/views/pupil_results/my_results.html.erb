@@ -273,10 +273,65 @@ $(document).ready(function(){
   <%end%>  
   <%end%>
   ];
+  
+   tickFormatter = function (format, val) { 
+	 if(val>=53)
+	 {return "8a";}
+	 else if(val>=51)
+	 {return "8b";}
+	 else if(val>=49)
+	 {return "8c";}
+	 else if(val>=47)
+	 {return "7a";}
+	 else if(val>=45)
+	 {return "7b";}
+	 else if(val>=43)
+	 {return "7c";}
+	 else if(val>=41)
+	 {return "6a";}
+	 else if(val>=39)
+	 {return "6b";}
+	 else if(val>=37)
+	 {return "6c";}
+	 else if(val>=35)
+	 {return "5a";}
+	 else if(val>=33)
+	 {return "5b";}
+	 else if(val>=31)
+	 {return "5c";}
+	 else if(val>=29)
+	 {return "4a";}
+	 else if(val>=27)
+	 {return "4b";}
+	 else if(val>=25)
+	 {return "4c";}
+	 else if(val>=23)
+	 {return "3a";}
+	 else if(val>=21)
+	 {return "3b";}
+	 else if(val>=19)
+	 {return "3c";}
+	 else if(val>=17)
+	 {return "2a";}
+	 else if(val>=15)
+	 {return "2b";}
+	 else if(val>=13)
+	 {return "2c";}
+	 else if(val>=11)
+	 {return "1a";}
+	 else if(val>=9)
+	 {return "1b";}
+	 else if(val>=7)
+	 {return "1c";}
+	 else if(val>=3)
+	 {return "W";}
+  }
  
   var plot2 = $.jqplot('chart2', [line1, line2], {
     series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
     axesDefaults: {
+		min: 3,
+		max: 53,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
           angle: 30
@@ -290,7 +345,12 @@ $(document).ready(function(){
         renderer: $.jqplot.CategoryAxisRenderer
       },
       yaxis: {
-        autoscale:true
+        autoscale:true,
+			  tickOptions: {
+		  formatter: tickFormatter
+		  },
+		   tickInterval : 2,
+	
       },
       y2axis: {
         autoscale:true
