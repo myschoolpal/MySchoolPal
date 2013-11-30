@@ -15,7 +15,7 @@
 <%elsif current_user.user_info.pupil== true%>
 <%@pupil_classes.each do |c|%>
 <%if c.class_name%>
-<%=c.class_name.class_name%>
+<%=link_to c.class_name.class_name, my_results_pupil_results_path(class_id: c.id)%>
 <%end%>
 <br />
 <%end%>

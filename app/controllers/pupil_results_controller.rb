@@ -203,6 +203,30 @@ class PupilResultsController < ApplicationController
 		end
 	end
   end
+  
+  def my_results
+	@user_id = current_user.id
+	@class_id = params[:class_id]
+	@class_name = ClassName.find(@class_id)
+	if params[:locked] == "true"
+	@locked = true
+	else
+	@locked = false
+	end
+	@pupil_results = PupilResult.where(user_id: @user_id).where(locked: @locked).where(class_id: @class_id).order("col_id ASC")
+	if !@pupil_results.empty?
+		@pupil = @pupil_results.first.user
+	end
+	
+	@titles = TitleClass.where(class_id: @class_id).where(locked:@locked)
+	 if s = SubjectClass.where(:class_id => params[:class_id]).first
+	@s = s.subject
+		if @s
+			@subject =@s.subject
+		end
+	end
+  end
+  
   def delete_many_results
   PupilResult.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).delete_all
   TitleClass.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).delete_all
