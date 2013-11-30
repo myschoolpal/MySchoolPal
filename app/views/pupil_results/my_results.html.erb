@@ -235,15 +235,10 @@ $(document).ready(function(){
   });
 });
 </script>
-<%(1..12).each do |k|%>
-  <%@r = @pupil_results.where(col_id: k).first%>
-  <%@title =@titles.where(col_id: k).first%>
-			<%if @title && @r%>		
-  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
-  <%end%>
+
 <script>
 $(document).ready(function(){
-  var line1 = [
+  var line1 = [['a',25],
   <%(1..12).each do |k|%>
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
@@ -318,8 +313,6 @@ $(document).ready(function(){
     series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
 	title:'Assessment Results ',
     axesDefaults: {
-		min: 3,
-		max: 53,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
           angle: -90
@@ -347,6 +340,8 @@ $(document).ready(function(){
       yaxis: {
          label: 'Grade',
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+				min: 3,
+		max: 53,
 		  tickOptions: {
 		  formatter: tickFormatter,
 		  angle: 0,
@@ -356,6 +351,8 @@ $(document).ready(function(){
       },
       y2axis: {
         autoscale:true,
+		min: 3,
+		max: 53,
 		tickOptions: {
 		  formatter: tickFormatter,
 		  angle: 0,
