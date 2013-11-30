@@ -56,12 +56,15 @@
 										<div class="col-xs-2 col-md-2 text-center empty_result cell_design">	
 								<%end%>
 									<%=@r.result.grade%>
-									<%=avg << @r.result.aps%>
+									| <%=@r.result.aps%>
+									<%avg << @r.result.aps%>
 										</div>
 						<%else%>
 							<%if @r%>
-								<div class="col-xs-2 col-md-2 text-center empty_result cell_design"><%=@r.result.grade%>
-									<%=avg << @r.result.aps%>								
+								<div class="col-xs-2 col-md-2 text-center empty_result cell_design">
+								<%=@r.result.grade%>
+								| <%=@r.result.aps%>
+									<%avg << @r.result.aps%>								
 								</div>	
 							<%end%>
 						<%end%>	
@@ -259,7 +262,7 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
 			<%if @title && @r%>		
-  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
+  ['<%=@title.title%>', <%=@r.result.aps+80%>],<%end%>  
   <%end%>
 ];
   var line2 = [
@@ -267,7 +270,7 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
   <%if @title && @r%>		
-  ['<%=@title.title%>', <%if @t%><%=@t.result.aps%><%end%>],
+  ['<%=@title.title%>', <%if @t%><%=@t.result.aps+80%><%end%>],
   <%end%>  
   <%end%>
   ];
