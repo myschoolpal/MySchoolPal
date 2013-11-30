@@ -262,7 +262,7 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
 			<%if @title && @r%>		
-  ['<%=@title.title%>', <%=@r.result.aps+80%>],<%end%>  
+  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
   <%end%>
 ];
   var line2 = [
@@ -270,7 +270,7 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
   <%if @title && @r%>		
-  ['<%=@title.title%>', <%if @t%><%=@t.result.aps+80%><%end%>],
+  ['<%=@title.title%>', <%if @t%><%=@t.result.aps%><%end%>],
   <%end%>  
   <%end%>
   ];
