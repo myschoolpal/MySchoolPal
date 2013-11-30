@@ -141,7 +141,109 @@ $(document).ready(function(){
   <%@r = @pupil_results.where(col_id: k).first%>
   <%@title =@titles.where(col_id: k).first%>
 			<%if @title && @r%>		
-  ['<%=@title.title%>', <%=@r.result.aps.to_i%>],<%end%>  
+  ['<%=@title.title%>', <%=@r.result.aps-80%>],<%end%>  
+  <%end%>
+];
+  var line2 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+  <%if @title && @r%>		
+  ['<%=@title.title%>', <%if @t%><%=@t.result.aps-80%><%end%>],
+  <%end%>  
+  <%end%>
+  ];
+ 
+	 tickFormatter = function (format, val) { 
+	 if(val==8)
+	 {return "A*";}
+	else if(val==7)
+	 {return "A";}
+	 else if(val==6)
+	 {return "B";}
+	 else if(val==5)
+	 {return "C";}
+	 else if(val==4)
+	 {return "D";}
+	 else if(val==3)
+	 {return "E";}
+	 else if(val==2)
+	 {return "F";}
+	 else if(val==1)
+	 {return "G";}
+	 else if(val==0)
+	 {return "U";}
+  }
+  
+  var plot1 = $.jqplot('chart1', [line1, line2], {
+    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+	title:'Assessment Results ',
+    axesDefaults: {
+		min: 0,
+		max: 8,
+        tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+        tickOptions: {
+          angle: -90
+        }
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		label:'Assessment Titles', 
+          labelOptions:{
+            fontFamily:'Helvetica',
+            fontSize: '12pt'
+          },
+      },
+      x2axis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		tickOptions: {
+          show: false,
+		  showLabel: false,
+		  textColor: '#ffffff'
+        },
+				  showTicks: false,
+				    showTickMarks: false
+      },
+      yaxis: {
+         label: 'Grade',
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+		  tickOptions: {
+		  formatter: tickFormatter,
+		  angle: 0,
+		  },
+		   tickInterval : 1,
+		  
+      },
+      y2axis: {
+        autoscale:true,
+		tickOptions: {
+		  formatter: tickFormatter,
+		  angle: 0,
+		  },
+		  tickInterval : 1,
+      }
+    },
+	 highlighter: {
+        show: true,
+        sizeAdjust: 7.5,
+		tooltipAxes: 'y',
+		formatString: 'Grade: %s'
+      }
+      
+
+  });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+  var line1 = [
+  <%(1..12).each do |k|%>
+  <%@r = @pupil_results.where(col_id: k).first%>
+  <%@title =@titles.where(col_id: k).first%>
+			<%if @title && @r%>		
+  ['<%=@title.title%>', <%=@r.result.aps%>],<%end%>  
   <%end%>
 ];
   var line2 = [
@@ -211,7 +313,7 @@ $(document).ready(function(){
     series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
 	title:'Assessment Results ',
     axesDefaults: {
-		min: 3,
+		min: 0,
 		max: 53,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
