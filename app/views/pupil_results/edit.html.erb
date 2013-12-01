@@ -16,15 +16,16 @@
 					<%if @locked == true%>
 						<%= fields_for "title_update[]", @t do |builder| %>			
 							<div class="input-group"><span class="input-group-addon">Title</span>
-								<%=builder.text_field :title, :class => "form-control"%>
-							</div>							
-						<%end%>				
+								<%=builder.text_field :title, :class => "form-control", :readonly => true%>
+							</div>
+						<%end%>					
 					<%else%>
 						<%= fields_for "title_update[]", @t do |builder| %>			
 							<div class="input-group"><span class="input-group-addon">Title</span>
-								<%=builder.text_field :title, :class => "form-control", :readonly => true%>
-							</div>
-						<%end%>				
+								<%=builder.text_field :title, :class => "form-control"%>
+							</div>							
+						<%end%>			
+						
 					<%end%>				
 				 
 				<%else%>
