@@ -56,7 +56,7 @@
 				Target
 			</div>
 			<div class="col-xs-4 col-md-4 text-center">
-				<%@t = TitleClass.where(:col_id => @col_id).where(:class_id=>@class_id).first%>						
+				<%@t = TitleClass.where(:col_id => @col_id).where(:class_id=>@class_id).where(locked: @locked).first%>						
 				<%if @t %>
 					<%=@t.title.slice(0..25)%>
 				<%elsif @col_id == 'avg'%>
@@ -80,7 +80,11 @@
 						<div class="col-xs-2 col-md-2 text-center">
 							<%@t = p.user.user_targets.first%>
 								<%if @t%>
+									<%if @aps == true%>
+									<%=@t.result.aps%>
+									<%else%>
 									<%=@t.result.grade%>
+									<%end%>
 								<%end%>
 						</div>
 							<%if @col_id == 'avg'%>
@@ -105,11 +109,19 @@
 											<%else%>
 											<div class="col-xs-4 col-md-4 text-center empty_result cell_design">	
 										<%end%>
-										<%= Result.where(aps: avg_aps).first.grade%>
+										<%if @aps == true%>
+											<%=avg_aps%>
+										<%else%>
+											<%= Result.where(aps: avg_aps).first.grade%>
+										<%end%>
 									<%else%>
 									<div class="col-xs-4 col-md-4 text-center empty_result cell_design">	
-										<%= Result.where(aps: avg_aps).first.grade%>
-									
+										
+										<%if @aps == true%>
+											<%= avg_aps%>
+										<%else%>
+											<%= Result.where(aps: avg_aps).first.grade%>
+										<%end%>
 									<%end%>
 
 								<%else%>
@@ -136,11 +148,19 @@
 													<%else%>
 														<div class="col-xs-4 col-md-4 text-center empty_result cell_design">	
 												<%end%>
-												<%=@r.result.grade %>
+												<%if @aps == true%>
+													<%=@r.result.aps%>
+												<%else%>
+													<%=@r.result.grade%>
+												<%end%>
 												</div>
 									<%else%>
 									<div class="col-xs-4 col-md-4 text-center empty_result cell_design">	
-									<%=@r.result.grade %>
+										<%if @aps == true%>
+											<%=@r.result.aps%>
+										<%else%>
+											<%=@r.result.grade%>
+										<%end%>
 									</div>	
 									<%end%>
 								<%else%>

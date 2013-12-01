@@ -71,9 +71,12 @@
 								<%avg << @r.result.aps%>
 							<%end%>
 						<%end%>	
+						
 					<%end%>
 				</div>
-				<hr style="margin:2px">
+				<%if (i*6)<@pupil_results.count%>
+					<hr style="margin:2px">
+				<%end%>
 			<%end%>
 		<br/>
 		
