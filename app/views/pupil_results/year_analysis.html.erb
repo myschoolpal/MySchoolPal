@@ -1,5 +1,10 @@
 
 			<ul class="nav nav-tabs" id="myTab">
+			<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			  Year<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
 <%@year.each do |y|%>
 	<%if y == @year_id.to_i%>
 		<li class="active"><%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: 1)%></li>
@@ -7,6 +12,24 @@
 		<li><%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: 1)%></li>
 	<%end%>
 <%end%>
+</ul>
+		</li>
+		<li class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			  Key Stage Comparison<span class="caret"></span>
+			</a>
+			<ul class="dropdown-menu">
+				<%if current_user.school.primary == true%>
+					<li><%=link_to 'KS1 Maths', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_maths')%></li>
+					<li><%=link_to 'KS1 English', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_english')%></li>
+					<li><%=link_to 'KS1 Reading', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_reading')%></li>
+					<li><%=link_to 'KS1 Writing', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_writing')%></li>
+				<%elsif current_user.school.secondary == true%>
+					<li><%=link_to 'KS2 Maths', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_maths')%></li>
+					<li><%=link_to 'KS2 English', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_english')%></li>
+				<%end%>
+			</ul>
+		</li>
 		<li class="dropdown">
 			<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			  Groups<span class="caret"></span>
@@ -142,7 +165,8 @@
 						
 					</div>
 					<div class="col-xs-4">
-							<%if k = Result.where(id: @key_stage.to_s).first%>
+							<%if k %>
+							
 								<%if r %>
 									<%k.aps%>
 									<%r.result.aps%>
