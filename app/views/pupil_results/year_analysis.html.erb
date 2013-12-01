@@ -28,6 +28,7 @@
 				<%elsif current_user.school.secondary == true%>
 					<li><%=link_to 'KS2 Maths', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_maths')%></li>
 					<li><%=link_to 'KS2 English', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_english')%></li>
+					<li><%=link_to 'KS2 Average', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_avg')%></li>
 				<%end%>
 			</ul>
 		</li>
@@ -309,7 +310,7 @@ $(document).ready(function(){
   var line2 = [
   <%@u.each do |p|%>
   	<%if a = p.user_info%>		
-		['<%=a.forename%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps-80%><%end%>],
+		['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps-80%><%end%><%end%>],
 	<%end%>  
   <%end%>
   ];
@@ -409,7 +410,7 @@ var line1 = [
   var line2 = [
   <%@u.each do |p|%>
   	<%if a = p.user_info%>		
-		['<%=a.forename%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%end%>],
+		['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%end%><%end%>],
 	<%end%>  
   <%end%>
   ];
