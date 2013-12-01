@@ -81,16 +81,27 @@ class PupilResultsController < ApplicationController
 	@subjects = Subject.where(school_id: current_user.school_id).all
   end
   def year_analysis
-		@above = Array.new
-		@on_track = Array.new
-		@one_below = Array.new
-		@below = Array.new
-		@levels =Array.new
+	@above = Array.new
+	@on_track = Array.new
+	@one_below = Array.new
+	@below = Array.new
+	@levels =Array.new
+
 	@year_id = params[:year_id]
 	@group_id = params[:group_id]
 	@class_id = params[:class_id]
 	@col_id = params[:col_id]
 	@subject_id = params[:subject_id]
+	if params[:locked] == "true"
+		@locked = true
+	else
+		@locked = false
+	end
+	if params[:aps] == "true"
+		@aps = true
+	else
+		@aps =false
+	end
 	@subjects = Subject.where(school_id: current_user.school_id).all
 	@groups = Group.where(school_id: current_user.school_id).all
 	@year = Hash.new
@@ -116,6 +127,11 @@ class PupilResultsController < ApplicationController
  
  def levels_progress
  @class_id = params[:class_id]
+ if params[:aps] == "true"
+ @aps = true
+ else
+ @aps = false
+ end
  if params[:locked] == "true"
 	@locked = true
 	else

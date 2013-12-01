@@ -22,7 +22,12 @@ class UserGroupsController < ApplicationController
 		end
 		
 	  @class_id = params[:class_id]
-	  @class_name = ClassName.where(id: @class_id).first
+	  if params[:aps] == "true"
+		@aps = true
+	  else
+		@aps = false
+	  end
+	  @class_name = ClassName.where(school_id: current_user.school_id).where(id: @class_id).first
 	  if s = @class_name.subject
 	  @subject = s.subject
 	  else 

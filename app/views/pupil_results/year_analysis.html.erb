@@ -41,6 +41,11 @@
 					<li><%=link_to 'All Classes', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, group_id: @group_id, col_id: @col_id)%></li>
 			</ul>
 		</li>
+		<%if @locked == true%>
+		<li><%=link_to 'Hide Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,@locked:false, group_id: @group_id, col_id: @col_id)%></li>
+		<%else%>
+		<li><%=link_to 'Show Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,@locked:true, group_id: @group_id, col_id: @col_id)%></li>
+		<%end%>
 		
 		</ul>
 		<div class="row">
@@ -74,7 +79,7 @@
 		<%aps = Array.new%>
 		<%@u.each do |p|%>
 			<%if a = p.user_info%>
-			<%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
+			<%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
 				<div class="row">
 					<div class="col-xs-2">
 						<%=a.surname%>
@@ -84,7 +89,11 @@
 					</div>
 					<div class="col-xs-2">
 						<%if t = p.user_targets.where(subject_id: @subject_id).first%>
-							<%=t.result.grade%>
+							<%if @aps == true%>
+								<%=t.result.aps%>
+							<%else%>
+								<%=t.result.grade%>
+							<%end%>
 						<%end%>
 					</div>
 					<div class="col-xs-2">
@@ -116,7 +125,12 @@
 						<%else%>
 									<div class="col-xs-1 col-md-1 text-center empty_result">
 									<%if @r%>
-									<%=r.result.grade %>
+									<%if @aps == true%>
+										<%=r.result.aps %>
+									<%else%>
+										<%=r.result.grade %>
+									<%end%>
+									
 									<%aps << r.result.aps%>
 									<%end%>
 									</div>
