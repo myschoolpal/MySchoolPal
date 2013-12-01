@@ -1,3 +1,9 @@
+	<ul class="nav nav-tabs" id="myTab">
+
+			<li><%=link_to @c.class_name + ' - ' +  @subject , pupil_results_path(class_id:@class_id, locked: @locked)%></li>
+			<li class="active"><%=link_to 'Edit' ,  edit_pupil_result_path(k, :class_id=>@class_id, locked: @locked)%></li>
+	</ul>
+
 <%= form_for :pupil_results, :url => update_all_results_path, :html => { :method => :put } do %>
 	
 	<div class="row" style="margin-bottom:2px;">

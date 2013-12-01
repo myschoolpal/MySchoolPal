@@ -14,7 +14,8 @@ class PupilResultsController < ApplicationController
 	else
 	@show=false
 	end
-	@class_name = ClassName.where(:id =>params[:class_id]).first.class_name
+	c = ClassName.where(:id =>params[:class_id]).first
+	@class_name = c.class_name
 	
 	@col_id = params[:col_id].to_i
 	if @col_id > 4
@@ -22,13 +23,11 @@ class PupilResultsController < ApplicationController
 	else 
 	@start_col = 1
 	end
-	@groups = Group.all
-	 if s = SubjectClass.where(:class_id => params[:class_id]).first
-	@s = s.subject
-	if @s
-	@subject =@s.subject
+	@groups = Group.where(school_id: current_user.school_id).all
+	 if s = c.subject
+	@subject =s.subject
 	end
-	end
+	
 	@pupils = UserClass.where(class_id: params[:class_id]).all
 	@pupil_result = PupilResult.new
 	@title = TitleClass.new	
@@ -257,6 +256,11 @@ class PupilResultsController < ApplicationController
   def edit
   @col = params[:id]
   @class_id =  params[:class_id]
+
+  	@c = ClassName.where(:id =>params[:class_id]).first
+  if s = @c.subject
+	@subject =s.subject
+	end
   @pupils = UserClass.where(class_id: params[:class_id]).all
   @pupil_result = PupilResult.new
   locked = params[:locked]
