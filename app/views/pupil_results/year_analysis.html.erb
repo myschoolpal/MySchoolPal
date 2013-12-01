@@ -313,7 +313,7 @@ if (plot1) {
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			['<%if current_user.user_info.governor == true%>Hidden<%else%><%=a.forename+" "+a.surname%><%end%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
 		<%end%>  
 	<%end%>
 ];
@@ -415,7 +415,7 @@ if (plot2) {
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
+			['<%if current_user.user_info.governor == true%>Hidden<%else%><%=a.forename+" "+a.surname%><%end%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
 		<%end%>  
 	<%end%>
 ];
