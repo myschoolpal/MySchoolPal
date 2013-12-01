@@ -13,13 +13,19 @@
 			<div class="col-md-4 text-center">
 			<%@t = TitleClass.where(:col_id => @col).where(:class_id => @class_id).where(locked: @locked).first%>
 				<% if @t%>
+					<%if @locked == true%>
 						<%= fields_for "title_update[]", @t do |builder| %>			
 							<div class="input-group"><span class="input-group-addon">Title</span>
-									<%=builder.text_field :title, :class => "form-control", :readonly => true%>
-							</div>
-							
+								<%=builder.text_field :title, :class => "form-control"%>
+							</div>							
 						<%end%>				
-				
+					<%else%>
+						<%= fields_for "title_update[]", @t do |builder| %>			
+							<div class="input-group"><span class="input-group-addon">Title</span>
+								<%=builder.text_field :title, :class => "form-control", :readonly => true%>
+							</div>
+						<%end%>				
+					<%end%>				
 				 
 				<%else%>
 						<%= fields_for "title[]", @title do |builder| %>			

@@ -78,7 +78,7 @@
 								<%=@t.title%><br />
 								<%=link_to('Edit', edit_pupil_result_path(k, :class_id=>@class_id, locked: @locked), :style => "color:#FFF")%>
 								  <%if @locked !=true%> | <%= link_to "Delete", delete_many_results_path(:col_id =>k, :class_id=>@class_id), :confirm => "Are you sure?" , :style => "color:#FFF" ,  :method => :put %><%end%>' data-html="true">														
-								<p style="font-size:10px"><%=@t.title.slice(0..12)%></p>
+								<p style="font-size:11px"><%=@t.title.slice(0..12)%></p>
 								
 								<br />
 								</div>
