@@ -166,21 +166,22 @@
 										<%end%>
 										
 										<%if r.result.aps <54%>
-										<%if diff == 0%>
-											No Progress
-										<%end%>
-										<%if diff == 1 || diff==2%>
-											1 Sub level
-										<%end%>
-										<%(3..50).step(2).each do |i|%>
-											<%if diff==i || diff==i+1%>
-												<%=((i+1)/2)%> sub levels
+											<%if diff == 0%>
+												No Progress
 											<%end%>
-											<%if diff==(i*-1) || diff==((i+1)*-1)%>
-												<%=(((i+1)/2)*-1)%> sub levels
+											<%if diff == 1 || diff==2%>
+												1 Sub level
 											<%end%>
-											<%i=+2%>
-										<%end%>
+											<%(3..50).step(2).each do |i|%>
+												<%if diff==i || diff==i+1%>
+													<%=((i+1)/2)%> sub levels
+												<%end%>
+												<%if diff==(i*-1) || diff==((i+1)*-1)%>
+													<%=(((i+1)/2)*-1)%> sub levels
+												<%end%>
+												<%i=+2%>
+											<%end%>
+											<% @levels << diff%>
 										<%end%>
 									
 								<%end%>
