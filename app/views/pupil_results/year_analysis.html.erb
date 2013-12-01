@@ -199,10 +199,20 @@
 							
 						<%elsif current_user.school.secondary == true%>
 							<%if @key_stage == "ks2_maths"%>
-								<%k = Result.where(id: a.ks1_maths).first%>	
+								<%k = Result.where(id: a.ks2_maths).first%>	
 							<%elsif @key_stage == "ks2_english"%>
-								<%k = Result.where(id: a.ks1_english).first%>
+								<%k = Result.where(id: a.ks2_english).first%>
 							<%end%>
+							<%elsif @key_stage == "ks2_avg"%>
+								<%ks2_av = Array.new%>
+								<%if Result.where(id: a.ks2_english).first%>
+									<%ks2_av << Result.where(id: a.ks2_english).first.aps%>
+								<%end%>
+								<%if Result.where(id: a.ks2_maths).first%>
+									<%ks2_av << Result.where(id: a.ks2_maths).first.aps%>
+								<%end%>
+								<%j = (ks2_av.inject{ |sum, el| sum + el }.to_f / ks2_av.size).round%>
+								<%k = Result.where(aps: j).first%>
 						<%end%>
 							
 							
