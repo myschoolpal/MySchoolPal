@@ -211,7 +211,7 @@
 								<%if Result.where(id: a.ks2_maths).first%>
 									<%ks2_av << Result.where(id: a.ks2_maths).first.aps%>
 								<%end%>
-								<%j = (ks2_av.inject{ |sum, el| sum + el }.to_f / ks2_av.size).round%>
+								<%=j = (ks2_av.inject{ |sum, el| sum + el }.to_f / ks2_av.size).round%>
 								<%k = Result.where(aps: j.to_i).first%>
 						<%end%>
 							
