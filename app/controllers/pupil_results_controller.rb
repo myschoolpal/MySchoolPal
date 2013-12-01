@@ -86,7 +86,7 @@ class PupilResultsController < ApplicationController
 	@one_below = Array.new
 	@below = Array.new
 	@levels =Array.new
-	
+	@key_stage = params[:key_stage]
 	
 	
 	@year_id = params[:year_id]
