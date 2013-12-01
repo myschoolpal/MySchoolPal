@@ -42,9 +42,9 @@
 			</ul>
 		</li>
 		<%if @locked == true%>
-		<li><%=link_to 'Hide Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,@locked:false, group_id: @group_id, col_id: @col_id)%></li>
+		<li><%=link_to 'Hide Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, locked: false, group_id: @group_id, col_id: @col_id)%></li>
 		<%else%>
-		<li><%=link_to 'Show Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,@locked:true, group_id: @group_id, col_id: @col_id)%></li>
+		<li><%=link_to 'Show Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,locked:true, group_id: @group_id, col_id: @col_id)%></li>
 		<%end%>
 		
 		</ul>
@@ -197,8 +197,8 @@
 			<%end%>
 				
 				<div class="row">
-					<div id="chart2" style="width:550px; height:350px;"></div>
-					<div id="chart1"  style="width:550px; height:350px;"></div>
+					<div id="chart2" style="width:550px; height:450px;"></div>
+					<div id="chart1"  style="width:550px; height:450px;"></div>
 					
 					<div id="pie_chart" style="width:500px; margin-top:40px; margin-left:auto; margin-right:auto;"></div>
 					<div id="pie_chart_levels" style="width:500px; margin-top:40px; margin-left:auto; margin-right:auto;"></div>
