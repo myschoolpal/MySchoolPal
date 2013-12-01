@@ -86,7 +86,17 @@ class PupilResultsController < ApplicationController
 	@one_below = Array.new
 	@below = Array.new
 	@levels =Array.new
-
+	
+	if params[:key_stage] == "ks1_maths"
+		@key_stage = a.ks1_maths
+	elsif params[:key_stage] == "ks1_writing"
+		@key_stage = a.ks1_writing
+	elsif params[:key_stage] == "ks1_reading"
+		@key_stage = a.ks1_reading
+	else params[:key_stage] == "ks1_english"
+		@key_stage = a.ks1_english
+	
+	end
 	@year_id = params[:year_id]
 	@group_id = params[:group_id]
 	@class_id = params[:class_id]

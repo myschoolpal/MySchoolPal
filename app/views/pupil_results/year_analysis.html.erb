@@ -142,7 +142,7 @@
 						
 					</div>
 					<div class="col-xs-4">
-							<%if k = Result.where(id: a.ks1_maths).first%>
+							<%if k = Result.where(id: @key_stage.to_s).first%>
 								<%if r %>
 									<%k.aps%>
 									<%r.result.aps%>
@@ -181,7 +181,7 @@
 												<%end%>
 												<%i=+2%>
 											<%end%>
-											<% @levels << diff%>
+											<% @levels << (diff/2)%>
 										<%end%>
 									
 								<%end%>
