@@ -57,6 +57,7 @@ class UserGroupsController < ApplicationController
 	  end
 	  @group_id = params[:group_id]
 	  @class_id = params[:class_id]
+	  @aps = params[:aps]
 	  @class_name = ClassName.find(@class_id)
 	  if @class_name.subject
 	  @subject = @class_name.subject.subject
