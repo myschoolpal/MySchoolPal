@@ -1,23 +1,27 @@
 <%if current_user.user_info%>
-<%if current_user.user_info.teacher== true%>
-
-
-<%=link_to 'Manage Classes', pupil_results_path(class_id: @manage_classes)%>
-<br />
-
-<%=link_to 'My Timetable', my_timetable_timetables_path%>
-<br />
-<%=link_to 'Add a Requisition', requisitions_path%>
-<br />
-
-<%=link_to 'Check Requisitions', tech_week_choice_requisitions_path%>
-<br />
-<%elsif current_user.user_info.pupil== true%>
-<%@pupil_classes.each do |c|%>
-<%if c.class_name%>
-<%=link_to c.class_name.class_name, my_results_pupil_results_path(class_id: c.class_name.id)%>
-<%end%>
-<br />
-<%end%>
-<%end%>
+	<%if current_user.user_info.governor == true%>
+		<%=link_to 'In Depth Analysis', subject_choice_pupil_results_path%>
+	<%end%>
+	<%if current_user.user_info.teacher== true%>
+		<%=link_to 'Manage Classes', pupil_results_path(class_id: @manage_classes)%>
+		<br />
+		<%=link_to 'In Depth Analysis', subject_choice_pupil_results_path%>
+		<br />
+		<%if current_user.school.secondary == true%>
+			<%=link_to 'My Timetable', my_timetable_timetables_path%>
+			<br />
+			<%=link_to 'Add a Requisition', requisitions_path%>
+			<br />
+			<%=link_to 'Check Requisitions', tech_week_choice_requisitions_path%>
+			<br />
+		<%end%>
+		<%elsif current_user.user_info.pupil== true%>
+			<%@pupil_classes.each do |c|%>
+			<%if c.class_name%>
+				<%=link_to c.class_name.class_name, my_results_pupil_results_path(class_id: c.class_name.id)%>
+				<br />
+			<%end%>
+			<br />
+		<%end%>
+	<%end%>
 <%end%>
