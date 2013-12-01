@@ -143,10 +143,11 @@
 	</div>
 
 </div>
-
-		
+	
 <script>
-$(document).ready(function(){
+if (plot1) {
+	plot1.destroy();
+	}
   var line1 = [
   <%(1..12).each do |k|%>
   <%@r = @pupil_results.where(col_id: k).first%>
@@ -244,11 +245,14 @@ $(document).ready(function(){
       
 
   });
-});
+
  
 </script>
 <script>
-$(document).ready(function(){
+
+if (plot2) {
+	plot2.destroy();
+	}
   var line1 = [
   <%(1..12).each do |k|%>
   <%@r = @pupil_results.where(col_id: k).first%>
@@ -319,7 +323,7 @@ $(document).ready(function(){
 	 else if(val>=3)
 	 {return "W";}
   }
- 
+  
   var plot2 = $.jqplot('chart2', [line1, line2], {
     series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
     axesDefaults: {
@@ -366,17 +370,19 @@ $(document).ready(function(){
 		formatString: 'Grade: %s'
       }
   });
-});
+
 </script>
 
 
-<script type='text/javascript'>
+
+	<script type='text/javascript'>
     var aps = '<%=avg_aps%>'
 	$(document).ready(function () {
 	if (aps>0 && aps<54)
 	{
 	$("#chart2").show();
 	$("#chart1").hide();
+	
 	
 	}
 	else if(aps>79)

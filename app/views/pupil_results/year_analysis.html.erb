@@ -307,7 +307,9 @@
 
 		
 <script>
-$(document).ready(function(){
+if (plot1) {
+	plot1.destroy();
+	}
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
@@ -403,11 +405,13 @@ $(document).ready(function(){
       
 
   });
-});
+
 </script>
 
 <script>
-$(document).ready(function(){
+if (plot2) {
+	plot2.destroy();
+	}
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
@@ -535,19 +539,18 @@ var line1 = [
       
 
   });
-});
-</script>
-<script type='text/javascript'>
-					var aps = '<%=avg_aps%>'
+	
+	var aps = '<%=avg_aps%>'
 					$(document).ready(function () {
 					if (aps>0 && aps<54)
 					{
 					$("#chart1").hide();
-					
+					$("#chart2").show();
 					}
 					else if (aps>79)
 					{
 					$("#chart2").hide();
+					$("#chart1").show();
 					
 					}
 					else if (aps==0)
@@ -559,7 +562,9 @@ var line1 = [
 				</script>
 				
 <script type='text/javascript'>				
-				$(document).ready(function(){
+				if (plot3) {
+	plot3.destroy();
+	}
   var data = [
     ['Above Target', <%=@above.count%>],['On Track', <%=@on_track.count%>], ['One Below Target', <%=@one_below.count%>], 
     ['Below Target', <%=@below.count%>]
@@ -586,12 +591,14 @@ var line1 = [
 }
     }
   );
-});
+
 
 </script>
 
 <script type='text/javascript'>				
-				$(document).ready(function(){
+				if (plot4) {
+	plot4.destroy();
+	}
   var data = [
 	<%(-50..50).each do |i|%>
 	<%if @levels.count(i) != 0%>
@@ -624,7 +631,7 @@ var line1 = [
 }
     }
   );
-});
+
 
 </script>
 
