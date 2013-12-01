@@ -86,23 +86,7 @@ class PupilResultsController < ApplicationController
 	@one_below = Array.new
 	@below = Array.new
 	@levels =Array.new
-	if current_user.school.primary == true
-		if params[:key_stage] == "ks1_maths"
-		k = Result.where(id: a.ks1_maths).first	
-		elsif params[:key_stage] == "ks1_writing"
-		k = Result.where(id: a.ks1_writing).first		
-		elsif params[:key_stage] == "ks1_reading"
-		k = Result.where(id: a.ks1_reading).first	
-		else params[:key_stage] == "ks1_english"
-		k = Result.where(id: a.ks1_english).first		
-		end
-	elsif current_user.school.secondary == true
-		if params[:key_stage] == "ks2_maths"
-			k = Result.where(id: a.ks1_maths).first	
-		elsif params[:key_stage] == "ks2_english"
-			k = Result.where(id: a.ks1_english).first	
-		end
-	end
+	
 	
 	
 	@year_id = params[:year_id]
