@@ -43,8 +43,8 @@
 			<%@subjects.each do |s|%>
 				<div>
 				<%if !@class_names.where(year_id: y).where(subject_id:s).empty?%>
-					<%if Subject.where(id: s).first%>
-						<%=Subject.where(id: s).first.subject%>
+					<%if sub = Subject.where(school_id: current_user.school_id).where(id: s).first%>
+						<%=sub.subject%>
 					<%end%>
 				<%end%>
 				</div>
