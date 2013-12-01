@@ -7,9 +7,9 @@
 			<ul class="dropdown-menu">
 <%@year.each do |y|%>
 	<%if y == @year_id.to_i%>
-		<li class="active"><%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: 1)%></li>
+		<li class="active"><%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: @col_id, key_stage:@key_stage)%></li>
 	<%else%>
-		<li><%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: 1)%></li>
+		<li><%=link_to 'Year ' + y.to_s, year_analysis_pupil_results_path(year_id: y, subject_id: @subject_id, class_id: @class_id, col_id: @col_id, key_stage:@key_stage)%></li>
 	<%end%>
 <%end%>
 </ul>
@@ -36,9 +36,9 @@
 			</a>
 			<ul class="dropdown-menu">
 					<%@groups.each do |g|%>
-						<li><%=link_to g.group, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,group_id: g.id, col_id: 1)%></li>
+						<li><%=link_to g.group, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,group_id: g.id, col_id: @col_id, key_stage:@key_stage)%></li>
 					<%end%>
-					<li><%=link_to 'All Pupils', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, col_id: 1)%></li>
+					<li><%=link_to 'All Pupils', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, col_id: @col_id, key_stage:@key_stage)%></li>
 			</ul>
 		</li>
 		
@@ -48,7 +48,7 @@
 			</a>
 			<ul class="dropdown-menu">
 					<%(1..50).each do |t|%>
-						<li><%=link_to 'Assessment ' + t.to_s, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: t)%></li>
+						<li><%=link_to 'Assessment ' + t.to_s, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: t, key_stage:@key_stage)%></li>
 					<%end%>
 			</ul>
 		</li>
@@ -59,15 +59,15 @@
 			</a>
 			<ul class="dropdown-menu">
 					<%@classes.each do |c|%>
-						<li><%=link_to c.class_name, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: c.id, group_id: @group_id, col_id: @col_id)%></li>
+						<li><%=link_to c.class_name, year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: c.id, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
 					<%end%>
-					<li><%=link_to 'All Classes', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, group_id: @group_id, col_id: @col_id)%></li>
+					<li><%=link_to 'All Classes', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
 			</ul>
 		</li>
 		<%if @locked == true%>
-		<li><%=link_to 'Hide Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, locked: false, group_id: @group_id, col_id: @col_id)%></li>
+		<li><%=link_to 'Hide Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, locked: false, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
 		<%else%>
-		<li><%=link_to 'Show Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,locked:true, group_id: @group_id, col_id: @col_id)%></li>
+		<li><%=link_to 'Show Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,locked:true, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
 		<%end%>
 		
 		</ul>
