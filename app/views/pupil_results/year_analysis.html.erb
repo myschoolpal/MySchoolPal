@@ -189,7 +189,7 @@
 									<%ks1_av << Result.where(id: a.ks1_maths).first.aps%>
 								<%end%>
 								
-								<%k = (ks1_av.inject{ |sum, el| sum + el }.to_f / arr.size)%>
+								<%k = (ks1_av.inject{ |sum, el| sum + el }.to_f / ks1_av.size)%>
 								
 							<%else @key_stage == "ks1_english"%>
 								<%k = Result.where(id: a.ks1_english).first%>
