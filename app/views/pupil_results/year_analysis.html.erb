@@ -107,10 +107,18 @@
 			<%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%>
 				<div class="row">
 					<div class="col-xs-2">
-						<%=a.surname%>
+						<% if current_user.user_info.governor == true%>
+							Name Hidden
+						<%else%>
+							<%=a.surname%>
+						<%end%>
 					</div>
 					<div class="col-xs-2">
-						<%=a.forename%>
+						<% if current_user.user_info.governor == true%>
+							Name Hidden
+						<%else%>
+							<%=a.forename%>
+						<%end%>
 					</div>
 					<div class="col-xs-2">
 						<%if t = p.user_targets.where(subject_id: @subject_id).first%>
