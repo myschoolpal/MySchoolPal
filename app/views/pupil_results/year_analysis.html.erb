@@ -225,7 +225,7 @@ $(document).ready(function(){
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
 		<%end%>  
 	<%end%>
 ];
@@ -266,7 +266,7 @@ $(document).ready(function(){
 		max: 8,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
-          angle: 30
+          angle: 0,
         }
     },
     axes: {
@@ -277,6 +277,9 @@ $(document).ready(function(){
             fontFamily:'Helvetica',
             fontSize: '12pt'
           },
+		  tickOptions: {
+          angle: -90,
+        },
       },
       x2axis: {
         renderer: $.jqplot.CategoryAxisRenderer,
@@ -322,7 +325,7 @@ $(document).ready(function(){
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: true).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
+			['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
 		<%end%>  
 	<%end%>
 ];
@@ -395,8 +398,8 @@ var line1 = [
 		max: 53,
         tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         tickOptions: {
-          angle: 30
-        }
+          angle: 0,
+        },
     },
     axes: {
       xaxis: {
@@ -406,6 +409,9 @@ var line1 = [
             fontFamily:'Helvetica',
             fontSize: '12pt'
           },
+		  tickOptions: {
+          angle: -90
+        },
       },
       x2axis: {
         renderer: $.jqplot.CategoryAxisRenderer,
