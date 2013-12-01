@@ -41,15 +41,11 @@ class PupilResultsController < ApplicationController
   end
   
    def aps_index
-	@show_menu = 1
-	@class_id = params[:class_id]
-	if params[:show]
-	@show = params[:show]
-	else
-	@show=false
-	end
-	@class_name = ClassName.where(:id =>params[:class_id]).first.class_name
 	
+	@class_id = params[:class_id]
+	
+	@c= ClassName.where(:id =>params[:class_id]).first
+	@class_name = @c.class_name
 	@col_id = params[:col_id].to_i
 	if @col_id > 4
 	@start_col = ((@col_id/7.0).ceil * 7)+1
@@ -57,12 +53,9 @@ class PupilResultsController < ApplicationController
 	@start_col = 1
 	end
 	@groups = Group.all
-	 if s = SubjectClass.where(:class_id => params[:class_id]).first
-	@s = s.subject
-	if @s
-	@subject =@s.subject
-	end
-	end
+	 if @c.subject
+	 @subject = @c.subject.subject
+	 end
 	@pupils = UserClass.where(class_id: params[:class_id]).all
 	@pupil_result = PupilResult.new
 	@title = TitleClass.new	
