@@ -144,28 +144,6 @@
 		</div>
 <%end%>
 		
-<script type='text/javascript'>
-    var aps = '<%=avg_aps%>'
-	$(document).ready(function () {
-	if (aps>0 && aps<54)
-	{
-    $("#chart1").hide();
-	$("#no_data").hide();
-	}
-	else if (aps>79)
-	{
-	$("#chart2").hide();
-	$("#no_data").hide();
-	}
-	else if (aps==0)
-	{
-	$("#chart2").hide();
-	$("#chart1").hide();
-	}
-});
-
-
-</script>
 		<div class="col-xs-6 col-md-6 text-center">
 		
 		
@@ -179,7 +157,9 @@
 
 		
 <script>
-$(document).ready(function(){
+if (plot1) {
+	plot1.destroy();
+	}
   var line1 = [
   <%(1..12).each do |k|%>
   <%@r = @pupil_results.where(col_id: k).first%>
@@ -277,11 +257,13 @@ $(document).ready(function(){
       
 
   });
-});
+
  
 </script>
 <script>
-$(document).ready(function(){
+if (plot2) {
+	plot2.destroy();
+	}
   var line1 = [
   <%(1..12).each do |k|%>
   <%@r = @pupil_results.where(col_id: k).first%>
@@ -399,5 +381,27 @@ $(document).ready(function(){
 		formatString: 'Grade: %s'
       }
   });
+
+</script>
+
+
+<script type='text/javascript'>
+    var aps = '<%=avg_aps%>'
+	$(document).ready(function () {
+	if (aps>0 && aps<54)
+	{
+    $("#chart1").hide();
+	$("#no_data").hide();
+	}
+	else if (aps>79)
+	{
+	$("#chart2").hide();
+	$("#no_data").hide();
+	}
+	else if (aps==0)
+	{
+	$("#chart2").hide();
+	$("#chart1").hide();
+	}
 });
 </script>
