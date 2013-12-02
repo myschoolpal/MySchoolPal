@@ -78,9 +78,8 @@ class PupilResultsController < ApplicationController
 	@one_below = Array.new
 	@below = Array.new
 	@levels =Array.new
+	
 	@key_stage = params[:key_stage]
-	
-	
 	@year_id = params[:year_id]
 	@group_id = params[:group_id]
 	@class_id = params[:class_id]
@@ -120,7 +119,9 @@ class PupilResultsController < ApplicationController
  end
  
  def levels_progress
+ @levels =Array.new
  @class_id = params[:class_id]
+ @key_stage = params[:key_stage]
  if params[:aps] == "true"
  @aps = true
  else
