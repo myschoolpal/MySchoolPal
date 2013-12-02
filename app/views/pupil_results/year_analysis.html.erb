@@ -315,7 +315,7 @@ if (plot1) {
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
 			['<%if current_user.user_info.governor == true%>Pupil <%=i%><%else%><%=a.forename+" "+a.surname%><%end%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
-			<%i+=1%?
+			<%i+=1%>
 		<%end%>  
 	<%end%>
 ];
