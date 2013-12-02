@@ -26,8 +26,8 @@ class User < ActiveRecord::Base
 		 
 		 validates :username, :uniqueness => {:case_sensitive => false }
 		 def email_required?
-  false
-end
+			false
+		end
 
 def email_changed?
   false

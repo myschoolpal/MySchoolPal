@@ -13,7 +13,9 @@ class UserInfo < ActiveRecord::Base
   accepts_nested_attributes_for :user_groups
   accepts_nested_attributes_for :user_targets
   validates :user_id, uniqueness: true
-  
+   def email_required?
+			false
+		end
   
 def self.import(file, current_user)
  
