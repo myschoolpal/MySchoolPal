@@ -25,6 +25,7 @@ def self.import(file, current_user)
 		u = User.new
 		u.school_id = current_user.school_id
 		u.username = row[0]
+		u.email = row[95]
 		u.password = row[1]
 		u.save   
 		user=u.id
