@@ -69,10 +69,10 @@
 		<%@u.each do |p|%>
 			<%if a = p.user_info%>
 				<div class="row">
-					<div class="col-xs-3">
+					<div class="col-xs-2">
 						<%=link_to(a.surname.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked))%>
 					</div>
-					<div class="col-xs-3">
+					<div class="col-xs-2">
 						<%=link_to(a.forename.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked))%>
 					</div>
 					<div class="col-xs-2">
@@ -86,7 +86,7 @@
 						<%end%>
 					<%end%>
 					</div>
-					<div class="col-xs-2">
+					<div class="col-xs-3">
 						<%if r = p.pupil_results.where(col_id: @col_id).where(locked:@locked).where(class_id: @class_id).first%>
 							<%if @aps == true%>
 							<%=r.result.aps%>
@@ -96,7 +96,7 @@
 							<%aps << r.result.aps%>
 						<%end%>
 					</div>
-					<div class="col-xs-2">
+					<div class="col-xs-3">
 							<%if current_user.school.primary == true%>
 							<%if params[:key_stage] == "ks1_maths"%>
 								<%k = Result.where(id: a.ks1_maths).first%>
