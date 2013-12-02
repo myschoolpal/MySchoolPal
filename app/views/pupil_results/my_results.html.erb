@@ -155,7 +155,7 @@
 
 </div>
 
-		
+	
 <script>
 if (plot1) {
 	plot1.destroy();
@@ -200,7 +200,37 @@ if (plot1) {
   }
   
   var plot1 = $.jqplot('chart1', [line1, line2], {
-    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+  // Turns on animatino for all series in this plot.
+        animate: true,
+        // Will animate plot on calls to plot1.replot({resetAxes:true})
+        animateReplot: true,
+    series:[{renderer:$.jqplot.BarRenderer, xaxis:'x2axis', yaxis:'y2axis',
+	
+	 rendererOptions: {
+                    // Speed up the animation a little bit.
+                    // This is a number of milliseconds.  
+                    // Default for bar series is 3000.  
+                    animation: {
+                        speed: 2500
+                    },
+                    barWidth: 15,
+                    barPadding: -15,
+                    barMargin: 0,
+                    highlightMouseOver: false
+                }
+            }, 
+            {
+                rendererOptions: {
+                    // speed up the animation a little bit.
+                    // This is a number of milliseconds.
+                    // Default for a line series is 2500.
+                    animation: {
+                        speed: 2000
+                    }
+                }
+            }
+			
+	],
 	title:'Assessment Results ',
 	legend: {
             show: true,
@@ -267,6 +297,7 @@ if (plot1) {
  
 </script>
 <script>
+
 if (plot2) {
 	plot2.destroy();
 	}
@@ -340,14 +371,39 @@ if (plot2) {
 	 else if(val>=3)
 	 {return "W";}
   }
- 
+  
   var plot2 = $.jqplot('chart2', [line1, line2], {
-    series:[
-		{renderer:$.jqplot.BarRenderer}, 
-		{xaxis:'x2axis', yaxis:'y2axis'},
-		],
+   animate: true,
+   animateReplot: true,
+    series:[{renderer:$.jqplot.BarRenderer, xaxis:'x2axis', yaxis:'y2axis',
+	
+	 rendererOptions: {
+                    // Speed up the animation a little bit.
+                    // This is a number of milliseconds.  
+                    // Default for bar series is 3000.  
+                    animation: {
+                        speed: 2500
+                    },
+                    barWidth: 15,
+                    barPadding: -15,
+                    barMargin: 0,
+                    highlightMouseOver: false
+                }
+            }, 
+            {
+                rendererOptions: {
+                    // speed up the animation a little bit.
+                    // This is a number of milliseconds.
+                    // Default for a line series is 2500.
+                    animation: {
+                        speed: 2000
+                    }
+                }
+            }
+			
+	],
 		title:'Assessment Results ',
-		legend: {
+		 legend: {
             show: true,
             placement: 'outsideGrid',
 			location: 's',
@@ -399,7 +455,6 @@ if (plot2) {
   });
 
 </script>
-
 
 <script type='text/javascript'>
     var aps = '<%=avg_aps%>'

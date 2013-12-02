@@ -263,7 +263,35 @@ $(document).ready(function(){
   }
   
   var plot1 = $.jqplot('chart1', [line1, line2], {
-    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+  
+   animate: true,
+   animateReplot: true,
+    series:[{renderer:$.jqplot.BarRenderer, xaxis:'x2axis', yaxis:'y2axis',
+	rendererOptions: {
+                    // Speed up the animation a little bit.
+                    // This is a number of milliseconds.  
+                    // Default for bar series is 3000.  
+                    animation: {
+                        speed: 2500
+                    },
+                    barWidth: 15,
+                    barPadding: -15,
+                    barMargin: 0,
+                    highlightMouseOver: false
+                }
+            }, 
+            {
+                rendererOptions: {
+                    // speed up the animation a little bit.
+                    // This is a number of milliseconds.
+                    // Default for a line series is 2500.
+                    animation: {
+                        speed: 2000
+                    }
+                }
+            }
+	
+	],
 	title:'Assessment Results ',
     axesDefaults: {
 		min: 0,
@@ -392,7 +420,35 @@ var line1 = [
   }
   
   var plot2 = $.jqplot('chart2', [line1, line2], {
-    series:[{renderer:$.jqplot.BarRenderer}, {xaxis:'x2axis', yaxis:'y2axis'}],
+   animate: true,
+   animateReplot: true,
+    series:[{renderer:$.jqplot.BarRenderer, xaxis:'x2axis', yaxis:'y2axis',
+	rendererOptions: {
+                    // Speed up the animation a little bit.
+                    // This is a number of milliseconds.  
+                    // Default for bar series is 3000.  
+                    animation: {
+                        speed: 2500
+                    },
+                    barWidth: 15,
+                    barPadding: -15,
+                    barMargin: 0,
+                    highlightMouseOver: false
+                }
+            }, 
+            {
+                rendererOptions: {
+                    // speed up the animation a little bit.
+                    // This is a number of milliseconds.
+                    // Default for a line series is 2500.
+                    animation: {
+                        speed: 2000
+                    }
+                }
+            }
+			
+	],
+	],
 	title:'Assessment Results ',
     axesDefaults: {
 		min: 3,

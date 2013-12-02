@@ -19,12 +19,12 @@ def self.import(file, current_user)
  
   CSV.foreach(file.path, headers: true) do |row|
 		
-	 if User.where(email: row[0].downcase).first
-	user = User.where(email: row[0].downcase).first.id
+	 if User.where(username: row[0].downcase).first
+	user = User.where(username: row[0].downcase).first.id
 	 else
 		u = User.new
 		u.school_id = current_user.school_id
-		u.email = row[0]
+		u.login = row[0]
 		u.password = row[1]
 		u.save   
 		user=u.id

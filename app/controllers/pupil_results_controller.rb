@@ -158,8 +158,8 @@ class PupilResultsController < ApplicationController
 	if params['r']
 		params['r'].each do |id|
 			@pupilresult = PupilResult.new(id)	
-			if Result.where(:grade => @pupilresult.result_id).first
-				@pupilresult.result_id = Result.where(:grade => @pupilresult.result_id).first.id
+			if r = Result.where(:grade => @pupilresult.result_id.downcase).first || r = Result.where(:grade => @pupilresult.result_id.upcase).first
+				@pupilresult.result_id = r.id
 				@pupilresult.save
 			end
 		end
