@@ -100,7 +100,7 @@
 			Levels of Progress
 			</div>
 		</div>
-		
+		<%i=1%>
 		<%aps = Array.new%>
 		<%@u.each do |p|%>
 			<%if a = p.user_info%>
@@ -108,14 +108,15 @@
 				<div class="row">
 					<div class="col-xs-2">
 						<% if current_user.user_info.governor == true%>
-							Hidden
+							Pupil <%=i%>
 						<%else%>
 							<%=a.surname%>
 						<%end%>
+						<%i+=1%>
 					</div>
 					<div class="col-xs-2">
 						<% if current_user.user_info.governor == true%>
-							Hidden
+							
 						<%else%>
 							<%=a.forename%>
 						<%end%>
@@ -305,7 +306,7 @@
 <%=link_to('Back', subject_choice_pupil_results_path)%>
 </div>
 
-		
+		<%i=1%>
 <script>
 if (plot1) {
 	plot1.destroy();
@@ -313,7 +314,8 @@ if (plot1) {
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%if current_user.user_info.governor == true%>Hidden<%else%><%=a.forename+" "+a.surname%><%end%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			['<%if current_user.user_info.governor == true%>Pupil <%=i%><%else%><%=a.forename+" "+a.surname%><%end%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps-80%><%end%>],
+			<%i+=1%?
 		<%end%>  
 	<%end%>
 ];
