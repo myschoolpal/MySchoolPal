@@ -19,11 +19,11 @@
   <%= f.hidden_field :period_id, :value => @period_id%>
   <div class="field">
     <%= f.label :class_id %><br>
-    <%= f.collection_select :class_id, ClassName.all, :id, :class_name, {:include_blank => true}, class: "form-control"%>
+    <%= f.collection_select :class_id, ClassName.where(school_id: current_user.school_id).all, :id, :class_name, {:include_blank => true}, class: "form-control"%>
   </div>
   <div class="field">
     <%= f.label :room_id %><br>
-    <%= f.collection_select :room_id, Room.all, :id, :room_name, {:include_blank => true}, class: "form-control"%>
+    <%= f.collection_select :room_id, Room.where(school_id: current_user.school_id).all, :id, :room_name, {:include_blank => true}, class: "form-control"%>
   </div>
   <div class="actions">
     <%= f.submit %>
