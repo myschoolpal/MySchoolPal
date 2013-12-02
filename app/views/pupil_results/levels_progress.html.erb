@@ -28,15 +28,15 @@
 		</a>	
 		<ul class="dropdown-menu">
 			<%if current_user.school.primary == true%>
-				<li><%=link_to 'KS1 Maths', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_maths')%></li>
-				<li><%=link_to 'KS1 English', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_english')%></li>
-				<li><%=link_to 'KS1 Reading', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_reading')%></li>
-				<li><%=link_to 'KS1 Writing', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_writing')%></li>
-				<li><%=link_to 'KS1 Average', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks1_avg')%></li>
+				<li><%=link_to 'KS1 Maths', year_analysis_pupil_results_path( class_id: @class_id, locked:@locked, col_id: @col_id, key_stage:'ks1_maths')%></li>
+				<li><%=link_to 'KS1 English', year_analysis_pupil_results_path( class_id: @class_id,  locked:@locked, col_id: @col_id, key_stage:'ks1_english')%></li>
+				<li><%=link_to 'KS1 Reading', year_analysis_pupil_results_path( class_id: @class_id, locked:@locked,  col_id: @col_id, key_stage:'ks1_reading')%></li>
+				<li><%=link_to 'KS1 Writing', year_analysis_pupil_results_path( class_id: @class_id, locked:@locked, col_id: @col_id, key_stage:'ks1_writing')%></li>
+				<li><%=link_to 'KS1 Average', year_analysis_pupil_results_path( class_id: @class_id, locked:@locked,  col_id: @col_id, key_stage:'ks1_avg')%></li>
 			<%elsif current_user.school.secondary == true%>
-				<li><%=link_to 'KS2 Maths', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_maths')%></li>
-				<li><%=link_to 'KS2 English', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_english')%></li>
-				<li><%=link_to 'KS2 Average', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, group_id: @group_id, col_id: @col_id, key_stage:'ks2_avg')%></li>
+				<li><%=link_to 'KS2 Maths', year_analysis_pupil_results_path( class_id: @class_id, locked:@locked, col_id: @col_id, key_stage:'ks2_maths')%></li>
+				<li><%=link_to 'KS2 English', year_analysis_pupil_results_path( class_id: @class_id,locked:@locked,  col_id: @col_id, key_stage:'ks2_english')%></li>
+				<li><%=link_to 'KS2 Average', year_analysis_pupil_results_path( class_id: @class_id,locked:@locked,  col_id: @col_id, key_stage:'ks2_avg')%></li>
 			<%end%>
 		</ul>
 	</li>
