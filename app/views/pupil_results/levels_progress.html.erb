@@ -1,6 +1,6 @@
 <ul class="nav nav-tabs" id="myTab">
 	<li><%=link_to @class.to_s + " - " + @subject.to_s, pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
-	<li class="active"><%=link_to 'Levels of Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
+	<li class="active"><%=link_to 'Levels of Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked, key_stage:@key_stage)%></li>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 			Assessments<span class="caret"></span>
@@ -8,19 +8,20 @@
 		<ul class="dropdown-menu">
 				<li style="text-align:center; font-weight:bold">Locked Cols</li>
 				<%@titles.where(locked: true).each do |t|%>
-					<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: true, col_id: t.col_id)%></li>
+					<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: true, col_id: t.col_id, key_stage:@key_stage)%></li>
 				<%end%>
 				<li style="text-align:center; font-weight:bold">Unlocked Cols</li>
 				<%@titles.where(locked: false).each do |t|%>
-					<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: false, col_id: t.col_id)%></li>
+					<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: false, col_id: t.col_id, key_stage:@key_stage)%></li>
 				<%end%>	
+			
 		</ul>
 	</li>
 	<%if @aps ==true%>
-		<li><%=link_to 'Levels', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked, aps:false)%></li>
+		<li><%=link_to 'Levels', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked, aps:false, key_stage:@key_stage)%></li>
 		
 	<%else%>
-		<li><%=link_to 'APS', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked, aps:true)%></li>
+		<li><%=link_to 'APS', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked, aps:true, key_stage:@key_stage)%></li>
 	<%end%>
 	<li class="dropdown">
 		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -40,6 +41,7 @@
 			<%end%>
 		</ul>
 	</li>
+	<li><a href="#" onclick="window.print();return false;">Print</a> </li>
 </ul>
 <div class="row-fluid" style="margin-top:20px;">
 	<div class="col-md-6 col-xs-6">
@@ -354,14 +356,14 @@ $(document).ready(function(){
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
-			['<%=(a.surname+" "+a.forename).slice(0..20)%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked:@locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%=r.result.aps%><%end%>],
+			['<%=(a.surname+" "+a.forename).slice(0..20)%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked:@locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%if r.result.aps <=53%><%=r.result.aps%><%end%><%else%>0<%end%>],
 		<%end%>  
 	<%end%>
 ];
   var line2 = [
   <%@u.each do |p|%>
   	<%if a = p.user_info%>		
-		['<%=(a.surname+" "+a.forename).slice(0..20)%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%end%>],
+		['<%=(a.surname+" "+a.forename).slice(0..20)%>', <%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%else%>0<%end%>],
 	<%end%>  
   <%end%>
   ];

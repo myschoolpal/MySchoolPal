@@ -1,24 +1,38 @@
+<h1><%=current_user.school.name%></h1>
+<hr>
+
 <%if current_user.user_info%>
 	<%if current_user.user_info.governor == true%>
-		<%=link_to 'In Depth Analysis', subject_choice_pupil_results_path%>
+	
+	<%=link_to 'In Depth Analysis', subject_choice_pupil_results_path, :class=>"btn btn-default"%>
 	<%end%>
 	<%if current_user.user_info.teacher== true%>
-		<%=link_to 'Manage Classes', pupil_results_path(class_id: @manage_classes)%>
-		<br />
-		<%=link_to 'In Depth Analysis', subject_choice_pupil_results_path%>
-		<br />
+	<div class ="row" style="margin-top:50px;">
+		<div class="col-xs-5 col-md-offset-1">
+			<%=link_to 'Manage Classes', pupil_results_path(class_id: @manage_classes), :style => "font-size:25px;",:class=>"btn btn-primary btn-large btn-block"%>
+		</div>
+		<div class="col-xs-5">
+			<%=link_to 'In Depth Analysis', subject_choice_pupil_results_path, :style => "font-size:25px;" , :class=>"btn btn-success btn-block"%>
+		</div>
+	</div>
+	
 		<%if current_user.school.secondary == true%>
-			<%=link_to 'My Timetable', my_timetable_timetables_path%>
-			<br />
-			<%=link_to 'Add a Requisition', requisitions_path%>
-			<br />
-			<%=link_to 'Check Requisitions', tech_week_choice_requisitions_path%>
-			<br />
+		<div class ="row" style="margin-top:30px">
+			<div class="col-xs-4">
+				<%=link_to 'My Timetable', my_timetable_timetables_path, :class=>"btn btn-danger btn-block"%>
+			</div>
+			<div class="col-xs-4">
+				<%=link_to 'Add a Requisition', requisitions_path, :class=>"btn btn-danger btn-block"%>
+			</div>
+			<div class="col-xs-4 ">
+			<%=link_to 'Check Requisitions', tech_week_choice_requisitions_path, :class=>"btn btn-danger btn-block"%>
+			</div>
+		</div>
 		<%end%>
 		<%elsif current_user.user_info.pupil== true%>
 			<%@pupil_classes.each do |c|%>
 			<%if c.class_name%>
-				<%=link_to c.class_name.class_name, my_results_pupil_results_path(class_id: c.class_name.id)%>
+				<%=link_to c.class_name.class_name, my_results_pupil_results_path(class_id: c.class_name.id), :class=>"btn btn-default"%>
 				<br />
 			<%end%>
 			<br />

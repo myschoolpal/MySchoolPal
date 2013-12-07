@@ -108,14 +108,15 @@ border:0px solid #000;
 
 .above_target
 {
-background: $above_target_color_1;
+background-color: $above_target_color_1;
+
 background: -moz-linear-gradient(left, $above_target_color_1 0%, $above_target_color_2 100%);
 background: -webkit-gradient(left top, right top, color-stop(0%, $above_target_color_1), color-stop(100%, $above_target_color_2));
 background: -webkit-linear-gradient(left, $above_target_color_1 0%, $above_target_color_2 100%);
 background: -o-linear-gradient(left, $above_target_color_1 0%, $above_target_color_2 100%);
 background: -ms-linear-gradient(left, $above_target_color_1 0%, $above_target_color_2 100%);
 background: linear-gradient(to right, $above_target_color_1 0%, $above_target_color_2 100%);
-
+-webkit-print-color-adjust: exact;
 }
 
 .on_target
@@ -127,7 +128,7 @@ background: -webkit-linear-gradient(left, $on_target_color_1 0%, $on_target_colo
 background: -o-linear-gradient(left, $on_target_color_1 0%, $on_target_color_2 100%);
 background: -ms-linear-gradient(left, $on_target_color_1 0%, $on_target_color_2 100%);
 background: linear-gradient(to right, $on_target_color_1 0%, $on_target_color_2 100%);
-
+-webkit-print-color-adjust: exact;
 }
 
 .one_below_target
@@ -139,7 +140,7 @@ background: -webkit-linear-gradient(left, $one_below_target_color_1 0%, $one_bel
 background: -o-linear-gradient(left, $one_below_target_color_1 0%, $one_below_target_color_2 100%);
 background: -ms-linear-gradient(left, $one_below_target_color_1 0%, $one_below_target_color_2 100%);
 background: linear-gradient(to right, $one_below_target_color_1 0%, $one_below_target_color_2 100%);
-
+-webkit-print-color-adjust: exact;
 }
 
 .below_target
@@ -151,7 +152,7 @@ background: -webkit-linear-gradient(left, $below_target_color_1 0%, $below_targe
 background: -o-linear-gradient(left, $below_target_color_1 0%, $below_target_color_2 100%);
 background: -ms-linear-gradient(left, $below_target_color_1 0%, $below_target_color_2 100%);
 background: linear-gradient(to right, $below_target_color_1 0%, $below_target_color_2 100%);
-
+-webkit-print-color-adjust: exact;
 }
 
 .empty_result

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   
   def after_sign_in_path_for(user_class)
   if current_user.admin == true
-	user_infos_path
+	user_infos_path(user_info:true)
   else
   user_classes_path
   end

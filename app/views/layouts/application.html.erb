@@ -4,7 +4,9 @@
 <script class="include" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <title><%= content_for?(:title) ? yield(:title) : "MySchoolPal" %></title>
-	<%= stylesheet_link_tag "application",  :media => 'all'%>
+	<%= stylesheet_link_tag "application-print",  :media => 'print'%> 
+	<%= stylesheet_link_tag "application",  :media => 'screen'%>
+	
 	<%= javascript_include_tag "application" %>
 	
     <%= csrf_meta_tag %>
@@ -62,7 +64,106 @@
   </div>
   <%end%>
   <div class="container">
-	
+	<%if current_user%>
+		<%if current_user.admin == true %>
+			<h1><%=current_user.school.name%></h1>
+			<ul class="nav nav-tabs" id="myTab" style="margin-bottom:10px;">
+				
+				<%if params[:user_info]=='true'%>
+				<li class="active"><%=link_to 'School Info', user_infos_path(user_info:true)%></li>
+				<%else%>
+					<li><%=link_to 'School Info', user_infos_path(user_info:true)%></li>
+				<%end%>
+				
+				
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					 Teachers<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+					<li><%= link_to 'Add Teachers', new_user_info_path%> </li>
+					<li><%= link_to 'View Teachers', user_infos_path(teachers: 'show')%> </li>	
+					</ul>
+				</li>
+					
+				
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					 Pupils<span class="caret"></span>
+					</a>
+					
+					<ul class="dropdown-menu">
+					<li><%= link_to 'Add Pupils', new_user_info_path%> </li>
+					<%if current_user.school.secondary ==true%>
+						<%i=7%>
+						<%y=13%>
+					<%elsif current_user.school.primary ==true%>
+					<%i=1%>
+					<%y=6%>
+					<%end%>
+						<%(i..y).each do |j|%>
+							<%if j == params[:year].to_i%>
+								<li class="active"><%= link_to 'Year ' + j.to_s, user_infos_path(year: j, pupils: 'show')%> </li>
+							<%else%>
+								<li><%= link_to 'Year ' + j.to_s, user_infos_path(year: j, pupils: 'show')%> </li>
+							<%end%>
+						<%end%>		
+					</ul>
+				</li>
+			
+				
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					 Classes<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><%=link_to 'Add Classes', new_class_name_path%></li>
+						<li><%=link_to 'View Classes', class_names_path%></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					 Subjects<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><%=link_to 'Add Subjects', new_subject_path%></li>
+						<li><%=link_to 'View Subjects', subjects_path%></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					 Groups<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><%=link_to 'Add Groups', new_group_path%></li>
+						<li><%=link_to 'View Groups', groups_path%></li>
+					</ul>
+				</li>
+				
+				
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					 Timetable<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><%=link_to 'Import Timetables', import_classes_timetables_path%></li>
+						<li><%=link_to 'View Timetables', timetables_path%></li>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+					 Lock Columns<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><%=link_to 'View Locked Titles', title_classes_path(locked: true)%></li>
+						<li><%=link_to 'New Locked Titles', new_title_class_path%></li>
+					</ul>
+				</li>
+				
+				
+			</ul>
+		<%end%>
+	<%end%>
         <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>

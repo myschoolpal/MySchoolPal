@@ -73,6 +73,7 @@ class PupilResultsController < ApplicationController
 	@subjects = Subject.where(school_id: current_user.school_id).all
   end
   def year_analysis
+	
 	@above = Array.new
 	@on_track = Array.new
 	@one_below = Array.new
@@ -116,6 +117,8 @@ class PupilResultsController < ApplicationController
 	@u = User.includes(:user_info).where("user_infos.year" => @year_id).joins(:pupil_results).where("pupil_results.col_id" =>@col_id).
 	joins(:class_names).where("class_names.subject_id" => @subject_id).where("class_names.id" => @class_id).all
 	end
+	
+	 
  end
  
  def levels_progress
@@ -134,7 +137,7 @@ class PupilResultsController < ApplicationController
 	end
  @titles = TitleClass.where(:class_id=>@class_id)
  @col_id = params[:col_id]
- @u = User.includes(:user_info).where("user_infos.pupil" => true).includes(:user_classes).where("user_classes.class_id" => @class_id).all
+ @u = User.includes(:user_info).where("user_infos.pupil" => true).includes(:user_classes).where("user_classes.class_id" => @class_id).order("user_infos.surname ASC").all
  if c = ClassName.where(id: @class_id).first
  if s = c.subject
  @subject = s.subject

@@ -15,6 +15,10 @@ gem 'protected_attributes'
 #CSV
 gem 'roo'
 
+#wickedPDF
+gem 'wkhtmltopdf-binary'
+
+
 
 #Google Visualization
 gem "google_visualr", "~> 2.1.0"

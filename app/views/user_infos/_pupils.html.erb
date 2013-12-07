@@ -1,46 +1,61 @@
-<h3>Pupils</h3>
-<%if current_user.school.primary ==true%>
-<%= link_to 'Year 1', user_infos_path(year: 1)%> |
-<%= link_to 'Year 2', user_infos_path(year: 2)%> |
-<%= link_to 'Year 3', user_infos_path(year: 3)%> |
-<%= link_to 'Year 4', user_infos_path(year: 4)%> |
-<%= link_to 'Year 5', user_infos_path(year: 5)%> |
-<%= link_to 'Year 6', user_infos_path(year: 6)%> |
-<%end%>
-<%if current_user.school.secondary ==true%>
-<%= link_to 'Year 7', user_infos_path(year: 7)%> |
-<%= link_to 'Year 8', user_infos_path(year: 8)%> |
-<%= link_to 'Year 9', user_infos_path(year: 9)%> |
-<%= link_to 'Year 10', user_infos_path(year: 10)%> |
-<%= link_to 'Year 11', user_infos_path(year: 11)%> |
-<%= link_to 'Year 12', user_infos_path(year: 12)%> |
-<%= link_to 'Year 13', user_infos_path(year: 13)%> |
-<%end%>
-<%= link_to 'Hide Pupils', user_infos_path()%>
-<br />
+<div class="row">
+	<div class="col-xs-4">
+		<h3>Pupils</h3>
+	</div>
+	<div class="col-xs-8">
+		<div class="pull-right">
+			<ul class="pagination">
+				<%if params[:show_pupils].to_i==0%>
+					<li class="disabled"><%=link_to '<<', user_infos_path(year: @year, show_pupils: (params[:show_pupils].to_i-50), pupils: 'show')%></li>
+				<%else%>
+					<li><%=link_to '<<', user_infos_path(year: @year, show_pupils: (params[:show_pupils].to_i-50), pupils: 'show')%></li>
+				<%end%>
+			  <%n=(@number_pupils/50).ceil%>
+			  <%(1..n+2).each do |j|%>
+				  <%if ((params[:show_pupils].to_i+50)/50).ceil==j%>
+					  <li class="active"><%=link_to j, user_infos_path(year: @year, show_pupils: ((j*50)-50), pupils: 'show')%></li>
+					  <%else%>
+					  <li ><%=link_to j, user_infos_path(year: @year, show_pupils: ((j*50)-50), pupils: 'show')%></li>
+				  <%end%>
+			  <%end%>
+				<%if (params[:show_pupils].to_i+50)>@number_pupils%>
+				<li class="disabled"><%=link_to '>>', user_infos_path(year: @year, show_pupils: (params[:show_pupils].to_i+50), pupils: 'show')%></li>
+				<%else%>
+				<li><%=link_to '>>', user_infos_path(year: @year, show_pupils: (params[:show_pupils].to_i+50), pupils: 'show')%></li>
+				<%end%>
+			</ul>
+		</div>
+	</div>
+</div>
+	
+		<%if !@pupils.empty?%>
+		
 
-<%if !@pupils.empty?%>
-<%if @back_show_pupils > 0%>
-<%=link_to 'Back', user_infos_path(year: @year, show_pupils: @back_show_pupils)%> |
-<%end%>
-<%if @number_pupils +50 >= @next_show_pupils%>
-<%=link_to 'Next', user_infos_path(year: @year, show_pupils: @next_show_pupils)%>
-<%end%>
-<table>
+<table class="table table-striped table-hover">
   <tr>
     <th>Email</th>
     <th>Forename</th>
 	<th>Surname</th>
 	<th>Year</th>
 	<th>Gender</th>
-    <th>Ks2 English</th>
-    <th>Ks2 Maths</th>
-	<th>Ks2 Science</th>
-	<th>Ks1 English</th>
-    <th>Ks1 Maths</th>
-	<th>Ks1 Reading</th>
-	<th>Ks1 Writing</th>
-	
+	<%if s = current_user.school%>
+		<%if s.secondary == true%>
+			<th>Ks2 English</th>
+			<th>Ks2 Maths</th>
+			<th>Ks2 Science</th>
+		<%end%>
+		<%if s.primary == true%>
+			<th>Ks1 English</th>
+			<th>Ks1 Maths</th>
+			<th>Ks1 Reading</th>
+			<th>Ks1 Writing</th>
+		<%end%>
+	<%end%>
+	<th>Classes</th>
+	<th>Targets</th>
+	<th>Groups</th>
+	<th></th>
+	<th></th>
   </tr>
   <% @pupils.each do |users| %>
     <tr>
@@ -54,62 +69,91 @@
       <td><%= users.user_info.surname %></td>
 	  <td><%= users.user_info.year %></td>
 	  <td><%= users.user_info.gender %></td>
-      <td>
-	  <% if !users.user_info.ks2_english.blank?%>
-	  <%= Result.where(id: users.user_info.ks2_english).first.grade%></td>
+	<%if s = current_user.school%>
+		<%if s.secondary == true%>
+			  <td>
+			  <% if !users.user_info.ks2_english.blank?%>
+			  <%= Result.where(id: users.user_info.ks2_english).first.grade%></td>
+			  <%end%>
+			  <td>
+			  <% if !users.user_info.ks2_maths.blank?%>
+			  <%= Result.where(id: users.user_info.ks2_maths).first.grade %>
+			  <%end%>
+			  </td>
+			  <td>
+			  <% if !users.user_info.ks2_science.blank?%>
+			  <%= Result.where(id: users.user_info.ks2_science).first.grade %>
+			  <%end%>
+			  </td>
+		<%end%>
+		<%if s.primary == true%>
+			  <td>
+			  <% if !users.user_info.ks1_english.blank?%>
+			  <%= Result.where(id: users.user_info.ks1_english.to_i).first.grade %>
+			  <%end%>
+			  </td>
+			  <td>
+			  <% if !users.user_info.ks1_maths.blank?%>
+			  <%= Result.where(id: users.user_info.ks1_maths.to_i).first.grade %>
+			  <%end%>
+			  </td>
+			  <td>
+			  <% if !users.user_info.ks1_reading.blank?%>
+			  <%= Result.where(id: users.user_info.ks1_reading.to_i).first.grade %>
+			  <%end%>
+			  </td>
+			  <td>
+			  <% if !users.user_info.ks1_writing.blank?%>
+			  <%= Result.where(id: users.user_info.ks1_writing.to_i).first.grade %>
+			  <%end%>
+			  </td>	  
+	    <%end%>
 	  <%end%>
 	  <td>
-	  <% if !users.user_info.ks2_maths.blank?%>
-      <%= Result.where(id: users.user_info.ks2_maths).first.grade %>
-	  <%end%>
+		<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Classes
+      <span class="caret"></span>
+    </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				<% users.user_classes.each do |c| %>
+					<li><%=link_to c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id)%></li>
+				<%end%>
+   		    </ul>
+		</div>
 	  </td>
 	  <td>
-	  <% if !users.user_info.ks2_science.blank?%>
-	  <%= Result.where(id: users.user_info.ks2_science).first.grade %>
-	  <%end%>
+		<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Targets
+      <span class="caret"></span>
+    </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				<%users.user_targets.each do |t| %>
+					<li><%=t.subject.subject%>
+					<%=t.result.grade%></li>
+				<%end%>
+   		    </ul>
+		</div>
 	  </td>
 	  <td>
-	  <% if !users.user_info.ks1_english.blank?%>
-	  <%= Result.where(id: users.user_info.ks1_english.to_i).first.grade %>
-	  <%end%>
+		<div class="btn-group">
+		  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Groups
+      <span class="caret"></span>
+    </button>
+			  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+				<%users.groups.each do |g| %>
+					<li><%=g.group%></li>
+				<%end%>
+   		    </ul>
+		</div>
 	  </td>
-	  <td>
-	  <% if !users.user_info.ks1_maths.blank?%>
-	  <%= Result.where(id: users.user_info.ks1_maths.to_i).first.grade %>
-	  <%end%>
-	  </td>
-      <td>
-	  <% if !users.user_info.ks1_reading.blank?%>
-	  <%= Result.where(id: users.user_info.ks1_reading.to_i).first.grade %>
-	  <%end%>
-	  </td>
-      <td>
-	  <% if !users.user_info.ks1_writing.blank?%>
-	  <%= Result.where(id: users.user_info.ks1_writing.to_i).first.grade %>
-	  <%end%>
-	  </td>	  
-	  <% users.user_classes.each do |c| %>
-	  <td>
-	  <%=link_to c.class_name.class_name, pupil_results_path(:class_id=>c.class_name.id)%>
-	  </td>
-	  <%end%>
-	  <%users.groups.each do |g| %>
-	  <td>
-	  <%=g.group%>
-	  </td>
-	  <%end%>
-	  <%users.user_targets.each do |t| %>
-	  <td>
-	  <%=t.subject.subject%>
-	  </td>
-	  <td>
-	  <%=t.result.grade%>
-	  </td>
-	  <%end%>
+	  
       <td><%= link_to "Edit", edit_user_info_path(users, :user_infos => users.user_info.id) %></td>
-	  <td><%= link_to "Destroy", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
+	  <td><%= link_to "Delete", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
 	  <%end%>
-	  <td><%= link_to "Add", new_user_info_path(users, :user => users.id) %></td>
+	  
       
     </tr>
   <%end%>

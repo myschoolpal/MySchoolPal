@@ -1,9 +1,12 @@
 
-<table>
+<table class="table table-striped table-hover">
   <tr>
+	<th>ID</th>
     <th>Email</th>
     <th>Forename</th>
 	<th>Surname</th>
+	<th></th>
+	<th></th>
 	</tr>
   <% for users in @teachers %>
     <tr>
@@ -16,23 +19,13 @@
 	  <% if !users.user_info.nil?%>
 	  <td><%= users.user_info.forename %></td>
       <td><%= users.user_info.surname %></td>
-	  <% users.class_names.each do |c| %>
-	  <td>
-	  <%=link_to c.class_name, pupil_results_path(:class_id=>c.id)%>
-	  </td>
-	  <%end%>
+
 		<td><%= link_to "Edit", edit_user_info_path(users, :user_infos => users.user_info.id) %></td>
-	  <td><%= link_to "Destroy", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
+	  <td><%= link_to "Delete", user_info_path(users, :user_info => users.user_info.id), :confirm => 'Are you sure?', :method => :delete %></td>
 	  <%end%>
-	  <td><%= link_to "Add", new_user_info_path(users, :user => users.id) %></td>
+	  
       
     </tr>
   <%end%>
 </table>
 
-
-
-  <%= form_tag import_user_infos_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
-<% end %>

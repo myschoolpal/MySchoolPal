@@ -1,34 +1,26 @@
-
-<%=current_user.school.name%>
-<br />
+	<%if params[:teachers].nil? && params[:pupils].nil?%>
 <b>Timetable Weeks:</b>
 <%=current_user.school.number_weeks%>
+<br>
 <b>Number of Periods:</b>
 <%=current_user.school.number_periods%>
+<br>
+<b>Admin:</b> 
+<% for users in @admin %>
+	<%= users.email %>
+<%end%>
+<%end%>
 
-<br />
-<%=link_to 'Add Classes', class_names_path%>
-<br />
-<%=link_to 'Add Subjects', subjects_path%>
-<br />
-<%=link_to 'Add Groups', groups_path%>
-<br />
 
-<%=link_to 'Lock Columns for Classes', title_classes_path%>
-<br />
-<%=link_to 'Import Timetables', import_classes_timetables_path%>
-<br />
-<%=link_to 'View Timetables', timetables_path%>
-<%= render 'admin'%>
-<h3>Teachers</h3>
-<br />
-<%if params[:teachers] != 'show'%>
-<%= link_to 'Show Teachers', user_infos_path(teachers: 'show')%> 
-<%else%>
-<%= link_to 'Hide Teachers', user_infos_path(teachers: 'hide')%> 
+
+
+
+
+<%if params[:teachers] == 'show'%>
 <%= render 'teachers'%>
 <%end%>
 
+<%if params[:pupils] == 'show'%>
 <%= render 'pupils'%>
-
+<%end%>
 

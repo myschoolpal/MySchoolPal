@@ -1,45 +1,26 @@
-<%= form_for @user do |f| %>
-  <%= f.error_messages %>
-  
-  <p>
-    <%= f.label :forename %><br />
-    <%= f.text_field :forename %>
-  </p>
-  <p>
-    <%= f.label :surname %><br />
-    <%= f.text_field :surname %>
-  </p>
-  <p>
-    <%= f.label :ks2_english %><br />
-    <%= f.collection_select(:ks2_english, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
-  </p>
-  <p>
-    <%= f.label :ks2_maths %><br />
-    <%= f.collection_select(:ks2_maths, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
-  </p>
-  <p>
-    <%= f.label :ks1_english %><br />
-    <%= f.collection_select(:ks1_english, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
-  </p>
-  <p>
-    <%= f.label :ks1_maths %><br />
-    <%= f.collection_select(:ks1_maths, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
-  </p>
-  <p>
-    <%= f.label :ks1_writing %><br />
-    <%= f.collection_select(:ks1_writing, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
-  </p>
-  <p>
-    <%= f.label :ks1_reading %><br />
-    <%= f.collection_select(:ks1_reading, Result.order("aps asc").all, :id, :grade, :prompt => 'Select')%>
-  </p>
-  <p>
-  <%= f.label :pupil %><br />
-  <%= f.check_box :pupil%>
-  </p>
-  <p>
-  <%= f.label :teacher %><br />
-  <%= f.check_box :teacher%>
-  </p>
-  <p><%= f.submit %></p>
-<% end %>
+<div style="margin-top:40px;">
+<H5>Import your data</H5>
+<br />
+Click on select file to browse to the file you have now filled with student/teacher data. 
+Then click import.
+</div>
+<div style="margin-top:50px">
+
+<%= form_tag import_user_infos_path, multipart: true do %>
+    <div class="fileupload fileupload-new" data-provides="fileupload">
+  <div class="input-append">
+    <div class="uneditable-input span3">
+	<i class="icon-file fileupload-exists"></i> 
+	<span class="fileupload-preview"></span>
+	</div><span class="btn btn-file">
+	<span class="fileupload-new">Select file</span>
+	<span class="fileupload-exists">Change</span>
+	<%= file_field_tag :file %>
+	</span>
+	<%= submit_tag "Import", class: "btn fileupload-exists btn-danger" %>
+<%end%>
+</div>
+
+<script>
+$('.fileinput').fileinput()
+</script>

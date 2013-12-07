@@ -71,7 +71,7 @@
 		<%else%>
 		<li><%=link_to 'Show Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,locked:true, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
 		<%end%>
-		
+		<li><a href="#" onclick="window.print();return false;">Print</a> </li>
 		</ul>
 		<div class="row">
 			<% if s = Subject.where(id: @subject_id).first%><%=s.subject%><%end%> | 

@@ -1,65 +1,38 @@
-<h1>Classes</h1>
-<%=link_to('Delete All',{:controller => :class_names, :action => :delete_many_cl}, data: { confirm: 'Are you sure?' })%>
-<table>
-  <thead>
-    <tr>
-      <th>Class name</th>
-      <th>Subject</th>
-      <th>Year</th>
-      <th></th>
-    </tr>
-  </thead>
+<h3>Classes</h3>
 
-  <tbody>
-    <% @class_names.each do |class_name| %>
-      <tr>
-	  <td>
-		<%=link_to class_name.class_name, pupil_results_path(:class_id=>class_name.id)%>
-		</td>
-		<td>
-		<%if c = class_name.subject%>
-		<%= c.subject %>
-		<%end%>
-		</td>
-		<td>
-		<%= class_name.year_id %>
-		</td>
-        <td><%= link_to 'Edit', edit_class_name_path(class_name) %></td>
-        
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+	<table class="table table-striped table-hover">
+	  <thead>
+		<tr>
+		  <th>Class name</th>
+		  <th>Subject</th>
+		  <th>Year</th>
+		  <th></th>
+		</tr>
+	  </thead>
+
+	  <tbody>
+		<% @class_names.each do |class_name| %>
+		  <tr>
+		  <td>
+			<%=link_to class_name.class_name, pupil_results_path(:class_id=>class_name.id)%>
+			</td>
+			<td>
+			<%if c = class_name.subject%>
+			<%= c.subject %>
+			<%end%>
+			</td>
+			<td>
+			<%= class_name.year_id %>
+			</td>
+			<td><%= link_to 'Edit', edit_class_name_path(class_name) %></td>
+			
+		  </tr>
+		<% end %>
+	  </tbody>
+	</table>
 
 <br>
 
-<div class="row-fluid">
-<div class="span6">
-<div class="span4 center">
-<div style="margin-top:40px;">
-<H5>Import your data</H5>
-<br />
-Click on select file to browse to the file you have now filled with student data. 
-Then click import.
-</div>
-<div style="margin-top:50px">
-<%= form_tag import_class_names_path, multipart: true do %>
-    <div class="fileupload fileupload-new" data-provides="fileupload">
-  <div class="input-append">
-    <div class="uneditable-input span3">
-	<i class="icon-file fileupload-exists"></i> 
-	<span class="fileupload-preview"></span>
-	</div><span class="btn btn-file">
-	<span class="fileupload-new">Select file</span>
-	<span class="fileupload-exists">Change</span>
-	<%= file_field_tag :file %>
-	</span>
-	<%= submit_tag "Import", class: "btn fileupload-exists btn-danger" %>
-<%end%>
-	</div>
-</div>
-</div>
 
-
-<%= link_to 'New Class name', new_class_name_path %>
-<%= link_to 'Back', user_infos_path%>
+<%=link_to('Delete All',{:controller => :class_names, :action => :delete_many_cl}, data: { confirm: 'Are you sure?' })%>

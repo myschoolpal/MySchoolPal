@@ -5,16 +5,15 @@ class UserInfosController < ApplicationController
 	  if current_user.school_id
 	    @year = params[:year]
 		if params[:show_pupils].to_i >= 50
-		show_pupils = params[:show_pupils].to_i
+		@show_pupils = params[:show_pupils].to_i
 		else
-		show_pupils = 50
+		@show_pupils = 50
 		end
-		@back_show_pupils = (show_pupils -50)
-		@next_show_pupils = (show_pupils +50)
+		
 		check_pupil = User.where(school_id: current_user.school_id).includes(:user_info).where("user_infos.pupil=?", true).where("user_infos.year=?", @year)
 		@number_pupils = check_pupil.all.size
 		if check_pupil
-		@pupils = check_pupil.order("user_infos.surname asc").limit(show_pupils).drop(show_pupils - 50)
+		@pupils = check_pupil.order("user_infos.surname asc").limit(@show_pupils).drop(@show_pupils - 50)
 		end
 		@teachers = User.where(school_id: current_user.school_id).includes(:user_info).where("user_infos.teacher=?", true).all
 		@admin = User.where(school_id: current_user.school_id).where(admin: true).all
@@ -34,7 +33,7 @@ class UserInfosController < ApplicationController
 end
 
   def new
-    @user = User.new
+    @user = UserInfo.new
 	
   end
 

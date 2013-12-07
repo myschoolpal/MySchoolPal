@@ -1,22 +1,4 @@
-<div class="row">
-	<div class="col-md-12">
-			<ul class="nav nav-tabs" id="myTab">
-			<li>
-				<%=link_to 'Locked Titles', title_classes_path(locked: true)%>
-			</li>
-			<li>
-				<%=link_to 'Unlocked Titles', title_classes_path(locked: false)%>
-			</li>
-			<li class="active">
-				<%=link_to 'New Titles', new_title_class_path%>
-			</li>
-			
-			</ul>
-	</div>
-</div>
-
 <h2>Adding locked titles to Classes</h2>
 
 <%= render 'form' %>
 
-<%= link_to 'Back', title_classes_path %>

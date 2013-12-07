@@ -45,6 +45,7 @@
 				<%if @start_col > 7%>
 				<li class="pull-right"><%=link_to('<< Previous',pupil_results_path(class_id: @class_id, col_id: @start_col-8, locked: @locked))%></li>
 				<%end%>
+				<li><a href="#" onclick="window.print();return false;">Print</a> </li>
 			</ul>
 </div>
 		<br />
