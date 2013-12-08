@@ -55,9 +55,9 @@
 </div>
 		<br />
 			
-	<div class="row" style="height:30px">
+	<div class="row">
 		<div class="col-xs-12 col-md-12">
-			<div class="row" style="height:30px">
+			<div class="row">
 				<div class="col-xs-3 col-md-3">
 					<div class="row">
 						<div class="col-xs-6 col-md-6">
@@ -88,7 +88,7 @@
 							<%else%>
 								<div class="col-xs-1 col-md-1 text-center">
 								<%if @locked !=true%>
-								<%=link_to('New', edit_pupil_result_path(k, :class_id=>@class_id, locked:@locked))%>
+								<%=link_to('New - '+i.to_s, edit_pupil_result_path(k, :class_id=>@class_id, locked:@locked))%>
 								<%end%>
 								</div>
 								<%i+=1%>
