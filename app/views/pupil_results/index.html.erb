@@ -76,17 +76,16 @@
 					<% until i == 8%>
 						<%@t = TitleClass.where(:col_id => k).where(:class_id=>@class_id).where(locked: @locked).first%>						
 							<%if @t%>
-								<div class="col-xs-1 col-sm-1 col-md-1 text-center tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='
+								<div class="col-md-1 text-center tooltip_hover hidden-xs hidden-sm" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='
 								<%=@t.title%><br />
 								<%=link_to('Edit', edit_pupil_result_path(k, :class_id=>@class_id, locked: @locked), :style => "color:#FFF")%>
 								  <%if @locked !=true%> | <%= link_to "Delete", delete_many_results_path(:col_id =>k, :class_id=>@class_id), :confirm => "Are you sure?" , :style => "color:#FFF" ,  :method => :put %><%end%>' data-html="true">														
-								<div class="hidden-xs hidden-sm">
 								<p style="font-size:11px"><%=@t.title.slice(0..12)%></p>
 								</div>
-								<div class="visible-xs visible-sm">
-								<button type="button" class="btn btn-link btn-small" style="margin:0px"><%=@t.title.slice(0..8)%></button>
+								<div class="col-xs-1 col-sm-1 visible-xs visible-sm">
+								<%=link_to(@t.title.slice(0..12), edit_pupil_result_path(k, :class_id=>@class_id, locked: @locked), :style => "color:#000")%>
 								</div>
-								</div>
+								
 								<%i+=1%>
 							<%else%>
 								<div class="col-xs-1 col-md-1 text-center">
