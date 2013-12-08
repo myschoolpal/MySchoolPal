@@ -18,6 +18,8 @@
 	  <%end%>
 	  <%if @col_id%>
 		<li><%=link_to "Assessment " + @col_id,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, col_id: @col_id, locked:@locked)%></li>
+		<%else%>
+		<p class="text-danger" style="margin:0px;">Select an Assessment</p>
 	  <%end%>
 	  <%if @class_id%>
 		<li><%if c = ClassName.find(@class_id)%><%=link_to c.class_name,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, col_id: @col_id, locked:@locked, class_id:@class_id)%><%end%></li>
