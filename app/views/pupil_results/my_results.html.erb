@@ -37,7 +37,7 @@
 </div>
 <%avg = Array.new%>
 	<div class="row">
-		<div class="col-xs-6 col-md-6">
+		<div class="col-md-6">
 			<%(0..9).each do |i|%>
 				<div class="row">
 					<%((i*6+1)..(i*6+6)).each do |k|%>
@@ -133,7 +133,7 @@
 		</div>
 <%else%>
 	<div class="row">
-		<div class="col-xs-6 col-md-6">
+		<div class="col-md-6">
 			<p>
 				There are no results for 
 				<%=UserInfo.where(user_id: @user_id).first.forename%> 
