@@ -13,7 +13,7 @@
     <%= csrf_meta_tag %>
     <%= yield(:head) %>
   </head>
-  <body class="<%= @home ? 'home' : ''%>">
+  <body>
 
 	<div class="navbar navbar-static-top">
         <div class="navbar-inner">
@@ -40,6 +40,17 @@
 		</div>
 	</div>
   </div>
+<%if @home %> 
+ <div class="row top1">
+	<div class="col-sm-7 col-sm-offset-1">
+		<p class="title">MYSCHOOLPAL</p>
+		<p class="sub-title">Monitoring Pupil's Progress</p>
+	</div>
+	<div class="col-xs-4">
+		<%= image_tag("/assets/ipodipad.png", width:"300")%>
+	</div>
+</div>
+<%end%>
   <%if @about %>
   <div class="top1">
   	<p class="about-title">About</p>
