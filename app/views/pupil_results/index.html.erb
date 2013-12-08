@@ -83,7 +83,7 @@
 								<p style="font-size:11px"><%=@t.title.slice(0..12)%></p>
 								</div>
 								<div class="col-xs-1 col-sm-1 visible-xs visible-sm">
-								<%=link_to(@t.title.slice(0..12), edit_pupil_result_path(k, :class_id=>@class_id, locked: @locked), :style => "color:#000")%>
+								<%=link_to(@t.title.slice(0..12), edit_pupil_result_path(k, :class_id=>@class_id, locked: @locked), :style => "color:#000; font-size:11px")%>
 								</div>
 								
 								<%i+=1%>
