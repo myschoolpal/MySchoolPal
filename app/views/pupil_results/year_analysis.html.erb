@@ -1,27 +1,29 @@
 <div class="row">
-		
-			
-			<ol class="breadcrumb">
-			  <li><% if s = Subject.where(id: @subject_id).first%><%=link_to s.subject,  year_analysis_pupil_results_path(subject_id:@subject_id)%><%end%></li>
-			  <%if @year_id%>
-				<li><%=link_to 'Year ' + @year_id,  year_analysis_pupil_results_path(subject_id:@subject_id,year_id: @year_id, locked:@locked)%></li>
-			  <%end%>
-			  <%if @key_stage%>
-				<li><%=link_to @key_stage.to_s.upcase,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage, locked:@locked)%></li>
-			  <%end%>
-			  <%if @group_id%>
-				<li><%if g = Group.find(@group_id)%><%=link_to g.group,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, locked:@locked)%><%end%></li>
-			  <%end%>
-			  <%if @col_id%>
-				<li><%=link_to "Assessment " + @col_id,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, col_id: @col_id, locked:@locked)%></li>
-			  <%end%>
-			  <%if @class_id%>
-				<li><%if c = ClassName.find(@class_id)%><%=link_to c.class_name,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, col_id: @col_id, locked:@locked, class_id:@class_id)%><%end%></li>
-			  <%end%>
-			  
-			</ol>
-			
-		</div>
+	<ol class="breadcrumb">
+	<%if @subject_id%>
+		<li><%if s = Subject.where(id: @subject_id).first%><%=link_to s.subject,  year_analysis_pupil_results_path(subject_id:@subject_id)%><%end%></li>
+	<%else%>
+		<p class="text-danger" style="margin:0px;">Select a Subject</p>
+	<%end%>
+	  <%if @year_id%>
+		<li><%=link_to 'Year ' + @year_id,  year_analysis_pupil_results_path(subject_id:@subject_id,year_id: @year_id, locked:@locked)%></li>
+		<%else%>
+		<p class="text-danger" style="margin:0px;">Select a Year</p>
+	  <%end%>
+	  <%if @key_stage%>
+		<li><%=link_to @key_stage.to_s.upcase,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage, locked:@locked)%></li>
+	  <%end%>
+	  <%if @group_id%>
+		<li><%if g = Group.find(@group_id)%><%=link_to g.group,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, locked:@locked)%><%end%></li>
+	  <%end%>
+	  <%if @col_id%>
+		<li><%=link_to "Assessment " + @col_id,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, col_id: @col_id, locked:@locked)%></li>
+	  <%end%>
+	  <%if @class_id%>
+		<li><%if c = ClassName.find(@class_id)%><%=link_to c.class_name,  year_analysis_pupil_results_path(subject_id:@subject_id, year_id:@year_id, key_stage:@key_stage,group_id:@group_id, col_id: @col_id, locked:@locked, class_id:@class_id)%><%end%></li>
+	  <%end%>
+	</ol>
+</div>
 			<ul class="nav nav-tabs" id="myTab">
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
