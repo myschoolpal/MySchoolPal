@@ -195,9 +195,15 @@ margin-top:-28px;
 background-color:$background;
 padding-bottom:20px;
 padding-top:40px;
-
+margin-left:0px;
+margin-right:0px;
+padding-left:0px;
+padding-right:0px;
 }
 
+.footer {
+background-color:$background;
+}
 p.about-title {
 font-family: Gill Sans mt;
 font-size:60px;

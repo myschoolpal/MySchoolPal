@@ -2,6 +2,8 @@ MSP::Application.routes.draw do  get "static_pages/home"
   get "static_pages/about"
   get "static_pages/contact"
   get "static_pages/features"
+  get "static_pages/tandc"
+  get "static_pages/privacy"
   
   	match 'pupil_results' => 'pupil_results#update_all_results', :as => :update_all_results, :via => :put
 	match 'lock_columns' => 'lock_columns#update_many_locks', :as => :update_many_locks, :via => :put

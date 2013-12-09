@@ -4,14 +4,22 @@ class StaticPagesController < ApplicationController
   end
 
   def about
-  @about = true
+	@about = true
   end
 
   def contact
-  @contact = true
+	@contact = true
   end
 
   def features
-  @features = true
+	@features = true
+  end
+  
+  def tandc
+	@tandc = true  
+  end
+  
+  def privacy
+	@privacy = true
   end
 end
