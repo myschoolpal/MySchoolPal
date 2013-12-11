@@ -1,3 +1,21 @@
+<%test = Array.new%>
+	<%if current_user.school.secondary == true%>
+		<%(3..36).each do |z|%>
+			<%test[z] = Array.new%>
+			<%(81..88).each do |i|%>
+				<%test[z][i] = Array.new%>
+			<%end%>					
+		<%end%>
+	<%end%>
+	<%if current_user.school.primary == true%>
+		<%(3..26).each do |z|%>
+			<%test[z] = Array.new%>
+			<%(3..36).each do |i|%>
+				<%test[z][i] = Array.new%>
+			<%end%>					
+		<%end%>
+	<%end%>
+	
 <ul class="nav nav-tabs" id="myTab">
 	<li><%=link_to @class.to_s + " - " + @subject.to_s, pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
 	<li class="active visible-md visible-lg"><%=link_to 'Levels of Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked, key_stage:@key_stage)%></li>
@@ -159,7 +177,28 @@
 									<%k.aps%>
 									<%r.result.aps%>
 									<%diff = r.result.aps- k.aps%>
-										
+									
+									
+									<%if current_user.school.secondary == true%>								
+										<%(3..36).each do |z|%>
+											<%(81..88).each do |i|%>
+													<%if r.result.aps ==i && k.aps ==z%>
+													<%test[z][i] << link_to( p.user_info.surname+" "+p.user_info.forename, personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked)) %>
+													<%end%>		
+											<%end%>				
+										<%end%>
+									<%end%>
+									<%if current_user.school.primary == true%>								
+										<%(3..26).each do |z|%>
+											<%(3..36).each do |i|%>
+												<%if r.result.aps ==i && k.aps ==z%>
+													<%test[z][i] << link_to( p.user_info.surname+" "+p.user_info.forename, personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked)) %>
+												<%end%>		
+											<%end%>				
+										<%end%>
+									<%end%>
+	
+									
 										<%if r.result.aps >80%>
 											
 											<%(7..53).step(6).each do |n|%>
@@ -176,7 +215,7 @@
 											
 											<%end%>
 										<%end%>
-										
+									
 										<%if r.result.aps <54%>
 											<%if diff == 0%>
 												No Progress
@@ -212,20 +251,163 @@
 			<%end%>
 				
 				<div class="row">
+					
 					<div id="chart2" style="width:550px; height:520px; margin-left: auto; margin-right: auto;"></div>
 					<div id="chart1"  style="width:550px; height:520px;  margin-left: auto; margin-right: auto;"></div>
 					<div id="no_data" style="width:550px; display:block;  margin-left: auto; margin-right: auto;">No Data</div>
 				</div>	
-
-
-		
+	
 		<br />
 	
 		<br />
 		
 	</div>
 </div>
-
+<hr>
+	<%if current_user.school.secondary == abc%>
+	
+			<table class="table table-striped table-hover">
+			<tr>
+			<td>Grade</td>
+			<td>G</td>
+			<td>F</td>
+			<td>E</td>
+			<td>D</td>
+			<td>C</td>
+			<td>B</td>
+			<td>A</td>
+			<td>A*</td>
+			</tr>
+			<%z=3%>
+				<%while z<35 do %>
+					
+					<tr>
+					
+						<td>
+							<%=Result.where(aps: z.to_i).first.grade%>
+						</td>
+					
+						<%(81..88).each do |i|%>
+						<td>
+							<%test[z][i].each do |j|%>
+							<%=j%>
+							<%end%>
+							<%z+=1%>
+							<%test[z][i].each do |j|%>
+							<%=j%>
+							<%end%>
+							<%z=z-1%>
+						</td>
+							
+						<%end%>				
+					<%z+=2%>
+					</tr>
+					
+					
+				<%end%>
+			</table>		
+		<%end%>
+			<%on_track= Array.new%>
+			<%one_above= Array.new%>
+			<%below= Array.new%>
+			<%on_track = [49036,56580,64124,49062, 56610, 64158, 49088, 56640, 64192,71782 ,79338,
+			86894,71820,79380, 86940,71858, 79422, 86986,94600,102168, 109736,94650, 102222,109794,
+			94700,102276,109852,117490, 125070,132650,26376, 33912,41448,26390, 33930, 41470]%>
+			
+			<%one_above = [48984,56520,64056,49010,56550,64090,71668,79212,86756,71706,79254,86802,
+			71744,79296,86848,94450,102006,109562,94500,102060,109620,94550,102114,109678,117304,
+			124872,132440,117366,124938,132510,117428,125004,132580]%>
+			<%below = [71896,79464,87032, 71934	,79506, 87078,71972, 79548, 87124,72010,79590,87170,94750,102330,109910] %>
+			
+		<%if current_user.school.primary == true%>		
+			<table class="table table-striped table-hover table-bordered">
+			<tr>
+			<td>Grade</td>
+			<td>W</td>
+			<td>W</td>
+			<td>1c</td>
+			<td>1b</td>
+			<td>1a</td>
+			<td>2c</td>
+			<td>2b</td>
+			<td>2a</td>
+			<td>3c</td>
+			<td>3b</td>
+			<td>3a</td>
+			<td>4c</td>
+			<td>4b</td>
+			<td>4a</td>
+			<td>5c</td>
+			<td>5b</td>
+			<td>5a</td>
+			</tr>
+			<%z=3%>
+				<%while z<26 do %>
+					
+					<tr>
+					
+						<td>
+							<%=Result.where(aps: z.to_i).first.grade%>
+						</td>
+					<%i=3%>
+						<%while i<36 do%>
+						<%x = i*(z+3765)%>
+						<td style ="background-color:
+						
+						<%if on_track.include? x%>
+						rgba(245,198,57,1)
+						<%elsif one_above.include? x%>
+						rgba(86,245,61,1)
+						<%elsif x<64431%>
+						rgba(245,59,59,1)
+						<%elsif below.include? x%>
+						rgba(245,59,59,1)
+						<%elsif x>71591%>
+						rgba(73,165,191,1)
+						<%end%>				
+						; width:5.6%">
+							<%x%>
+								<%if test[z][i].count>0%>
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%>' data-html="true">						
+							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
+							<br>
+								</div>
+							<%end%>
+							<%i+=1%>
+							<%if test[z][i].count>0%>
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%>' data-html="true">						
+							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
+							<br>
+								</div>
+							<%end%>
+						
+							<%i=i-1%>
+							<%z+=1%>
+								<%if test[z][i].count>0%>
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%>' data-html="true">						
+							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
+							<br>
+								</div>
+							<%end%>
+							<%i+=1%>
+								<%if test[z][i].count>0%>
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%>' data-html="true">						
+							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
+							<br>
+								</div>
+							<%end%>
+							<%z=z-1%>
+							<%i+=1%>
+						</td>
+							
+						<%end%>				
+					<%z+=2%>
+					</tr>
+					
+					
+				<%end%>
+			</table>		
+		<%end%>
 <%= render "matrix"%>
 
 
@@ -544,3 +726,11 @@ var line1 = [
 				</script>
 				
 <%end%>
+<script>
+$('body').tooltip({
+    trigger: 'click',
+	selector: '[id=userdata]',
+	html: true,
+	placement: 'top'
+});
+</script>

@@ -75,6 +75,7 @@ end
 	
   
     if @user_info.update_attributes(params[:user_info])
+		@user_info.save!
       redirect_to :back, :notice  => "Successfully updated user info."
     else
       render :action => 'edit'
