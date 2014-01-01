@@ -39,8 +39,8 @@
 						<%end%>
 					</ul>
 				</li>
-				<li class="hidden-xs hidden-sm"><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
-				<li class="visible-xs visible-sm"><%=link_to 'LP', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
+				<li class="hidden-xs hidden-sm"><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: 1, locked:@locked)%></li>
+				<li class="visible-xs visible-sm"><%=link_to 'LP', levels_progress_pupil_results_path(class_id: @class_id, col_id: 1, locked:@locked)%></li>
 				<%if @locked == true%>
 				<li class="hidden-xs hidden-sm"><%=link_to 'Hide Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
 				<li class="visible-xs visible-sm"><%=link_to 'Unlocked', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
