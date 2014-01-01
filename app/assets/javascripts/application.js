@@ -26,3 +26,4 @@
 //= require jqplot.canvasAxisLabelRenderer.min.js
 //= require jqplot.pieRenderer.min.js
 //= require jqplot.canvasAxisTickRenderer.min.js
+//= require jquery-ui.min.js

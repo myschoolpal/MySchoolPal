@@ -60,12 +60,31 @@
 			<%end%>
 		</ul>
 	</li>
+	
+	<li class="dropdown">
+		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+			Charts<span class="caret"></span>
+		</a>	
+		<ul class="dropdown-menu">
+					
+			
+			<%if current_user.school.primary == true%>
+					<li><a data-toggle="modal" href="#KS1_KS5_tc">Comparison to Targets</a></li>
+				<li><a data-toggle="modal" href="#ks1_matrix_modal">KS1-2 Matrix Modal</a></li>
+			<%end%>
+			<%if current_user.school.secondary == true%>
+			<li><a data-toggle="modal" href="#KS1_KS5_tc">Comparison to Targets KS3</a></li>
+			<li><a data-toggle="modal" href="#ks4_matrix_modal">KS2-4 Transition Matrix</a></li>
+			<%end%>
+		</ul>
+	</li>
 	<li class="hidden-xs hidden-sm"><a href="#" onclick="window.print();return false;">Print</a> </li>
 </ul>
+
 <div class="row" style="margin-top:20px;">
-	<div class="col-md-6 col-xs-12">
+	<div class="col-md-12 col-xs-12">
 		<%if title =TitleClass.where(col_id:@col_id).where(class_id:@class_id).first%>
-		Assessment: <%=title.title%>
+		Assessment: <b><%=title.title%></b>
 		<%end%>
 		<div class="row">
 			<div class="col-xs-2 col-md-2">
@@ -244,94 +263,70 @@
 		<%end%>
 		
 	</div>
-	<hr class="visible-xs visible-sm" style="margin:5px">
-	<div class="col-md-6 col-xs-12 text-center">
+
+	
+	
+	
+</div>				
 			<%if !aps.empty?%>
 				<%avg_aps =(aps.inject{|sum,x| sum + x }.to_f/aps.size).round(0)%>
-			<%end%>
-				
-				<div class="row">
-					
-					<div id="chart2" style="width:550px; height:520px; margin-left: auto; margin-right: auto;"></div>
-					<div id="chart1"  style="width:550px; height:520px;  margin-left: auto; margin-right: auto;"></div>
-					<div id="no_data" style="width:550px; display:block;  margin-left: auto; margin-right: auto;">No Data</div>
-				</div>	
+			<%end%>			
+							
 	
-		<br />
-	
-		<br />
-		
-	</div>
+			<%if avg_aps%>
+			<%if avg_aps >54%>				
+<div class="modal fade" id="KS1_KS5_tc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:850px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+				<h4 class="modal-title">Comparison to Target Grade</h4>
+			</div>
+			<div class="modal-body">
+				<br />
+				<div id="chart1" style="width:800px; height:500px; margin-top:-40px; margin-left:auto; margin-right:auto;"></div>
+			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>	
 </div>
-<hr>
-	<%if current_user.school.secondary == true%>
-			<%on_track= Array.new%>
-			<%one_above= Array.new%>
-			<%below= Array.new%>
-			<%on_track = [308976, 309140, 309304, 309468, 309632, 313574, 313740, 313906, 317856,318024,318192,322150,322320,322490,326456,326628,326800]%>
+<%elsif avg_aps <54 && avg_aps>0%>
+
+<div class="modal fade" id="KS1_KS5_tc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:850px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+				<h4 class="modal-title">Comparison to Target Grade</h4>
+			</div>
+			<div class="modal-body">
 			
-			<%one_above = [312744,	312910,	313076,	313242,	313408,	317352,	317520,	317688,	321640,	321810,	321980,	325940,	326112,	326284, 330252,330426,330600]%>
-			<%below = [305208,	305370,	305532,	305694,	305856,	306018,	306180,	306342,	306504,	306666,	306828,	306990,	307152,
-			307314,	307476,	307638,	307800,	309796,	309960,	310124,	310288,	310452,	310616,	310780,	310944,	311108,	311272,	311436,	
-			311600,	314072,	314238,	314404,	314570,	314736,	314902,	315068,	315234,	315400,	318360,	318528,	318696,	
-			318864,	319032,	319200,	322660,	322830,	323000,	323000] %>
+							<div id="chart2" style="width:800px; height:600px; margin-top:-40px; margin-left:auto; margin-right:auto;"></div>
 			
-			<table class="table table-striped table-hover table-bordered">
-			<tr>
-			<td>Grade</td>
-			<td>G</td>
-			<td>F</td>
-			<td>E</td>
-			<td>D</td>
-			<td>C</td>
-			<td>B</td>
-			<td>A</td>
-			<td>A*</td>
-			</tr>
-			<%z=3%>
-				<%while z<37 do %>
-					
-					<tr>
-					
-						<td>
-							<%=Result.where(aps: z.to_i).first.grade%>
-						</td>
-					
-						<%(81..88).each do |i|%>
-						<%x = i*(z+3765)%>
-						<td style ="background-color:
-						
-						<%if on_track.include? x%>
-						rgba(245,198,57,1)
-						<%elsif one_above.include? x%>
-						rgba(86,245,61,1)
-						<%elsif below.include? x%>
-						rgba(245,59,59,1)
-						<%elsif x>71591%>
-						rgba(73,165,191,1)
-						<%end%>				
-						; width:11%">
-							<%x%>
-								<%if test[z][i].count>0%>
-							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%><br />' data-html="true">						
-							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
-							<br>
-								</div>
-							<%end%>
-							
-						</td>
-							
-							
-						<%end%>				
-					<%z+=2%>
-					</tr>
-					
-					
-				<%end%>
-			</table>		
-		<%end%>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>	
+</div>
+		
+			<%end%>
+			<%end%>
+
+<div class="modal fade" id="ks1_matrix_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:850px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+				<h4 class="modal-title">Comparison to Target Grade</h4>
+			</div>
 			
-			<%on_track= Array.new%>
+			<div class="modal-body">
+					<%on_track= Array.new%>
 			<%one_above= Array.new%>
 			<%below= Array.new%>
 			<%on_track = [49036,56580,64124,49062, 56610, 64158, 49088, 56640, 64192,71782 ,79338,
@@ -432,13 +427,117 @@
 				<%end%>
 			</table>		
 		<%end%>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+	</div>
+
+
+
+	
+	<%if current_user.school.secondary == true%>
+	
+							
+<div class="modal fade" id="ks4_matrix_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:850px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+				<h4 class="modal-title">Comparison to Target Grade</h4>
+			</div>
+			<div class="modal-body">
+				<%on_track= Array.new%>
+			<%one_above= Array.new%>
+			<%below= Array.new%>
+			<%on_track = [308976, 309140, 309304, 309468, 309632, 313574, 313740, 313906, 317856,318024,318192,322150,322320,322490,326456,326628,326800]%>
+			
+			<%one_above = [312744,	312910,	313076,	313242,	313408,	317352,	317520,	317688,	321640,	321810,	321980,	325940,	326112,	326284, 330252,330426,330600]%>
+			<%below = [305208,	305370,	305532,	305694,	305856,	306018,	306180,	306342,	306504,	306666,	306828,	306990,	307152,
+			307314,	307476,	307638,	307800,	309796,	309960,	310124,	310288,	310452,	310616,	310780,	310944,	311108,	311272,	311436,	
+			311600,	314072,	314238,	314404,	314570,	314736,	314902,	315068,	315234,	315400,	318360,	318528,	318696,	
+			318864,	319032,	319200,	322660,	322830,	323000,	323000] %>
+			
+			<table class="table table-striped table-hover table-bordered">
+			<tr>
+			<td>Grade</td>
+			<td>G</td>
+			<td>F</td>
+			<td>E</td>
+			<td>D</td>
+			<td>C</td>
+			<td>B</td>
+			<td>A</td>
+			<td>A*</td>
+			</tr>
+			<%z=3%>
+				<%while z<37 do %>
+					
+					<tr>
+					
+						<td>
+							<%=Result.where(aps: z.to_i).first.grade%>
+						</td>
+					
+						<%(81..88).each do |i|%>
+						<%x = i*(z+3765)%>
+						<td style ="background-color:
+						
+						<%if on_track.include? x%>
+						rgba(245,198,57,1)
+						<%elsif one_above.include? x%>
+						rgba(86,245,61,1)
+						<%elsif below.include? x%>
+						rgba(245,59,59,1)
+						<%elsif x>71591%>
+						rgba(73,165,191,1)
+						<%end%>				
+						; width:11%">
+							<%x%>
+								<%if test[z][i].count>0%>
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%><br />' data-html="true">						
+							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
+							<br>
+								</div>
+							<%end%>
+							
+						</td>
+							
+							
+						<%end%>				
+					<%z+=2%>
+					</tr>
+					
+					
+				<%end%>
+			</table>		
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>	
+	</div>
+	</div>
+		<%end%>
+			
+		
 <%= render "matrix"%>
 
 
 <%if @subject_id%>
-		
+	
+			
 <script>
-$(document).ready(function(){
+
+
+$('#KS4_tc').on('shown.bs.modal', function(event, ui) {
+      plot1.replot();
+	  
+  });
+
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
@@ -475,6 +574,7 @@ $(document).ready(function(){
 	 {return "U";}
   }
   
+	
   var plot1 = $.jqplot('chart1', [line1, line2], {
   
    animate: true,
@@ -505,7 +605,7 @@ $(document).ready(function(){
             }
 	
 	],
-	title:'Assessment Results ',
+	
     axesDefaults: {
 		min: 0,
 		max: 8,
@@ -559,11 +659,13 @@ $(document).ready(function(){
       
 
   });
-});
-</script>
 
-<script>
-$(document).ready(function(){
+
+ </script>
+ 
+<script> 
+
+
 var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
@@ -632,6 +734,13 @@ var line1 = [
 	 {return "W";}
   }
   
+    
+$('#KS1_KS5_tc').on('shown.bs.modal', function(event, ui) {
+      
+      plot2.replot();
+	 
+  });
+  
   var plot2 = $.jqplot('chart2', [line1, line2], {
    animate: true,
    animateReplot: true,
@@ -662,7 +771,7 @@ var line1 = [
 			
 	],
 	
-	title:'Assessment Results ',
+	
     axesDefaults: {
 		min: 3,
 		max: 53,
@@ -726,35 +835,20 @@ var line1 = [
       
 
   });
-});
+
+
+
 </script>
-<script type='text/javascript'>
-					var aps = '<%=avg_aps%>'
-					$(document).ready(function () {
-					if (aps>0 && aps<54)
-					{
-					$("#chart1").hide();
-					$("#no_data").hide();
-					}
-					else if (aps>79)
-					{
-					$("#chart2").hide();
-					$("#no_data").hide();
-					}
-					else if (aps==0)
-					{
-					$("#chart2").hide();
-					$("#chart1").hide();
-					}
-				});
-				</script>
-				
-<%end%>
-<script>
+				<script>
 $('body').tooltip({
     trigger: 'click',
 	selector: '[id=userdata]',
 	html: true,
 	placement: 'top'
 });
+
 </script>
+	
+<%end%>
+
+		
