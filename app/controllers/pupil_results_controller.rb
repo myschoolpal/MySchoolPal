@@ -123,6 +123,11 @@ class PupilResultsController < ApplicationController
  
  def levels_progress
  @levels =Array.new
+ @above = Array.new
+	@on_track = Array.new
+	@one_below = Array.new
+	@below = Array.new
+	
  @class_id = params[:class_id]
  @key_stage = params[:key_stage]
  if params[:aps] == "true"

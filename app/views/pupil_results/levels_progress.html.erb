@@ -83,42 +83,39 @@
 
 <div class="row" style="margin-top:20px;">
 	<div class="col-md-12 col-xs-12">
-		<%if title =TitleClass.where(col_id:@col_id).where(class_id:@class_id).first%>
-		Assessment: <b><%=title.title%></b>
-		<%end%>
-		<div class="row">
-			<div class="col-xs-2 col-md-2">
+		<table class="table table-striped table-hover">
+			<th>
 			Surname
-			</div>
-			<div class="col-xs-2 col-md-2">
+			</th>
+			<th>
 			Forename
-			</div>
-			<div class="col-xs-2 col-md-2">
+			</th>
+			<th>
 			Target
-			</div>
-			<div class="col-xs-3 col-md-3">
+			</th>
+			<th>
 			<%if title = TitleClass.where(class_id: @class_id).where(col_id: @col_id).where(locked: @locked).first%>
 			<%=title.title%>			
 			<%else%>
 			Result
 			<%end%>
-			</div>
-			<div class="col-xs-3 col-md-3">
+			</th>
+			<th>
 			Levels of Progress
-			</div>
-		</div>
+			</th>
+		
 		
 		<%aps = Array.new%>
 		<%@u.each do |p|%>
 			<%if a = p.user_info%>
-				<div class="row">
-					<div class="col-xs-2">
+				<tr>
+					<td>
 						<%=link_to(a.surname.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked))%>
-					</div>
-					<div class="col-xs-2">
+					</td>
+					<td>
 						<%=link_to(a.forename.downcase.titleize.slice(0..12), personal_analysis_path(user_id: a.user_id, class_id: @class_id, locked:@locked))%>
-					</div>
-					<div class="col-xs-2">
+					</td>
+					<td>
 					<%if @subject_id%>
 						<%if t = p.user_targets.where(subject_id: @subject_id).first%>
 							<%if @aps == true%>
@@ -128,18 +125,53 @@
 							<%end%>
 						<%end%>
 					<%end%>
-					</div>
-					<div class="col-xs-3">
+					</td>
+					
 						<%if r = p.pupil_results.where(col_id: @col_id).where(locked:@locked).where(class_id: @class_id).first%>
-							<%if @aps == true%>
-							<%=r.result.aps%>
-							<%else%>
-							<%=r.result.grade%>
-							<%end%>
-							<%aps << r.result.aps%>
+						<%if t%>
+						
+							
+								<%@difference = r.result.aps - t.result.aps%>
+								
+											<%case %>
+												<%when @difference >0%>
+													<td class="text-center above_target cell_design">
+													<%@above << 1%>
+												<%when @difference ==0%>
+													<td class="text-center on_target cell_design">
+													<%@on_track << 1%>
+												<%when @difference <0 && @difference >=-2 %>
+													<td class="text-center one_below_target cell_design">
+													<%@one_below << 1%>
+												<%when @difference <-2%>
+													<td class="text-center below_target cell_design">
+													<%@below << 1%>
+												<%else%>
+													<td class="text-center empty_result cell_design">	
+											<%end%>
+														<%=r.result.grade %>
+														
+														<%aps << r.result.aps%>
+													</td>
+													
+						<%else%>
+									<td class="text-center empty_result">
+									<%if @r%>
+									<%if @aps == true%>
+										<%=r.result.aps %>
+									<%else%>
+										<%=r.result.grade %>
+									<%end%>
+									
+									<%aps << r.result.aps%>
+									<%end%>
+									</td>
+									
+									
 						<%end%>
-					</div>
-					<div class="col-xs-3">
+						<%end%>
+					</td>
+					<td>
 							<%if current_user.school.primary == true%>
 							<%if params[:key_stage] == "ks1_maths"%>
 								<%k = Result.where(id: a.ks1_maths).first%>
@@ -256,13 +288,13 @@
 									
 								<%end%>
 							<%end%>
-						</div>
-				</div>
+						</td>
+				</tr>
 						
 			<%end%>		
 		<%end%>
 		
-	</div>
+	</table>
 
 	
 	

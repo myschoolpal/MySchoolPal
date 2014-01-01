@@ -184,7 +184,7 @@
 						<% if current_user.user_info.governor == true%>
 							Pupil <%=i%>
 						<%else%>
-							<%=a.surname%>
+							<%=link_to( p.user_info.surname, personal_analysis_path(user_id: a.user_id, class_id: p.user_classes.joins(:class_name).where("class_names.subject_id = ?", @subject_id).first.class_id, locked:@locked))%>
 						<%end%>
 						<%i+=1%>
 					</td>
@@ -192,7 +192,7 @@
 						<% if current_user.user_info.governor == true%>
 							
 						<%else%>
-							<%=a.forename%>
+							<%=link_to( p.user_info.forename, personal_analysis_path(user_id: a.user_id, class_id: p.user_classes.joins(:class_name).where("class_names.subject_id = ?", @subject_id).first.class_id, locked:@locked))%>
 						<%end%>
 					</td>
 					<td>
