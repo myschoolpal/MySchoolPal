@@ -70,10 +70,14 @@
 			
 			<%if current_user.school.primary == true%>
 					<li><a data-toggle="modal" href="#KS1_KS5_tc">Comparison to Targets</a></li>
+					<li><a data-toggle="modal" href="#pie_chart_targets">Pie Chart Targets</a></li>
+					<li><a data-toggle="modal" href="#pie_chart_level">Pie Chart Levels</a></li>
 				<li><a data-toggle="modal" href="#ks1_matrix_modal">KS1-2 Matrix Modal</a></li>
 			<%end%>
 			<%if current_user.school.secondary == true%>
 			<li><a data-toggle="modal" href="#KS1_KS5_tc">Comparison to Targets KS3</a></li>
+			<li><a data-toggle="modal" href="#pie_chart_targets">Pie Chart Targets</a></li>
+					<li><a data-toggle="modal" href="#pie_chart_level">Pie Chart Levels</a></li>
 			<li><a data-toggle="modal" href="#ks4_matrix_modal">KS2-4 Transition Matrix</a></li>
 			<%end%>
 		</ul>
@@ -169,6 +173,8 @@
 									
 									
 						<%end%>
+						<%else%>
+						<td>
 						<%end%>
 					</td>
 					<td>
@@ -555,7 +561,43 @@
 	</div>
 		<%end%>
 			
-		
+		<div class="modal fade" id="pie_chart_targets" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:850px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+				<h4 class="modal-title">Comparison to Target Grade</h4>
+			</div>
+			<div class="modal-body">
+				<br />
+				<div id="pie_chart" style="width:650px; height:350px;  margin-left:auto; margin-right:auto;"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>	
+</div>
+
+
+<div class="modal fade" id="pie_chart_level" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width:850px;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
+				<h4 class="modal-title">Numbers of levels of Progress</h4>
+			</div>
+			<div class="modal-body">
+				<br />
+				<div id="pie_chart_levels" style="width:650px; height:350px;  margin-left:auto; margin-right:auto;"></div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>	
+</div>
+
 <%= render "matrix"%>
 
 
@@ -569,7 +611,12 @@ $('#KS4_tc').on('shown.bs.modal', function(event, ui) {
       plot1.replot();
 	  
   });
-
+$('#pie_chart_level').on('shown.bs.modal', function(event, ui) {
+      plot4.replot();
+  });
+$('#pie_chart_targets').on('shown.bs.modal', function(event, ui) {
+      plot3.replot();
+  });
   var line1 = [
 	<%@u.each do |p|%>
 		<%if a = p.user_info%>		
@@ -871,6 +918,82 @@ $('#KS1_KS5_tc').on('shown.bs.modal', function(event, ui) {
 
 
 </script>
+
+<script type='text/javascript'>				
+				if (plot3) {
+	plot3.destroy();
+	}
+  var data = [
+    ['Above Target', <%=@above.count%>],['On Track', <%=@on_track.count%>], ['One Below Target', <%=@one_below.count%>], 
+    ['Below Target', <%=@below.count%>]
+  ];
+  var plot3 = jQuery.jqplot ('pie_chart', [data], 
+    { 
+      title:'Comparison to Target Grade',
+	  seriesDefaults: {
+	  seriesColors: ["rgba(73,165,191,1)","rgba(78,230,55,1)","rgba(254,182,69,1)", "rgba(252,70,70,1)"],
+        // Make this a pie chart.
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true
+        }
+      }, 
+      legend: { show:true, location: 'e' },
+	  highlighter: {
+    show: true,
+    formatString:'%s', 
+    tooltipLocation:'sw', 
+    useAxesFormatters:false
+}
+    }
+  );
+
+
+</script>
+
+
+<script type='text/javascript'>				
+				if (plot4) {
+	plot4.destroy();
+	}
+  var data = [
+	<%(-50..50).each do |i|%>
+	<%if @levels.count(i) != 0%>
+	['<%=i%> levels', <%=@levels.count(i)%>],  
+	<%end%>
+    <%end%>
+  ];
+  var plot4 = jQuery.jqplot ('pie_chart_levels', [data], 
+    { 
+      title:'Levels of Progress',
+	  seriesDefaults: {
+	  seriesColors: ["rgba(73,165,191,1)","rgba(78,230,55,1)","rgba(254,182,69,1)", "rgba(252,70,70,1)"],
+        // Make this a pie chart.
+        renderer: jQuery.jqplot.PieRenderer, 
+        rendererOptions: {
+          // Put data labels on the pie slices.
+          // By default, labels show the percentage of the slice.
+          showDataLabels: true,
+          
+		  
+        }
+      }, 
+      legend: { show:true, location: 'e' },
+	  highlighter: {
+    show: true,
+	
+    formatString:'%s', 
+    tooltipLocation:'sw', 
+    useAxesFormatters:false
+}
+    }
+  );
+
+
+</script>
+
 				<script>
 $('body').tooltip({
     trigger: 'click',
