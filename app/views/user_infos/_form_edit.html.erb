@@ -13,18 +13,20 @@
 			<%= f.label :gender %><br />
 			<%= f.text_field :gender %>
 	</div>
-	<div class="col-md-2">	
-			<%= f.label :ks2_english %><br />
-			<%= f.collection_select(:ks2_english, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
-	</div>
-	<div class="col-md-2">
-			<%= f.label :ks2_maths %><br />
-			<%= f.collection_select(:ks2_maths, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
-	</div>
-	<div class="col-md-2">
-			<%= f.label :ks2_science %><br />
-			<%= f.collection_select(:ks2_science, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
-	</div>
+	<%if current_user.school.secondary == true%>
+		<div class="col-md-2">	
+				<%= f.label :ks2_english %><br />
+				<%= f.collection_select(:ks2_english, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
+		</div>
+		<div class="col-md-2">
+				<%= f.label :ks2_maths %><br />
+				<%= f.collection_select(:ks2_maths, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
+		</div>
+		<div class="col-md-2">
+				<%= f.label :ks2_science %><br />
+				<%= f.collection_select(:ks2_science, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
+		</div>
+	<%end%>
 </div>	
 <br />
 <div class="row">
@@ -53,14 +55,15 @@
 		<%= f.label :ks1_writing %><br />
 		<%= f.collection_select(:ks1_writing, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
 	</div>
-	<div class="col-md-2">
-		<%= f.label :ks1_reading %><br />
-		<%= f.collection_select(:ks1_reading, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
-	</div>
+
 </div>
 <br />
 
 <div class="row">
+	<div class="col-md-2">
+		<%= f.label :ks1_reading %><br />
+		<%= f.collection_select(:ks1_reading, Result.order("aps asc").all, :id, :grade, {prompt: 'Select', :include_blank => true}, {class: 'form-control'})%>
+	</div>
 	<div class="col-md-2">
 		<b>Classes:</b>
 		  <%= f.fields_for :user_classes do |builder| %>
