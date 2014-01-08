@@ -1,7 +1,7 @@
 <%@sign_in = true%>
 
 
-<div style="margin-top:30px;">
+<div style="margin-top:30px; width:40%;">
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <div><%= f.label :login %><br />
   <%= f.text_field :login, :autofocus => true, :class => "form-control" %></div>

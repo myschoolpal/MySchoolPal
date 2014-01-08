@@ -21,7 +21,7 @@
 			<ul class="nav">
 				<% if current_user%>
 				
-					<li><%= link_to "Start", user_classes_path %></li>
+					<li><%= link_to "Dashboard", user_classes_path %></li>
 					<li style="width:300px; color:#000;"><%= link_to "Change your password", edit_user_registration_path %></li>
 					<li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
 					

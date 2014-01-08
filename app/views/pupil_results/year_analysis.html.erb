@@ -386,7 +386,7 @@
 			<div class="modal-body">
 				<br />
 				<div id="chart1" style="width:800px; height:500px; margin-top:-40px; margin-left:auto; margin-right:auto;"></div>
-			<div id="chart2" style="width:550px; height:520px;"></div>
+			<div id="chart2" style="width:550px; height:520px;  margin-top:-40px; margin-left:auto; margin-right:auto;"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -594,14 +594,14 @@
 						; width:5.6%">
 							<%x%>
 								<%if test[z][i].count>0%>
-							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%><br />' data-html="true">						
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%>	<%if current_user.user_info.governor != true%><%=j%><%end%><br /><%end%><br />' data-html="true">						
 							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
 							<br>
 								</div>
 							<%end%>
 							<%i+=1%>
 							<%if test[z][i].count>0%>
-							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%><br />' data-html="true">						
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><br /><%end%><br />' data-html="true">						
 							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
 							<br>
 								</div>
@@ -610,14 +610,14 @@
 							<%i=i-1%>
 							<%z+=1%>
 								<%if test[z][i].count>0%>
-							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%><br />' data-html="true">						
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><br /><%end%><br />' data-html="true">						
 							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
 							<br>
 								</div>
 							<%end%>
 							<%i+=1%>
 								<%if test[z][i].count>0%>
-							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><%end%><br />' data-html="true">						
+							<div class="tooltip_hover" style="height:30px;" id="userdata" data-toggle="tooltip" data-original-title='<%test[z][i].each do |j|%><%=j%><br /><%end%><br />' data-html="true">						
 							<%=t=test[z][i].count%> | <%=(t*100/@u.count)%>%
 							<br>
 								</div>
@@ -670,7 +670,7 @@ if (plot1) {
   var line2 = [
   <%@u.each do |p|%>
   	<%if a = p.user_info%>		
-		['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps-80%><%end%><%end%>],
+		['<%if current_user.user_info.governor == true%>Pupil <%=i%><%else%><%=a.forename+" "+a.surname%><%end%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps-80%><%end%><%end%>],
 	<%end%>  
   <%end%>
   ];
@@ -807,7 +807,7 @@ var line1 = [
   var line2 = [
   <%@u.each do |p|%>
   	<%if a = p.user_info%>		
-		['<%=a.forename%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%end%><%end%>],
+		[<%if current_user.user_info.governor == true%>Pupil <%=i%><%else%><%=a.forename+" "+a.surname%><%end%>', <%if r = p.pupil_results.where(col_id: @col_id).where(locked: @locked).joins(:class_name).where("class_names.subject_id" => @subject_id).first%><%if t = p.user_targets.where(subject_id: @subject_id).first%><%=t.result.aps%><%end%><%end%>],
 	<%end%>  
   <%end%>
   ];

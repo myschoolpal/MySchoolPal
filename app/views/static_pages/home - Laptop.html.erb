@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+background: #2ecc71;
+}
+p.main_title
+{
+font-size:90px;
+margin-top:120px;
+}
+
+
+
+
+</style>
+</head>
+<div class="row">
+	<div class="col-md-4 col-xs-4">
+		<div class="logo_home">
+			<div class="white_square white_square1"></div>
+			<div class="white_square white_square2"></div>
+			<div class="white_square white_square3"></div>
+			<div class="white_square white_square4"></div>
+			<div class="white_square white_square5"></div>
+			<div class="white_square white_square6"></div>
+			<div class="logo_large_letter logo_letter1">
+				M
+			</div>
+			<div class="logo_large_letter logo_letter2">
+				S
+			</div>
+			<div class="logo_large_letter logo_letter3">
+				P
+			</div>
+			<div class="logo_text">MYSCHOOLPAL</div>
+		</div>
+		<div class="play_homepage" data-toggle="modal" data-target="#slider">
+			<div class="play_circle">
+				<span class="glyphicon glyphicon-play play_button"></span>
+			</div>
+			<div class="ring">
+			</div>
+		</div>
+	</div>
+	<div class="col-md-8 col-xs-8">
+		<div class="tech">
+				<div class="pc">
+					<div class="pc_back">
+						<div class="webcam"></div>
+						<div class="pc_screen">
+							<div class="white_back">
+								<div class="matrix_title">
+									Transition Matrix
+								</div>
+								<hr style="margin:4px;">
+								<div class="matrix_image">
+									<%= image_tag("/assets/matrix.png", width:"240")%>
+								</div>
+							</div>
+						</div>
+						<div class="on_button">	</div>
+					</div>
+					<div class="base"></div>
+					<div class="foot"></div>
+					<div class="shadow"></div>		
+				</div>
+				<div class="ipad">
+					<div class="ipad_back">
+						<div class="ipad_button"></div>
+						<div class="ipad_screen">
+							<div class="ipad_white_section">
+								<div class="bar_chart_title">
+									Comparison to Target
+								</div>
+								<hr style="margin:4px;">
+								<div class="bar_chart_image">
+									<%= image_tag("/assets/bar_chart.png", width:"170")%>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="ipod">
+					<div class="ipod_back">
+						<div class="ipod_button"></div>
+						<div class="ipod_screen">
+						<div class="pie_chart_title">
+									Levels of Progress
+								</div>
+						<div class="pie_chart">
+								<div class="pie_segment1 pie_size">
+									<div class="pie_segment1_color pie_size">
+									</div>
+								</div>
+								<div class="pie_segment2 pie_size">
+									<div class="pie_segment2_color pie_size">
+									</div>
+								</div>
+								<div class="pie_segment3 pie_size">
+									<div class="pie_segment3_color pie_size">
+									</div>
+								</div>
+								<div class="pie_segment4 pie_size">
+									<div class="pie_segment4_color pie_size">
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="slider" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="width:900px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Features</h4>
+      </div>
+      <div class="modal-body">
+			<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+			  <!-- Indicators -->
+			  
+
+			  <!-- Wrapper for slides -->
+			  <div class="carousel-inner" >
+				<div class="item active" style="margin-left:80px;">
+				  <%= image_tag("/assets/bar_chart.png" , width:"700")%>
+				  <div class="carousel-caption"  style="position:fixed; color:#000; top:25px; font-size:20px; font-family:gill sans mt; text-shadow: 0 0px 0px rgba(0, 0, 0, 0.6);">
+					Comparison to Target Grade
+				  </div>
+				</div>
+				<div class="item" style="margin-left:80px;">
+						<%= image_tag("/assets/matrix.png", width:"700")%>
+				  <div class="carousel-caption"  style="position:fixed; color:#000; top:25px; font-size:20px; font-family:gill sans mt; text-shadow: 0 0px 0px rgba(0, 0, 0, 0.6);">
+					Transition matrix
+				  </div>
+				</div>
+				<div class="item" style="margin-left:80px;">
+						<%= image_tag("/assets/slide1.png", width:"700")%>
+				  <div class="carousel-caption"  style="position:fixed; color:#000; top:25px; font-size:20px; font-family:gill sans mt; text-shadow: 0 0px 0px rgba(0, 0, 0, 0.6);">
+					Data Sheet
+				  </div>
+				</div>
+			  </div>
+
+			  <!-- Controls -->
+			  <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" style="color:#000;"></span>
+			  </a>
+			  <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right"  style="color:#000;"></span>
+			  </a>
+			</div>
+      </div>
+      <div class="modal-footer">
+        
+        
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
