@@ -29,6 +29,7 @@ class PupilResultsController < ApplicationController
 	end
 	
 	@pupils = UserClass.where(class_id: params[:class_id]).all
+	
 	@pupil_result = PupilResult.new
 	@title = TitleClass.new	
 	@user_classes = current_user.timetables.where('class_id IS NOT NULL').select(:class_id).uniq

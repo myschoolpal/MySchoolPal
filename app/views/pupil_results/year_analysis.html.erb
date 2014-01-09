@@ -126,9 +126,9 @@
 			</ul>
 		</li>
 		<%if @locked == true%>
-		<li><%=link_to 'Hide Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, locked: false, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
+		<li><%=link_to 'Hide Fixed Assessments', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id, locked: false, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
 		<%else%>
-		<li><%=link_to 'Show Locked Columns', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,locked:true, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
+		<li><%=link_to 'Show Fixed Assessments', year_analysis_pupil_results_path(year_id: @year_id, subject_id: @subject_id, class_id: @class_id,locked:true, group_id: @group_id, col_id: @col_id, key_stage:@key_stage)%></li>
 		<%end%>
 		<li><a href="#" onclick="window.print();return false;">Print</a> </li>
 		
@@ -349,14 +349,14 @@
 												No Progress
 											<%end%>
 											<%if diff == 1 || diff==2%>
-												1 Sub level
+												+1
 											<%end%>
 											<%(3..50).step(2).each do |i|%>
 												<%if diff==i || diff==i+1%>
-													<%=((i+1)/2)%> sub levels
+													+ <%=((i+1)/2)%> 
 												<%end%>
 												<%if diff==(i*-1) || diff==((i+1)*-1)%>
-													<%=(((i+1)/2)*-1)%> sub levels
+													<%=(((i+1)/2)*-1)%> 
 												<%end%>
 												<%i=+2%>
 											<%end%>

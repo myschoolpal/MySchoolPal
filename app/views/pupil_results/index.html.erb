@@ -42,11 +42,11 @@
 				<li class="hidden-xs hidden-sm"><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: 1, locked:@locked)%></li>
 				<li class="visible-xs visible-sm"><%=link_to 'LP', levels_progress_pupil_results_path(class_id: @class_id, col_id: 1, locked:@locked)%></li>
 				<%if @locked == true%>
-				<li class="hidden-xs hidden-sm"><%=link_to 'Hide Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
-				<li class="visible-xs visible-sm"><%=link_to 'Unlocked', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
+				<li class="hidden-xs hidden-sm"><%=link_to 'Hide Fixed Assessments', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
+				<li class="visible-xs visible-sm"><%=link_to 'Assessments', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
 				<%else%>
-				<li class="hidden-xs hidden-sm"><%=link_to 'Show Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: true)%></li>
-				<li class="visible-xs visible-sm"><%=link_to 'Locked', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: true)%></li>
+				<li class="hidden-xs hidden-sm"><%=link_to 'Show Fixed Assessments', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: true)%></li>
+				<li class="visible-xs visible-sm"><%=link_to 'Fixed Assessments', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: true)%></li>
 				
 				<%end%>
 				
@@ -227,7 +227,16 @@
 			</div>
 			<div class="modal-body">
 				<div id="group_overview" style="width:400px; height:300px;">
-				
+					<%Group.where(school_id: current_user.school_id).each do |group|%>
+						<%@pupils_groups = UserGroup.where(group_id: group.id)%>
+						<%@pupils_groups.each do |p|%>
+							<%if p.user%>	
+								<%if p.user.user_classes.where(class_id: params[:class_id]).first%>
+								<%=p.user.user_info.surname%>
+								<%end%>
+							<%end%>
+						<%end%>
+					<%end%>
 </div>
 			</div>
 			<div class="modal-footer">
@@ -239,52 +248,7 @@
 	
 	
 	<script>
-	$(document).ready(function(){
-    var s1 = [200, 600, 700, 1000];
-    var s2 = [460, -210, 690, 820];
-    var s3 = [-260, -440, 320, 200];
-    // Can specify a custom tick Array.
-    // Ticks should match up one for each y value (category) in the series.
-    var ticks = ['May', 'June', 'July', 'August'];
-     
-    var plot1 = $.jqplot('group_overview', [s1, s2, s3], {
-        // The "seriesDefaults" option is an options object that will
-        // be applied to all series in the chart.
-        seriesDefaults:{
-            renderer:$.jqplot.BarRenderer,
-            rendererOptions: {fillToZero: true}
-        },
-        // Custom labels for the series are specified with the "label"
-        // option on the series option.  Here a series option object
-        // is specified for each series.
-        series:[
-            {label:'Hotel'},
-            {label:'Event Regristration'},
-            {label:'Airfare'}
-        ],
-        // Show the legend and put it outside the grid, but inside the
-        // plot container, shrinking the grid to accomodate the legend.
-        // A value of "outside" would not shrink the grid and allow
-        // the legend to overflow the container.
-        legend: {
-            show: true,
-            placement: 'outsideGrid'
-        },
-        axes: {
-            // Use a category axis on the x axis and use our custom ticks.
-            xaxis: {
-                renderer: $.jqplot.CategoryAxisRenderer,
-                ticks: ticks
-            },
-            // Pad the y axis just a little so bars can get close to, but
-            // not touch, the grid boundaries.  1.2 is the default padding.
-            yaxis: {
-                pad: 1.05,
-                tickOptions: {formatString: '$%d'}
-            }
-        }
-    });
-});
+	
 	
 $('body').tooltip({
     trigger: 'click',

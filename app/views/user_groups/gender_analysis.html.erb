@@ -14,11 +14,11 @@
 					Assessments<span class="caret"></span>
 				</a>	
 				<ul class="dropdown-menu">
-						<li style="text-align:center; font-weight:bold">Locked Cols</li>
+						<li style="text-align:center; font-weight:bold">Fixed Assessments</li>
 						<%@titles.where(locked: true).each do |t|%>
 							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender, locked:true)%></li>
 						<%end%>
-						<li style="text-align:center; font-weight:bold">Unlocked Cols</li>
+						<li style="text-align:center; font-weight:bold">Assessments</li>
 						<%@titles.where(locked: false).each do |t|%>
 							<li><%=link_to t.title, gender_analysis_user_groups_path(class_id: @class_id, col_id: t.col_id, gender: @gender, locked:false)%></li>
 						<%end%>

@@ -25,11 +25,11 @@
 			Assessments<span class="caret"></span>
 		</a>	
 		<ul class="dropdown-menu">
-				<li style="text-align:center; font-weight:bold">Locked Cols</li>
+				<li style="text-align:center; font-weight:bold">Fixed Assessments</li>
 				<%@titles.where(locked: true).each do |t|%>
 					<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: true, col_id: t.col_id, key_stage:@key_stage)%></li>
 				<%end%>
-				<li style="text-align:center; font-weight:bold">Unlocked Cols</li>
+				<li style="text-align:center; font-weight:bold">Assessments</li>
 				<%@titles.where(locked: false).each do |t|%>
 					<li><%=link_to t.title, levels_progress_pupil_results_path(class_id: @class_id, locked: false, col_id: t.col_id, key_stage:@key_stage)%></li>
 				<%end%>	
@@ -278,14 +278,14 @@
 												No Progress
 											<%end%>
 											<%if diff == 1 || diff==2%>
-												1 Sub level
+												+ 1 
 											<%end%>
 											<%(3..50).step(2).each do |i|%>
 												<%if diff==i || diff==i+1%>
-													<%=((i+1)/2)%> sub levels
+													+ <%=((i+1)/2)%> 
 												<%end%>
 												<%if diff==(i*-1) || diff==((i+1)*-1)%>
-													<%=(((i+1)/2)*-1)%> sub levels
+													<%=(((i+1)/2)*-1)%> 
 												<%end%>
 												<%i=+2%>
 											<%end%>

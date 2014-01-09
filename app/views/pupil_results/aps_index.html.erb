@@ -36,9 +36,9 @@
 				</li>
 				<li><%=link_to 'Levels Progress', levels_progress_pupil_results_path(class_id: @class_id, col_id: @col_id, locked:@locked)%></li>
 				<%if @locked == true%>
-				<li><%=link_to 'Hide Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
+				<li><%=link_to 'Hide Fixed Assessments', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: false)%></li>
 				<%else%>
-				<li><%=link_to 'Show Locked Columns', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: true)%></li>
+				<li><%=link_to 'Show Fixed Assessments', pupil_results_path(class_id: @class_id, col_id: @col_id, locked: true)%></li>
 				<%end%>
 				
 				<li class="pull-right"><%=link_to('Next >>',pupil_results_path(class_id: @class_id, col_id: @start_col+6,locked: @locked))%></li>
