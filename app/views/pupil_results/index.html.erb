@@ -226,9 +226,8 @@
 				<h4 class="modal-title">Overview - <%=@class_name%></h4>
 			</div>
 			<div class="modal-body">
-				<div id="group_overview" style="width:100%; height:300px;">
+				<div id="chart1" style="width:800px; height:500px; margin-top:-40px; margin-left:auto; margin-right:auto;"></div>
 					<%i=1%>
-					
 					<%Group.where(school_id: current_user.school_id).each do |group|%>
 						<%if i%5 == 0%>
 							<div class="row">
@@ -239,10 +238,10 @@
 							<%=group.group%>
 							</b>
 							<br />
-							<%@pupils_groups = UserGroup.where(group_id: group.id)%>
+							<%@pupils_groups = UserGroup.where(group_id: group.id).includes(:user).where("users.school_id = ?", current_user.school_id).includes(:user_classes).where("user_classes.class_id = ?", params[:class_id])%>
 							<%@pupils_groups.each do |p|%>
 								<%if p.user%>	
-									<%if p.user.user_classes.where(class_id: params[:class_id]).first%>
+									<%if p.user.user_info.first%>
 									<%=p.user.user_info.surname%> 
 									<%=p.user.user_info.forename%>
 									<br />
@@ -252,11 +251,12 @@
 						</div>
 						<%if i%5 == 1%>
 							</div>
+							<hr style="margin:2px;">
 						<%end%>
 					<%end%>
 					</div>
 </div>
-			</div>
+			
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
@@ -267,6 +267,106 @@
 	
 	<script>
 	
+	
+
+var line1 = [
+	<%Group.where(school_id: current_user.school_id).each do |group|%>
+		<%@pupils_groups = UserGroup.where(group_id: group.id).includes(:user).where("users.school_id = ?", current_user.school_id).includes(:user_classes).where("user_classes.class_id = ?", params[:class_id])%>
+		
+		
+			['<%=group.group%>', <%=@pupils_groups.count%>],
+	<%end%>
+];
+
+	
+	$('#overview_modal').on('shown.bs.modal', function(event, ui) {
+      
+      plot1.replot();
+	 
+  });
+  
+  var plot1 = $.jqplot('chart1', [line1], {
+   animate: true,
+   animateReplot: true,
+    series:[{renderer:$.jqplot.BarRenderer, xaxis:'x2axis', yaxis:'y2axis',
+	rendererOptions: {
+                    // Speed up the animation a little bit.
+                    // This is a number of milliseconds.  
+                    // Default for bar series is 3000.  
+                    animation: {
+                        speed: 2500
+                    },
+                    barWidth: 15,
+                    barPadding: -15,
+                    barMargin: 0,
+                    highlightMouseOver: false
+                }
+            }, 
+            {
+                rendererOptions: {
+                    // speed up the animation a little bit.
+                    // This is a number of milliseconds.
+                    // Default for a line series is 2500.
+                    animation: {
+                        speed: 2000
+                    }
+                }
+            }
+			
+	],
+	
+	
+    axesDefaults: {
+		tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
+        
+    },
+    axes: {
+      xaxis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		label:'Students	', 
+          labelOptions:{
+            fontFamily:'Helvetica',
+            fontSize: '12pt'
+          },
+		  tickOptions: {
+          angle: -90,
+        },
+      },
+      x2axis: {
+        renderer: $.jqplot.CategoryAxisRenderer,
+		tickOptions: {
+          show: false,
+		  showLabel: false,
+		  textColor: '#ffffff'
+        },
+				  showTicks: false,
+				    showTickMarks: false
+      },
+      yaxis: {
+         label: 'Grade',
+                labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+		  
+		   
+		  
+      },
+      y2axis: {
+        
+		   
+      }
+    },
+	 highlighter: {
+        show: true,
+        sizeAdjust: 7.5,
+		tooltipAxes: 'y',
+		formatString: 'Grade: %s'
+      }
+      
+
+  });
+
+
+
+</script>
 	
 $('body').tooltip({
     trigger: 'click',

@@ -3,6 +3,7 @@ class UserGroup < ActiveRecord::Base
   
   belongs_to :user
   belongs_to :group
+  has_many :user_classes, foreign_key: 'user_id'
 
 validates :user_id, uniqueness: { scope: :group_id}  
   
