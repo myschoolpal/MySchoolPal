@@ -226,17 +226,35 @@
 				<h4 class="modal-title">Overview - <%=@class_name%></h4>
 			</div>
 			<div class="modal-body">
-				<div id="group_overview" style="width:400px; height:300px;">
+				<div id="group_overview" style="width:100%; height:300px;">
+					<%i=1%>
+					
 					<%Group.where(school_id: current_user.school_id).each do |group|%>
-						<%@pupils_groups = UserGroup.where(group_id: group.id)%>
-						<%@pupils_groups.each do |p|%>
-							<%if p.user%>	
-								<%if p.user.user_classes.where(class_id: params[:class_id]).first%>
-								<%=p.user.user_info.surname%>
+						<%if i%5 == 0%>
+							<div class="row">
+						<%end%>
+						<div class="col-md-2 col-xs-2">
+							<%i+=1%>
+							<b>
+							<%=group.group%>
+							</b>
+							<br />
+							<%@pupils_groups = UserGroup.where(group_id: group.id)%>
+							<%@pupils_groups.each do |p|%>
+								<%if p.user%>	
+									<%if p.user.user_classes.where(class_id: params[:class_id]).first%>
+									<%=p.user.user_info.surname%> 
+									<%=p.user.user_info.forename%>
+									<br />
+									<%end%>
 								<%end%>
 							<%end%>
+						</div>
+						<%if i%5 == 1%>
+							</div>
 						<%end%>
 					<%end%>
+					</div>
 </div>
 			</div>
 			<div class="modal-footer">
