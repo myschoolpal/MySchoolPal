@@ -5,6 +5,7 @@ class UserClass < ActiveRecord::Base
   belongs_to :class_name, :foreign_key => "class_id"
   has_many :subject_classes, :primary_key => "class_id", :foreign_key => "class_id"
   has_many :pupil_results, :primary_key => "class_id", :foreign_key => "class_id"
+  belongs_to :user_group, :foreign_key => "user_id"
   
 validates :user_id, uniqueness: { scope: :class_id}
   

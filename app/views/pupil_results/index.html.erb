@@ -241,7 +241,7 @@
 							<%@pupils_groups = UserGroup.where(group_id: group.id).includes(:user).where("users.school_id = ?", current_user.school_id).includes(:user_classes).where("user_classes.class_id = ?", params[:class_id])%>
 							<%@pupils_groups.each do |p|%>
 								<%if p.user%>	
-									<%if p.user.user_info.first%>
+									<%if p.user.user_info%>
 									<%=p.user.user_info.surname%> 
 									<%=p.user.user_info.forename%>
 									<br />
