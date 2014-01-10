@@ -218,21 +218,22 @@
 		</div>
 	</div>
 	
-	<div class="modal fade" id="overview_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal fade" id="overview_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" height:1500px;>
     <div class="modal-dialog" style="width:850px;">
-		<div class="modal-content">
+		<div class="modal-content" style="width:850px; height:1500px;">
 			<div class="modal-header">
 				<a type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</a>
 				<h4 class="modal-title">Overview - <%=@class_name%></h4>
 			</div>
 			<div class="modal-body">
-				<div id="chart1" style="width:800px; height:500px; margin-top:-40px; margin-left:auto; margin-right:auto;"></div>
+				<div id="chart1" style="width:600px; height:400px; margin-left:auto; margin-right:auto;"></div>
+				<hr style="margin:2px;">
 					<%i=1%>
 					<%Group.where(school_id: current_user.school_id).each do |group|%>
-						<%if i%5 == 0%>
+						<%if i%4 == 0%>
 							<div class="row">
 						<%end%>
-						<div class="col-md-2 col-xs-2">
+						<div class="col-md-3 col-xs-2">
 							<%i+=1%>
 							<b>
 							<%=group.group%>
@@ -249,7 +250,7 @@
 								<%end%>
 							<%end%>
 						</div>
-						<%if i%5 == 1%>
+						<%if i%4 == 1%>
 							</div>
 							<hr style="margin:2px;">
 						<%end%>
@@ -272,10 +273,9 @@
 var line1 = [
 	<%Group.where(school_id: current_user.school_id).each do |group|%>
 		<%@pupils_groups = UserGroup.where(group_id: group.id).includes(:user).where("users.school_id = ?", current_user.school_id).includes(:user_classes).where("user_classes.class_id = ?", params[:class_id])%>
-		
-		
-			['<%=group.group%>', <%=@pupils_groups.count%>],
+			['<%=group.group%>',<%=@pupils_groups.count%>],
 	<%end%>
+	
 ];
 
 	
@@ -288,7 +288,7 @@ var line1 = [
   var plot1 = $.jqplot('chart1', [line1], {
    animate: true,
    animateReplot: true,
-    series:[{renderer:$.jqplot.BarRenderer, xaxis:'x2axis', yaxis:'y2axis',
+    series:[{renderer:$.jqplot.BarRenderer, 
 	rendererOptions: {
                     // Speed up the animation a little bit.
                     // This is a number of milliseconds.  
@@ -299,7 +299,7 @@ var line1 = [
                     barWidth: 15,
                     barPadding: -15,
                     barMargin: 0,
-                    highlightMouseOver: false
+                    highlightMouseOver: true
                 }
             }, 
             {
@@ -315,15 +315,14 @@ var line1 = [
 			
 	],
 	
-	
-    axesDefaults: {
+	axesDefaults: {
 		tickRenderer: $.jqplot.CanvasAxisTickRenderer ,
         
     },
     axes: {
       xaxis: {
         renderer: $.jqplot.CategoryAxisRenderer,
-		label:'Students	', 
+		label:'Groups	', 
           labelOptions:{
             fontFamily:'Helvetica',
             fontSize: '12pt'
@@ -332,33 +331,23 @@ var line1 = [
           angle: -90,
         },
       },
-      x2axis: {
-        renderer: $.jqplot.CategoryAxisRenderer,
-		tickOptions: {
-          show: false,
-		  showLabel: false,
-		  textColor: '#ffffff'
-        },
-				  showTicks: false,
-				    showTickMarks: false
-      },
+     
       yaxis: {
-         label: 'Grade',
+         label: 'Number of Pupils',
                 labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-		  
+		   tickOptions: {
+		   formatString: '%.0f'
+		   } 
 		   
 		  
       },
-      y2axis: {
-        
-		   
-      }
+    
     },
 	 highlighter: {
         show: true,
         sizeAdjust: 7.5,
 		tooltipAxes: 'y',
-		formatString: 'Grade: %s'
+		formatString: 'Number of Pupils: %s',		
       }
       
 
