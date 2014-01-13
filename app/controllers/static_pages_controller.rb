@@ -22,4 +22,10 @@ class StaticPagesController < ApplicationController
   def privacy
 	@privacy = true
   end
+  
+  def transition_matrix
+	
+	
+  end
+  
 end

@@ -227,6 +227,7 @@
 			</div>
 			<div class="modal-body">
 				<div id="chart1" style="width:600px; height:400px; margin-left:auto; margin-right:auto;"></div>
+				<div id="imgChart1"></div>
 				<hr style="margin:2px;">
 					<%i=1%>
 					<%Group.where(school_id: current_user.school_id).each do |group|%>
@@ -252,7 +253,7 @@
 						</div>
 						<%if i%4 == 1%>
 							</div>
-							<hr style="margin:2px;">
+							<hr style="margin:4px;">
 						<%end%>
 					<%end%>
 					</div>
@@ -353,9 +354,12 @@ var line1 = [
 
   });
 
+	var imgData = $('#chart1').jqplotToImageStr({}); // given the div id of your plot, get the img data
+	var imgElem = $('<img/>').attr('src',imgData); // create an img and add the data to it
+	$('#imgChart1').append(imgElem);​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
 
 
-</script>
+
 	
 $('body').tooltip({
     trigger: 'click',
