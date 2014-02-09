@@ -243,8 +243,8 @@ class PupilResultsController < ApplicationController
   end
   
   def delete_many_results
-  PupilResult.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).delete_all
-  TitleClass.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).delete_all
+  PupilResult.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).where(locked:false).delete_all
+  TitleClass.where(:col_id=>params[:col_id]).where(:class_id=>params[:class_id]).where(locked:false).delete_all
   redirect_to :back
   end
   
