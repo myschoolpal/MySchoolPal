@@ -69,13 +69,13 @@
 					
 			
 			<%if current_user.school.primary == true%>
-					<li><a data-toggle="modal" href="#KS1_KS5_tc">Comparison to Targets</a></li>
+					<li><a data-toggle="modal" href="#KS1_KS2_tc">Comparison to Targets</a></li>
 					<li><a data-toggle="modal" href="#pie_chart_targets">Pie Chart Targets</a></li>
 					<li><a data-toggle="modal" href="#pie_chart_level">Pie Chart Levels</a></li>
 				<li><a data-toggle="modal" href="#ks1_matrix_modal">KS1-2 Matrix Modal</a></li>
 			<%end%>
 			<%if current_user.school.secondary == true%>
-			<li><a data-toggle="modal" href="#KS1_KS5_tc">Comparison to Targets KS3</a></li>
+			<li><a data-toggle="modal" href="#KS2_KS4_tc">Comparison to Targets KS3</a></li>
 			<li><a data-toggle="modal" href="#pie_chart_targets">Pie Chart Targets</a></li>
 					<li><a data-toggle="modal" href="#pie_chart_level">Pie Chart Levels</a></li>
 			<li><a data-toggle="modal" href="#ks4_matrix_modal">KS2-4 Transition Matrix</a></li>
@@ -313,7 +313,7 @@
 	
 			<%if avg_aps%>
 			<%if avg_aps >54%>				
-<div class="modal fade" id="KS1_KS5_tc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="KS2_KS4_tc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:850px;">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -333,7 +333,7 @@
 </div>
 <%elsif avg_aps <54 && avg_aps>0%>
 
-<div class="modal fade" id="KS1_KS5_tc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="KS1_KS2_tc" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width:850px;">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -607,9 +607,9 @@
 <script>
 
 
-$('#KS4_tc').on('shown.bs.modal', function(event, ui) {
-      plot1.replot();
-	  plot2.replot();
+$('#KS2_KS4_tc').on('shown.bs.modal', function(event, ui) {
+      plot2.replot();
+	  
   });
 $('#pie_chart_level').on('shown.bs.modal', function(event, ui) {
       plot4.replot();
@@ -814,7 +814,7 @@ var line1 = [
   }
   
     
-$('#KS1_KS5_tc').on('shown.bs.modal', function(event, ui) {
+$('#KS1_KS2_tc').on('shown.bs.modal', function(event, ui) {
       
       plot2.replot();
 	 
