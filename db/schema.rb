@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140108223219) do
+ActiveRecord::Schema.define(version: 20140524161803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 20140108223219) do
     t.datetime "updated_at"
     t.integer  "number_weeks"
     t.integer  "number_periods"
+    t.boolean  "dashboard"
   end
 
   create_table "subject_classes", force: true do |t|

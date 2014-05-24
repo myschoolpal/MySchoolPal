@@ -27,3 +27,4 @@
 //= require jqplot.pieRenderer.min.js
 //= require jqplot.canvasAxisTickRenderer.min.js
 //= require jquery-ui.min.js
+//= require read-csv.js

@@ -1,0 +1,260 @@
+<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
+  'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>MySchoolPal Dashboard</title>
+    
+
+
+
+
+<style>
+.hidden {display: none;}
+</style>
+<style type="text/css" media="print">
+   .no-print { display: none; }
+   .print {display: inline; width:100%; height:600px;}
+   
+</style>
+
+</head>
+<body class="body">
+
+<div class="cont">
+    <form class="form-horizontal well no-print">
+		<div class="row">
+			<div class="col-md-4">
+				<strong><h1><%=current_user.school.name%></h1></strong>
+				<input type="file" id="files"  style="margin-top:30px;" name="files" accept=".csv">
+			</div>
+			
+			<div class="col-md-2 text-center">
+				<button class="button_link" data-toggle="modal" data-target="#tmModal">
+				<strong>Transition Matrices</strong>
+				<%= image_tag("/assets/tm.png", class:"img_link img-rounded")%>
+				
+				</button>
+			</div>
+			<div class="col-md-2 text-center">
+				<button class="button_link" data-toggle="modal" data-target="#barChartModal">
+				<strong>Class Progress</strong>
+				<%= image_tag("/assets/class_progress.png", class:"img_link img-rounded")%>
+				</button>
+			</div>
+			<div class="col-md-2 text-center">
+			<button class="button_link" data-toggle="modal" data-target="#lpModal">
+			<strong>Levels of Progress</strong>
+			<%= image_tag("/assets/levels_progress.png", class:"img_link img-rounded")%>
+				
+			</button>
+			</div>
+			<div class="col-md-2 text-center">
+				<button class="button_link" data-toggle="modal" data-target="#targetModal">
+					<strong>Progress Target</strong>
+					<%= image_tag("/assets/target_progress.png", class:"img_link img-rounded")%>
+				</button>
+			</div>
+        </div>
+      
+    </form>
+	<div class="container">
+	
+	<button class="pull-right" id="print_table">Print</button>
+	<br />
+	<br />
+		<div id="output">		
+			<div class="row">
+				<div class="col-md-12">
+				<h2>Dashboard Service</h2>
+				<br />
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4">
+					<h5>MySchoolPal's Dashboard service provides all teachers with an extremely quick and simple method of analysing data.
+					<br />
+					<br />
+					This suite provides teachers with the opportunity to immediately analyse the amount of progress each pupil is making.</h5>	
+				</div>
+				<div class="col-md-8">
+					<h5>
+						The format for the data sheet is very simple, use the example below to create your own:
+						<br />
+						<br />
+						<table class="table table-bordered">
+							<tr>
+								<th>
+									Surname
+								</th>
+								<th>
+									Forename
+								</th>
+								<th>
+									Target
+								</th>
+								<th>
+									Comparison
+								</th>
+								<th>
+									Result
+								</th>
+								
+							</tr>
+							<tr>
+								<td>
+									David
+								</td>
+								<td>
+									Holmes
+								</td>
+								<td>
+									4C
+								</td>
+								<td>
+									2C
+								</td>
+								<td>
+									3A
+								</td>
+							</tr>
+						</table>
+						<br />
+						Click <a href="example.csv">here </a> to open an example sheet to give a more detailed example.
+					</h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade no-print"  id="tmModal" tabindex="-1" role="dialog" aria-labelledby="tmModalLabel" aria-hidden="true">
+		<div class="modal-dialog print" style="width:90%">
+			<div class="modal-content">
+				<div class="modal-header no-print">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title no-print">Transition Matrix</h4>
+				</div>
+				<div class="modal-body">
+					
+						<div id = "tm_1_2" class="print"></div>
+						<br />
+						<button id="print_tm">Print</button>
+				</div>
+				<div class="modal-footer no-print">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	
+	<div class="modal fade"  id="barChartModal" tabindex="-1" role="dialog" aria-labelledby="tmModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:90%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Comparison - Target - Result</h4>
+				</div>
+				<div class="modal-body">
+					<div style="overflow:auto;">
+						<div id="barChart_target" style="height:400px; width:2000px; "></div>
+						
+					</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<div class="modal fade"  id="lpModal" tabindex="-1" role="dialog" aria-labelledby="tmModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:700px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Levels of Progress</h4>
+				</div>
+				<div class="modal-body">
+					
+					<div id="pie_chart" style="height:450px;width:600px; margin-right:auto; margin-left:auto;"></div>
+					<div id="pie_chart_img" class="hidden print"></div>
+					<br />
+					<button id="printPieChart">Print</button>
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+	<div class="modal fade"  id="targetModal" tabindex="-1" role="dialog" aria-labelledby="tmModalLabel" aria-hidden="true">
+		<div class="modal-dialog" style="width:700px">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">Comparison to Target</h4>
+				</div>
+				<div class="modal-body">
+					<div id="pie_chart_target" style="height:450px;width:600px;  margin-right:auto; margin-left:auto;"></div>
+					<div id="pie_chart_target_hidden" class="hidden print"></div>
+					<br>
+					<button id="printChart_target">Print</div>
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	
+  </div>
+  
+  
+
+
+  <footer>
+    <center>
+      
+    </center>
+  </footer>
+  
+<!--<a href="javascript:demoFromHTML()" class="button">Run Code</a>-->
+
+<script>
+	
+    function demoFromHTML() {
+		var doc = new jsPDF();
+		doc.text(20, 20, 'MySchoolPal Data');
+		
+		doc.output('dataurlnewwindow');
+    }
+	document.getElementById('files').addEventListener('change', handleFiles, false);
+
+function printTable() {
+
+ var divElements = document.getElementById("output").innerHTML;
+        //Get the HTML of whole page
+        var print_window = window.open();
+		
+        //Reset the page's HTML with div's HTML only
+        print_window.document.write( 
+          "<html><head><title></title></head><body>" + 
+          divElements + "</body>");
+
+        //Print Page
+        print_window.print();
+		print_window.close();
+
+}
+$('#print_table').on('click',function(){ printTable();})	
+</script>
+</div>
+
+
+</body>
+</html>

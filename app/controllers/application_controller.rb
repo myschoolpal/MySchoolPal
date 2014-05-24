@@ -16,7 +16,11 @@ class ApplicationController < ActionController::Base
   user_classes_path
 end
   
-  def authorize_admin
+ def goto_dashboard
+	redirect_to(static_pages_window_path) if current_user.school.dashboard == true
+ end
+  
+ def authorize_admin
     redirect_to(user_classes_path) if current_user.admin != true
     #redirects to previous page
 	end
