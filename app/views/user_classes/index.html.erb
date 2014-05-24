@@ -8,13 +8,11 @@
 	<%end%>
 	<%if current_user.user_info.teacher== true%>
 	<div class ="row" style="margin-top:50px;">
-		<div class="col-xs-4 col-md-offset-1">
+		<div class="col-xs-5 col-md-offset-1">
 			<%=link_to 'Manage Classes', pupil_results_path(class_id: @manage_classes), :style => "font-size:25px;",:class=>"btn btn-primary btn-large btn-block"%>
 		</div>
-		<div class="col-xs-4 col-md-offset-1">
-			<%=link_to 'Dashboard', static_pages_window_path, :style => "font-size:25px;",:class=>"btn btn-primary btn-large btn-block"%>
-		</div>
-		<div class="col-xs-2">
+		
+		<div class="col-xs-5">
 			<%if current_user.user_info.slt== true%>
 				<%=link_to 'In Depth Analysis', year_analysis_pupil_results_path, :style => "font-size:25px;" , :class=>"btn btn-success btn-block"%>
 			<%end%>
