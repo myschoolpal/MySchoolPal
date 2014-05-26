@@ -4,10 +4,6 @@
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" />
   <title>MySchoolPal Dashboard</title>
-    
-
-
-
 
 <style>
 .hidden {display: none;}
@@ -59,11 +55,19 @@
       
     </form>
 	<div class="container">
+	<div class="row">
+		<div class="col-md-10">
+		</div>
+		<div class="col-md-1">
+			<div class="btn btn-primary pull-right no-print" id="example">Example Data</div>
+		</div>
+		<div class="col-md-1">
+			<button class="pull-right btn btn-success no-print" id="print_table">Print</button>
+		</div>
+	</div>
+	<br />
 	
-	<button class="pull-right" id="print_table">Print</button>
-	<br />
-	<br />
-		<div id="output">		
+		<div id="output" class="no-print">		
 			<div class="row">
 				<div class="col-md-12">
 				<h2>Dashboard Service</h2>
@@ -138,7 +142,7 @@
 					
 						<div id = "tm_1_2" class="print"></div>
 						<br />
-						<button id="print_tm">Print</button>
+						<button id="print_tm" class="btn btn-success">Print</button>
 				</div>
 				<div class="modal-footer no-print">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -181,7 +185,7 @@
 					<div id="pie_chart" style="height:450px;width:600px; margin-right:auto; margin-left:auto;"></div>
 					<div id="pie_chart_img" class="hidden print"></div>
 					<br />
-					<button id="printPieChart">Print</button>
+					<button id="printPieChart" class="btn btn-success">Print</button>
 					</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -201,7 +205,7 @@
 					<div id="pie_chart_target" style="height:450px;width:600px;  margin-right:auto; margin-left:auto;"></div>
 					<div id="pie_chart_target_hidden" class="hidden print"></div>
 					<br>
-					<button id="printChart_target">Print</div>
+					<button id="printChart_target" class="btn btn-success">Print</button>
 					
 				</div>
 				<div class="modal-footer">
@@ -234,24 +238,13 @@
 		doc.output('dataurlnewwindow');
     }
 	document.getElementById('files').addEventListener('change', handleFiles, false);
-
-function printTable() {
-
- var divElements = document.getElementById("output").innerHTML;
-        //Get the HTML of whole page
-        var print_window = window.open();
-		
-        //Reset the page's HTML with div's HTML only
-        print_window.document.write( 
-          "<html><head><title></title></head><body>" + 
-          divElements + "</body>");
-
-        //Print Page
-        print_window.print();
-		print_window.close();
-
-}
+	document.getElementById('example').addEventListener('click', exampleData, false);
+	$('#print_tm').on('click',function(){ printData();})
 $('#print_table').on('click',function(){ printTable();})	
+$('body').tooltip({
+	
+    selector: '[id=tooltip]'
+	});
 </script>
 </div>
 
