@@ -1,4 +1,5 @@
 var surname = [];
+var title
 var forename = [];
 var target = [];
 var initial = [];
@@ -47,6 +48,20 @@ function convertAps(aps) {
 function handleFiles(evt) {
 	example = false;
 	lines = [];
+	initial_result = [];
+	surname = [];
+	forename = [];
+	target = [];
+	initial = [];
+	result = [];
+	target_result = [];
+	comparison = [];
+	result_number = [];
+	target_number = [];
+	levels_progress = {};
+	levels_target = {};
+	title ="";
+
 	// Check for the various File API support.
 	var files = evt.target.files; 
 	if (window.FileReader) {
@@ -75,9 +90,22 @@ function loadHandler(event) {
 	function exampleData(){
 	example = true;
 	lines = [];
+	initial_result = [];
+	surname = [];
+	forename = [];
+	target = [];
+	initial = [];
+	result = [];
+	target_result = [];
+	comparison = [];
+	result_number = [];
+	target_number = [];
+	levels_progress = {};
+	levels_target = {};
+	title = "";
 	document.getElementById("files").value = "";
-	lines[0] = ['Surname', "Forename","Target","KS1","Result"];
-	lines[1] = ['Smith', "Daniel","21","20","89"];
+	lines[0] = ["Example Data"];
+	lines[1] = ['Surname', "Forename","Target","KS1","Result"];
 	lines[2] = ['Knight', "Gemma","4a","1b","2c"];
 	lines[3] = ['Colbert', "John","3b","1b","4c"];
 	lines[4] = ['Austin', "Edward","2a","1a","3b"];
@@ -97,8 +125,8 @@ function loadHandler(event) {
 	lines[18] = ['Storey', "Alex","3a","2c","4b"];
 	lines[19] = ['Clausen', "Rachel","4b","2a","4a"];
 	lines[20] = ['Sinclair', "Mike","4b","1b","3a"];
-	
-	
+	lines[21] = ['Smith', "Daniel","21","20","89"];
+	title = lines[0]
 	processData();
 	}
 	
@@ -117,7 +145,8 @@ function loadHandler(event) {
         lines.push(allTextLines.shift().split(','));
     }
 	}
-	for (var i = 1; i < lines.length; i++) {
+	title = lines[0][0];
+	for (var i = 2; i < lines.length; i++) {
 		if(lines[i][0].length >0) {
 			surname.push(lines[i][0]);
 			forename.push(lines[i][1]);
@@ -153,7 +182,7 @@ function loadHandler(event) {
 				}
 			
 				initial_result.push(result_value-initial_value);
-			
+				console.log(initial_result);
 			}
 			
 			if(lines[i][4] && lines[i][2]) {
@@ -227,7 +256,7 @@ function pieChart_levels() {
    
   var plot1 = jQuery.jqplot ('pie_chart', [data], 
     { 
-		title: 'Levels of Progress',
+		title: title + ' - Levels of Progress',
 		  seriesDefaults: {
 			renderer: jQuery.jqplot.PieRenderer, 
 			rendererOptions: {
@@ -279,7 +308,7 @@ function pieChart_target() {
   
   var plot2 = jQuery.jqplot ('pie_chart_target', [data], 
     { 
-		title: 'Comparison to Target',
+		title: title + ' - Comparison to Target',
       seriesDefaults: {
         renderer: jQuery.jqplot.PieRenderer, 
         rendererOptions: {
@@ -421,8 +450,11 @@ function barChart_target(lines) {
         // the legend to overflow the container.
         legend: {
             show: true,
-            placement: 'outsideGrid'
+            placement: 'outsideGrid',
+			location: 's'
         },
+		
+		title: title, 
         axes: {
             // Use a category axis on the x axis and use our custom ticks.
             xaxis: {
@@ -469,27 +501,28 @@ function errorHandler(evt) {
 
 
 function drawOutput(lines){
+	document.getElementById('data_title').innerHTML = lines[0][0];
 	
 	document.getElementById("output").innerHTML = "";
 	var table = document.createElement("table");
 	table.className = 'table table-hover';
-	for (var i = 0; i < lines.length; i++) {
+	for (var i = 1; i < lines.length; i++) {
 		var row = table.insertRow(-1);
 		for (var j = 0; j < lines[i].length; j++) {
 			var firstNameCell = row.insertCell(-1);
-			if (i>0 && j==4) {
+			if (i>1 && j==4) {
 				if(lines[i][j] && lines[i][j-2]) {
 				
-					if(target_result[i-1]>0) {
+					if(target_result[i-2]>0) {
 						firstNameCell.className = 'above_target';
 					}
-					if(target_result[i-1]==0) {
+					if(target_result[i-2]==0) {
 						firstNameCell.className = 'on_target';
 					}
-					if(target_result[i-1]==-1) {
+					if(target_result[i-2]==-1) {
 						firstNameCell.className = 'one_below_target';
 					}
-					if(target_result[i-1]<-1) {
+					if(target_result[i-2]<-1) {
 						firstNameCell.className = 'below_target';
 					}
 					if(isInArray(lines[i][j].toUpperCase(), grade_array) == false && isInArray(lines[i][j], aps_array) == false) {
@@ -504,12 +537,12 @@ function drawOutput(lines){
 			firstNameCell.appendChild(document.createTextNode(lines[i][j].toUpperCase()));
 		}
 		var levelsProgress = row.insertCell(-1);
-		if (i==0) {
+		if (i==1) {
 			levelsProgress.appendChild(document.createTextNode('Sublevels of Progress'));
 		}
 		else {
 			if (lines[i][4] && lines[i][3]) {
-				lp = initial_result[i-1];
+				lp = initial_result[i-2];
 				levelsProgress.appendChild(document.createTextNode(lp));
 			}
 		}
@@ -518,12 +551,19 @@ function drawOutput(lines){
 	document.getElementById("output").appendChild(table);
 }
 
+
+function tm_1_2(lines) {
+
+document.getElementById('tm_title').innerHTML = lines[0][0] + " - Transition Matrix";
+
+var b = [];
+var a = [];
+
 var arr = [];
   for (var i = 0; i < 6000; i++) {
     arr[i] = [];
 	}
 
-function tm_1_2(lines) {
 
 for (i=1; i<lines.length-1; i++) {
 		if (lines[i][3]=== undefined) {

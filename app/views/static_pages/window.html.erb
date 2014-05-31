@@ -22,12 +22,20 @@
 		<div class="row">
 			<div class="col-md-4">
 				<strong><h1><%=current_user.school.name%></h1></strong>
-				<input type="file" id="files"  style="margin-top:30px;" name="files" accept=".csv">
+				<div class="row" style="margin-top:30px">
+					<div class="col-md-7">
+						<input type="file" id="files" name="files" accept=".csv">
+					</div>
+					<div class="col-md-5 text-center">
+					
+						<%= link_to "Download Template", "/MSP-Template.csv", class:"btn btn-sm btn-primary"%>
+					</div>
+				</div>
 			</div>
 			
 			<div class="col-md-2 text-center">
 				<button class="button_link" data-toggle="modal" data-target="#tmModal">
-				<strong>Transition Matrices</strong>
+				<strong>Transition Matrix</strong>
 				<%= image_tag("/assets/tm.png", class:"img_link img-rounded")%>
 				
 				</button>
@@ -57,6 +65,7 @@
 	<div class="container">
 	<div class="row">
 		<div class="col-md-10">
+			<h2><div id="data_title"></div></h2>
 		</div>
 		<div class="col-md-1">
 			<div class="btn btn-primary pull-right no-print" id="example">Example Data</div>
@@ -139,7 +148,7 @@
 					<h4 class="modal-title no-print">Transition Matrix</h4>
 				</div>
 				<div class="modal-body">
-					
+						<h3><div id="tm_title"></div></h3>
 						<div id = "tm_1_2" class="print"></div>
 						<br />
 						<button id="print_tm" class="btn btn-success">Print</button>
