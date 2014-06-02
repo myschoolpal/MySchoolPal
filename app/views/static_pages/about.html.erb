@@ -1,18 +1,64 @@
-<h3>Progress, Progress, Progress...</h3>
-	<br />
-	<p>
-		MySchoolPal has been designed by Stephen Howse, Head of Physics at a leading school in Doncaster. The aim of the software is to facilitate teachers with a system that will 
-		analyse pupils' data in great detail yet remain simple to use. The system allows teachers / Curriculum leaders & Senior Management to monitor pupils' progress at all levels,
-		the software is designed to be extremely versatile as it is clearly understood that each school just like each pupil will have different needs. 
-	</p>
-	
-	<p>
-		The features offered within the software allow schools to set their own pupil groups, their own whole school assessments and each class teacher can add an unlimited 
-		number of their own assessments. The data analysis tools then allow teachers and pupils to monitor the progress of pupils in great detail, from looking at a whole year
-		group down to a single pupil. To read more about the features click <%=link_to 'here', static_pages_features_path%>
-	</p>
-	
-	<p>
-		MySchoolPal is committed to improving, therefore we are looking for schools to use the product for free for 6 months on the condition that schools provide us with 
-		feedback that we can then use to make improvements to the product. 
-	</p>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+            </div>
+          </div>
+
+          <div class="inner cover">
+			<%= image_tag("/assets/logo2.png", style:"width:600px")%>
+			<center>
+            <div style="width:600px; height:163px; margin-top:20px;">
+			MySchoolPal has been developed by a dedicated team of serving teachers. Designed in response to the ever
+			increasing importance and relevance of in year data to inform teaching decisions but with an overwhelming desire to ‘KEEP IT SIMPLE’.
+			<br>
+			<br>
+			Simply use the excel template to enter group data and MySchoolPal does the rest.
+			<br>
+			<br>
+			Try it FREE
+            </div>
+            <p class="lead">
+			
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Login', new_user_session_path, style: "width:90px", :class =>"btn btn-small btn-default") %>
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('About Us', static_pages_about_path, style: "width:90px" , :class => "btn btn-small btn-default") %>
+					
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Free Trial', static_pages_features_path, style: "width:90px", :class => "btn btn-small btn-warning") %>
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Features', static_pages_features_path, style: "width:90px", :class => "btn btn-small btn-default") %>
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Contact', static_pages_features_path, style: "width:90px" , :class => "btn btn-small btn-default") %>
+				</div>
+				<div class="col-md-1">
+				</div>
+			</div>
+			  
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>

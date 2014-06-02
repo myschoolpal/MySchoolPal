@@ -28,4 +28,8 @@ class StaticPagesController < ApplicationController
 	
   end
   
+  def window
+	@window = true
+  end
+  
 end

@@ -3,6 +3,11 @@ b {
 
 }
 
+
+body {
+color:#1D609D;
+font-family: verdana;
+}
 img.img_link {
 margin-top:10px;
 
@@ -13,6 +18,7 @@ button.button_link {
 border: 0px;
 background: none;
 padding:10px;
+color:#1D609D;
 }
 
 button.button_link:hover {
@@ -22,7 +28,7 @@ padding:10px;
 }
 
 table.tm_layout {
-border:2px solid black;
+border:2px solid #fff;
 border-collapse:collapse;
 width:100%;
 }
@@ -31,7 +37,7 @@ td.tm_layout {
 width:5%;
 height:30px;
 text-align:center;
-border:2px solid black;
+border:2px solid #fff;
 }
 
 input.tm_button {

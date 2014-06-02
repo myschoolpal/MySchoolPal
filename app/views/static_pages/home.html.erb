@@ -1,20 +1,56 @@
-<h3>Supporting Pupils' Progress</h3>
-	<br />
-	<div class="row">
-		<div class="col-xs-8 col-md-8">
-			<p>
-				
-			</p>
+
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="masthead clearfix">
+            <div class="inner">
+            </div>
+          </div>
+
+          <div class="inner cover">
+			<%= image_tag("/assets/logo2.png", style:"width:600px")%>
+			<center>
+            <div style="width:450px; height:163px; margin-top:20px;">
+            </div>
+            <p class="lead">
 			
-			<p>
-				
-			</p>
-			
-			<p>
-				
-			</p>
-		</div>
-		<div class="col-xs-4 col-md-4">
-		<%= image_tag("/assets/slide1.png", width:"400")%>
-		</div>
-	</div>
+			<div class="row">
+				<div class="col-md-1">
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Login', new_user_session_path, style: "width:90px", :class =>"btn btn-small btn-default") %>
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('About Us', static_pages_about_path, style: "width:90px" , :class => "btn btn-small btn-default") %>
+					
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Free Trial', static_pages_features_path, style: "width:90px", :class => "btn btn-small btn-warning") %>
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Features', static_pages_features_path, style: "width:90px", :class => "btn btn-small btn-default") %>
+				</div>
+				<div class="col-md-2 text-center">
+					<%= link_to('Contact', static_pages_features_path, style: "width:90px" , :class => "btn btn-small btn-default") %>
+				</div>
+				<div class="col-md-1">
+				</div>
+			</div>
+			  
+            </p>
+          </div>
+
+          <div class="mastfoot">
+            <div class="inner">
+              
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>

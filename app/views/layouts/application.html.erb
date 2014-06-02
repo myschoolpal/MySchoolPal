@@ -20,39 +20,29 @@
 			<div class="container-fluid">
 			<ul class="nav">
 				<% if current_user%>
-				
+						<% if @window || @features || @home || @sign_in || @about%>
+						<% else%>
 					<li><%= link_to "Dashboard", user_classes_path %></li>
 					<li style="width:300px; color:#000;"><%= link_to "Change your password", edit_user_registration_path %></li>
 					<li><%= link_to('Logout', destroy_user_session_path, :method => :delete) %></li>
-					
+						<%end%>
 				<%else%>
-					<%if @home%>
-					<li class="active"><%= link_to('Home', static_pages_home_path, :class =>"active") %></li>
+					<%if @features || @home || @sign_in || @about%>
 					<%else%>
+					
 					<li><%= link_to('Home', static_pages_home_path) %></li>
-					<%end%>
+					
 					<li><%= link_to('About', static_pages_about_path) %></li>
 					<li><%= link_to('Features', static_pages_features_path) %></li>
 					<li><%= link_to('Contact', static_pages_contact_path) %></li>
 					<li><%= link_to('Login', new_user_session_path) %></li>
+					<%end%>    
 				<%end%>    
 			</ul>
 			</div>
 		</div>
 	  </div>
-	<%if @home %> 
-	 <div class="top1">
-		<div class="row">
-			<div class="col-md-7 col-md-offset-1">
-				<p class="title">MYSCHOOLPAL</p>
-				<p class="sub-title">Monitoring Pupils' Progress</p>
-			</div>
-			<div class="col-md-4 hidden-xs hidden-sm">
-				<%= image_tag("/assets/ipodipad.png", width:"300")%>
-			</div>
-		</div>
-	</div>
-	<%end%>
+	
 		<%if @privacy %>
 		  <div class="top1">
 			<p class="about-title">Privacy Policy</p>
@@ -65,30 +55,15 @@
 		<p class="about-subtitle">MySchoolPal terms and conditions</p>
 	  </div>
 	  <%end%>
-	  <%if @about %>
-	  <div class="top1">
-		<p class="about-title">About</p>
-		<p class="about-subtitle">Helping students make progress, whilst keeping things simple</p>
-	  </div>
-	  <%end%>
+	  
 	  <%if @contact %>
 	  <div class="top1">
 		<p class="about-title">Contact</p>
 		<p class="about-subtitle">Give us a call to see how we can help</p>
 	  </div>
 	  <%end%>
-	  <%if @features %>
-	  <div class="top1">
-		<p class="about-title">Features</p>
-		<p class="about-subtitle">Interactive features that support your students progress</p>
-	  </div>
-	  <%end%>
-	  <%if @sign_in %>
-	  <div class="top1">
-		<p class="about-title">Login</p>
-		<p class="about-subtitle">Sign in to use the interactive tools</p>
-	  </div>
-	  <%end%>
+	  
+
 	  <div class="container">
 		<%if current_user%>
 			<%if current_user.admin == true %>
@@ -199,7 +174,7 @@
 		</div>
 		<div class="push"></div>
 	</div>
-	<div class="footer" style="padding-top:3px;">
+	<!-- <div class="footer" style="padding-top:3px;">
 			<div class="row">
 				<div class="col-xs-6 text-center">
 					<%=link_to 'Terms and Conditions', static_pages_tandc_path, :style => "color:#fff"%>
@@ -208,7 +183,7 @@
 					<%=link_to 'Privacy Policy', static_pages_privacy_path, :style => "color:#fff"%>
 				</div>
 			</div>
-		</div>
+		</div> -->
   </body>
 </html>
 <script>

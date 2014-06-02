@@ -21,7 +21,11 @@
     <form class="form-horizontal well no-print">
 		<div class="row">
 			<div class="col-md-4">
-				<strong><h1><%=current_user.school.name%></h1></strong>
+				<div class="row">
+					<div class="col-md-12">
+					<strong><h2><p style=""><%=current_user.school.name%></p></h2></strong>
+					</div>
+				</div>
 				<div class="row" style="margin-top:30px">
 					<div class="col-md-7">
 						<input type="file" id="files" name="files" accept=".csv">
@@ -35,43 +39,49 @@
 			
 			<div class="col-md-2 text-center">
 				<button class="button_link" data-toggle="modal" data-target="#tmModal">
-				<strong>Transition Matrix</strong>
+				Transition Matrix
 				<%= image_tag("/assets/tm.png", class:"img_link img-rounded")%>
 				
 				</button>
 			</div>
 			<div class="col-md-2 text-center">
 				<button class="button_link" data-toggle="modal" data-target="#barChartModal">
-				<strong>Class Progress</strong>
+				Individual Progress
 				<%= image_tag("/assets/class_progress.png", class:"img_link img-rounded")%>
+				</button>
+			</div>
+			
+			<div class="col-md-2 text-center">
+				<button class="button_link" data-toggle="modal" data-target="#targetModal">
+					Target Data
+					<%= image_tag("/assets/target_progress.png", class:"img_link img-rounded")%>
 				</button>
 			</div>
 			<div class="col-md-2 text-center">
 			<button class="button_link" data-toggle="modal" data-target="#lpModal">
-			<strong>Levels of Progress</strong>
+			Levels of Progress
 			<%= image_tag("/assets/levels_progress.png", class:"img_link img-rounded")%>
 				
 			</button>
-			</div>
-			<div class="col-md-2 text-center">
-				<button class="button_link" data-toggle="modal" data-target="#targetModal">
-					<strong>Progress Target</strong>
-					<%= image_tag("/assets/target_progress.png", class:"img_link img-rounded")%>
-				</button>
 			</div>
         </div>
       
     </form>
 	<div class="container">
 	<div class="row">
-		<div class="col-md-10">
+		<div class="col-md-6">
 			<h2><div id="data_title"></div></h2>
 		</div>
-		<div class="col-md-1">
-			<div class="btn btn-primary pull-right no-print" id="example">Example Data</div>
+		
+		<div class="col-md-2">
+			<div class="btn btn-primary  no-print" style="width:150px" id="example">Example Data</div>
 		</div>
-		<div class="col-md-1">
-			<button class="pull-right btn btn-success no-print" id="print_table">Print</button>
+		<div class="col-md-2">
+			<button class="btn btn-success no-print" style="width:150px" id="print_table">Print</button>
+		</div>
+		<div class="col-md-2">
+
+			<%= link_to('Logout', destroy_user_session_path, :method => :delete, style: "width:150px;", class: "btn btn-warning  no-print") %>
 		</div>
 	</div>
 	<br />
@@ -79,7 +89,7 @@
 		<div id="output" class="no-print">		
 			<div class="row">
 				<div class="col-md-12">
-				<h2>Dashboard Service</h2>
+				<h2 class="pull-left">Your Dashboard </h2>
 				<br />
 				</div>
 			</div>
@@ -92,7 +102,7 @@
 				</div>
 				<div class="col-md-8">
 					<h5>
-						The format for the data sheet is very simple, use the example below to create your own:
+						The format for the data sheet is very simple, <%= link_to "download", "/MSP-Template.csv"%> the template to create your own.
 						<br />
 						<br />
 						<table class="table table-bordered">
@@ -133,7 +143,7 @@
 							</tr>
 						</table>
 						<br />
-						Click <a href="example.csv">here </a> to open an example sheet to give a more detailed example.
+						
 					</h5>
 				</div>
 			</div>
@@ -151,6 +161,20 @@
 						<h3><div id="tm_title"></div></h3>
 						<div id = "tm_1_2" class="print"></div>
 						<br />
+						<div class="row">
+							<div class="col-md-2 col-md-offset-2 text-center">
+								<div style="width:150px; height:20px; background-color:#F83F3F; border-radius:5px; color:#fff; font-weight:bold;">Below 2 levels</div>
+							</div>
+							<div class="col-md-2 text-center">
+								<div style="width:150px; height:20px; background-color:#fABD3F; border-radius:5px; color:#fff; font-weight:bold;">+ 2 levels</div>
+							</div>
+							<div class="col-md-2 text-center">
+								<div style="width:150px; height:20px; background-color:#52ED3A; border-radius:5px; color:#fff; font-weight:bold;">+ 3 levels</div>
+							</div>
+							<div class="col-md-2 text-center">
+								<div style="width:150px; height:20px; background-color:#51AAC0; border-radius:5px; color:#fff; font-weight:bold;">Above 3 levels</div>
+							</div>
+						</div>
 						<button id="print_tm" class="btn btn-success">Print</button>
 				</div>
 				<div class="modal-footer no-print">
